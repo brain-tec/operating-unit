@@ -16,7 +16,6 @@ class AccountJournal(models.Model):
                                              "used in payments, when this "
                                              "journal is used.")
 
-    @api.multi
     @api.constrains('type')
     def _check_ou(self):
         for journal in self:

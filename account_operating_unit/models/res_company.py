@@ -21,7 +21,6 @@ class ResCompany(models.Model):
         " balance sheet for each "
         "operating unit.")
 
-    @api.multi
     @api.constrains('ou_is_self_balanced')
     def _inter_ou_clearing_acc_required(self):
         for rec in self:

@@ -9,7 +9,6 @@ from odoo.exceptions import ValidationError
 class CrmTeam(models.Model):
     _inherit = 'crm.team'
 
-    @api.multi
     @api.constrains('operating_unit_id')
     def _check_sales_order_operating_unit(self):
         for rec in self:

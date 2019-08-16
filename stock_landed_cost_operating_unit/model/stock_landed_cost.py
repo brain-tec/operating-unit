@@ -30,7 +30,6 @@ class StockLandedCost(models.Model):
     show_operating_unit = fields.Boolean(compute="_compute_show_operating_unit",
                                          default="_default_show_operating_unit")
 
-    @api.multi
     def _compute_show_operating_unit(self):
         for item in self:
             item.show_operating_unit = len(self.env.user.operating_unit_ids) > 1
@@ -48,7 +47,6 @@ class StockLandedCost(models.Model):
         """
         res = super(StockLandedCost, self)._register_hook()
 
-        @api.multi
         def button_validate(self):
             if any(cost.state != 'draft' for cost in self):
                 raise UserError(_('Only draft landed costs can be validated'))

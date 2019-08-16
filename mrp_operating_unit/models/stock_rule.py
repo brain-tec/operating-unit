@@ -8,7 +8,6 @@ class StockRule(models.Model):
 
     _inherit = 'stock.rule'
 
-    @api.multi
     def _prepare_mo_vals(self, product_id, product_qty, product_uom,
                          location_id, name, origin, values, bom):
         mo_vals = super(StockRule, self)._prepare_mo_vals(

@@ -37,7 +37,6 @@ class StockMove(models.Model):
             return [(0, 0, debit_line_vals), (0, 0, credit_line_vals)]
         return res
 
-    @api.multi
     def _action_done(self):
         """
         Generate accounting moves if the product being moved is subject

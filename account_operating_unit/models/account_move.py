@@ -29,7 +29,6 @@ class AccountMoveLine(models.Model):
                            self._context.get('operating_unit_ids')))
         return super(AccountMoveLine, self)._query_get(domain)
 
-    @api.multi
     @api.constrains('operating_unit_id', 'company_id')
     def _check_company_operating_unit(self):
         for rec in self:
@@ -39,7 +38,6 @@ class AccountMoveLine(models.Model):
                                   ' Move Line and in the Operating Unit must '
                                   'be the same.'))
 
-    @api.multi
     @api.constrains('operating_unit_id', 'move_id')
     def _check_move_operating_unit(self):
         for rec in self:
@@ -60,7 +58,6 @@ class AccountMove(models.Model):
                                         help="This operating unit will "
                                              "be defaulted in the move lines.")
 
-    @api.multi
     def _prepare_inter_ou_balancing_move_line(self, move, ou_id,
                                               ou_balances):
         if not move.company_id.inter_ou_clearing_account_id:
@@ -82,7 +79,6 @@ class AccountMove(models.Model):
             res['credit'] = ou_balances[ou_id]
         return res
 
-    @api.multi
     def _check_ou_balance(self, move):
         # Look for the balance of each OU
         ou_balance = {}
@@ -92,7 +88,6 @@ class AccountMove(models.Model):
             ou_balance[line.operating_unit_id.id] += (line.debit - line.credit)
         return ou_balance
 
-    @api.multi
     def post(self, invoice=False):
         ml_obj = self.env['account.move.line']
         for move in self:
@@ -132,7 +127,6 @@ class AccountMove(models.Model):
             return True
         return super(AccountMove, self).assert_balanced()
 
-    @api.multi
     @api.constrains('line_ids')
     def _check_ou(self):
         for move in self:

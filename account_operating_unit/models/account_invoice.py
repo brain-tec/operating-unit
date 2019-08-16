@@ -42,7 +42,6 @@ class AccountInvoice(models.Model):
             )
             self.operating_unit_id = ou
 
-    @api.multi
     def finalize_invoice_move_lines(self, move_lines):
         move_lines = super(AccountInvoice,
                            self).finalize_invoice_move_lines(move_lines)
@@ -54,7 +53,6 @@ class AccountInvoice(models.Model):
             new_move_lines.append(line_tuple)
         return new_move_lines
 
-    @api.multi
     @api.constrains('operating_unit_id', 'company_id')
     def _check_company_operating_unit(self):
         for pr in self:
@@ -67,7 +65,6 @@ class AccountInvoice(models.Model):
                                         'Operating Unit must be the same.'))
         return True
 
-    @api.multi
     @api.constrains('operating_unit_id', 'journal_id')
     def _check_journal_operating_unit(self):
         for ai in self:

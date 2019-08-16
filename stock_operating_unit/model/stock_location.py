@@ -10,7 +10,6 @@ class StockLocation(models.Model):
 
     operating_unit_id = fields.Many2one('operating.unit', 'Operating Unit')
 
-    @api.multi
     @api.constrains('operating_unit_id')
     def _check_warehouse_operating_unit(self):
         for rec in self:
@@ -25,7 +24,6 @@ class StockLocation(models.Model):
                                       'assigned to a warehouse that belongs to'
                                       ' a different operating unit.'))
 
-    @api.multi
     @api.constrains('operating_unit_id')
     def _check_required_operating_unit(self):
         for rec in self:
@@ -41,7 +39,6 @@ class StockLocation(models.Model):
                       'assigned to internal locations only.')
                 )
 
-    @api.multi
     @api.constrains('operating_unit_id', 'company_id')
     def _check_company_operating_unit(self):
         for rec in self:
@@ -51,7 +48,6 @@ class StockLocation(models.Model):
                     _('Configuration error. The Company in the Stock Location '
                       'and in the Operating Unit must be the same.'))
 
-    @api.multi
     @api.constrains('operating_unit_id', 'location_id')
     def _check_parent_operating_unit(self):
         for rec in self:

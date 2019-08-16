@@ -22,7 +22,6 @@ class StockPicking(models.Model):
             self.operating_unit_id = unit
         return res
 
-    @api.multi
     @api.constrains('operating_unit_id', 'company_id')
     def _check_company_operating_unit(self):
         for rec in self:
@@ -33,7 +32,6 @@ class StockPicking(models.Model):
                       'and in the Operating Unit must be the same.')
                 )
 
-    @api.multi
     @api.constrains('operating_unit_id', 'picking_type_id')
     def _check_picking_type_operating_unit(self):
         for rec in self:

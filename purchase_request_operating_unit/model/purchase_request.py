@@ -22,7 +22,6 @@ class PurchaseRequest(models.Model):
         operating_unit_default_get(self._uid),
     )
 
-    @api.multi
     @api.constrains('operating_unit_id', 'company_id')
     def _check_company_operating_unit(self):
         for rec in self:
@@ -32,7 +31,6 @@ class PurchaseRequest(models.Model):
                                         'and in the Operating Unit must be'
                                         'the same.'))
 
-    @api.multi
     @api.constrains('operating_unit_id', 'picking_type_id')
     def _check_warehouse_operating_unit(self):
         for rec in self:

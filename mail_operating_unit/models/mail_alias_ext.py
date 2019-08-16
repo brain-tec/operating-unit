@@ -13,7 +13,6 @@ class MailAliasExt(models.Model):
 
     operating_unit_id = fields.Many2one('operating.unit', 'Operating Unit')
 
-    @api.multi
     def _get_alias_domain(self):
         super(MailAliasExt, self)._get_alias_domain()
         for record in self:

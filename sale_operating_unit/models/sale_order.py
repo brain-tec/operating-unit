@@ -37,7 +37,6 @@ class SaleOrder(models.Model):
                 self.operating_unit_id:
             self.team_id = False
 
-    @api.multi
     @api.constrains('team_id', 'operating_unit_id')
     def _check_team_operating_unit(self):
         for rec in self:
@@ -47,7 +46,6 @@ class SaleOrder(models.Model):
                                         'Unit of the sales team must match '
                                         'with that of the quote/sales order.'))
 
-    @api.multi
     @api.constrains('operating_unit_id', 'company_id')
     def _check_company_operating_unit(self):
         for rec in self:
@@ -57,7 +55,6 @@ class SaleOrder(models.Model):
                                         'the Sales Order and in the Operating '
                                         'Unit must be the same.'))
 
-    @api.multi
     def _prepare_invoice(self):
         self.ensure_one()
         invoice_vals = super(SaleOrder, self)._prepare_invoice()
