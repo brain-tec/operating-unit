@@ -54,7 +54,6 @@ class AccountMove(models.Model):
 
     operating_unit_id = fields.Many2one('operating.unit',
                                         'Default operating unit',
-                                        domain="[('user_ids', '=', uid)]",
                                         help="This operating unit will "
                                              "be defaulted in the move lines.")
 
@@ -88,7 +87,7 @@ class AccountMove(models.Model):
             ou_balance[line.operating_unit_id.id] += (line.debit - line.credit)
         return ou_balance
 
-    def post(self, invoice=False):
+    def post(self):
         ml_obj = self.env['account.move.line']
         for move in self:
             if not move.company_id.ou_is_self_balanced:
@@ -120,7 +119,7 @@ class AccountMove(models.Model):
                 move.with_context(wip=False).\
                     write({'line_ids': [(4, aml.id) for aml in amls]})
 
-        return super(AccountMove, self).post(invoice)
+        return super(AccountMove, self).post()
 
     def assert_balanced(self):
         if self.env.context.get('wip'):

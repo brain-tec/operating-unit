@@ -11,8 +11,8 @@ class TestAccountOperatingUnit(AccountingTestCase):
         super(TestAccountOperatingUnit, self).setUp()
         self.res_users_model = self.env['res.users']
         self.aml_model = self.env['account.move.line']
-        self.invoice_model = self.env['account.invoice']
-        self.inv_line_model = self.env['account.invoice.line']
+        self.invoice_model = self.env['account.move']
+        self.inv_line_model = self.env['account.move.line']
         self.account_model = self.env['account.account']
         self.journal_model = self.env['account.journal']
         self.product_model = self.env['product.product']

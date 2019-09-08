@@ -5,7 +5,7 @@
     "name": 'Accounting with Operating Units',
     "summary": "Introduces Operating Unit (OU) in invoices and "
                "Accounting Entries with clearing account",
-    "version": "12.0.1.0.0",
+    "version": "13.0.1.0.0",
     "author": "Eficent, "
               "Serpent Consulting Services Pvt. Ltd.,"
               "WilldooIT Pty Ltd,"
@@ -19,7 +19,8 @@
         "views/account_move_view.xml",
         "views/account_journal_view.xml",
         "views/company_view.xml",
-        "views/invoice_view.xml",
+        # TODO: Check port to 13.0
+        # "views/invoice_view.xml",
         "views/account_payment_view.xml",
         "views/account_invoice_report_view.xml",
     ],

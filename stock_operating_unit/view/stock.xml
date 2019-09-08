@@ -156,6 +156,7 @@
         </field>
     </record>
 
+    <!-- TODO: Must be ported to 13.0
     <record id="view_move_picking_form" model="ir.ui.view">
         <field name="name">stock.move.form</field>
         <field name="model">stock.move</field>
@@ -173,6 +174,7 @@
             </field>
         </field>
     </record>
+    -->
 
     <record id="stock_move_tree" model="ir.ui.view">
         <field name="name">Stock Moves</field>

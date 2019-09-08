@@ -4,6 +4,20 @@
 <!--License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
 <odoo>
 
+    <!-- invoice -->
+    <record id="view_move_form" model="ir.ui.view">
+        <field name="name">account.move.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="before">
+                <field name="operating_unit_id"
+                       options="{'no_create': True}"
+                       groups="operating_unit.group_multi_operating_unit"/>
+            </xpath>
+        </field>
+    </record>
+
     <record id="view_move_line_form" model="ir.ui.view">
         <field name="name">account.move.line.form</field>
         <field name="model">account.move.line</field>

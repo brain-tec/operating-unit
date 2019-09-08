@@ -18,7 +18,7 @@ class TestInvoiceOperatingUnit(test_ou.TestAccountOperatingUnit):
         self.invoice.sudo(self.user_id.id).action_invoice_open()
 
         # Pay the invoice using a cash journal associated to the main company
-        ctx = {'active_model': 'account.invoice', 'active_ids': [
+        ctx = {'active_model': 'account.move', 'active_ids': [
             self.invoice.id]}
         register_payments = \
             self.register_payments_model.with_context(ctx).create({
