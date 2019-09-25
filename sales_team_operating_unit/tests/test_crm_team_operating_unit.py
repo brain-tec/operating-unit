@@ -5,9 +5,8 @@
 
 from odoo.tests import tagged
 
-from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
-    OperatingUnitsTransactionCase,
-)
+from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import \
+    OperatingUnitsTransactionCase
 
 
 @tagged("post_install", "-at_install")
@@ -39,23 +38,6 @@ class TestSaleTeamOperatingUnit(OperatingUnitsTransactionCase):
         # Create CRM teams
         self.team1 = self._create_crm_team(self.user1.id, self.ou1)
         self.team2 = self._create_crm_team(self.user2.id, self.b2c)
-
-    def _create_user(self, login, groups, company, operating_units, context=None):
-        """ Create a user. """
-        group_ids = [group.id for group in groups]
-        user = self.res_users_model.create(
-            {
-                "name": "Test User",
-                "login": login,
-                "password": "demo",
-                "email": "test@yourcompany.com",
-                "company_id": company.id,
-                "company_ids": [(4, company.id)],
-                "operating_unit_ids": [(4, ou.id) for ou in operating_units],
-                "groups_id": [(6, 0, group_ids)],
-            }
-        )
-        return user
 
     def _create_crm_team(self, uid, operating_unit):
         """Create a Sales Team."""

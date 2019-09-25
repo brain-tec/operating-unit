@@ -2,9 +2,13 @@
 # © 2019 Serpent Consulting Services Pvt. Ltd.
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 from odoo.addons.stock.tests import common
+from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import \
+    OperatingUnitsTransactionCase
 
 
-class TestStockOperatingUnit(common.TestStockCommon):
+class TestStockOperatingUnit(common.TestStockCommon,
+                             OperatingUnitsTransactionCase):
+
     def setUp(self):
         super(TestStockOperatingUnit, self).setUp()
         self.ResUsers = self.env["res.users"]
@@ -61,23 +65,6 @@ class TestStockOperatingUnit(common.TestStockCommon):
             self.stock_location,
             self.location_b2c_id,
         )
-
-    def _create_user(self, login, groups, company, operating_units):
-        """ Create a user."""
-        group_ids = [group.id for group in groups]
-        user = self.ResUsers.with_context({"no_reset_password": True}).create(
-            {
-                "name": "Stock User",
-                "login": login,
-                "password": "demo",
-                "email": "chicago@yourcompany.com",
-                "company_id": company.id,
-                "company_ids": [(4, company.id)],
-                "operating_unit_ids": [(4, ou.id) for ou in operating_units],
-                "groups_id": [(6, 0, group_ids)],
-            }
-        )
-        return user.id
 
     def _create_picking(self, user_id, ou_id, picking_type, src_loc_id, dest_loc_id):
         """Create a Picking."""

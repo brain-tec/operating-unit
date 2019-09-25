@@ -3,10 +3,11 @@
 # Copyright (C) 2019 Serpent Consulting Services
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 from odoo.exceptions import ValidationError
-from odoo.tests import common
+from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import \
+    OperatingUnitsTransactionCase
 
 
-class TestProductOperatingUnit(common.TransactionCase):
+class TestProductOperatingUnit(OperatingUnitsTransactionCase):
     def setUp(self):
         super(TestProductOperatingUnit, self).setUp()
         self.ResUsers = self.env["res.users"]
@@ -36,23 +37,6 @@ class TestProductOperatingUnit(common.TransactionCase):
         self.product3.categ_id.operating_unit_ids = [(6, 0, [self.ou1.id, self.b2b.id])]
         self.testing_products_ids = [
             self.product1.id, self.product2.id, self.product3.id]
-
-    def _create_user(self, login, groups, company, operating_units):
-        """ Create a user."""
-        group_ids = [group.id for group in groups]
-        user = self.ResUsers.with_context({"no_reset_password": True}).create(
-            {
-                "name": "Chicago Purchase User",
-                "login": login,
-                "password": "demo",
-                "email": "chicago@yourcompany.com",
-                "company_id": company.id,
-                "company_ids": [(4, company.id)],
-                "operating_unit_ids": [(4, ou.id) for ou in operating_units],
-                "groups_id": [(6, 0, group_ids)],
-            }
-        )
-        return user.id
 
     def test_po_ou_onchange(self):
         with self.assertRaises(ValidationError):
