@@ -111,8 +111,8 @@ class PurchaseOrder(models.Model):
                     self.picking_type_id = types[:1]
                 else:
                     raise UserError(
-                        _("No Warehouse found with the Operating Unit indicated "
-                          "in the Purchase Order")
+                        _("No Warehouse found with the Operating Unit "
+                          "indicated in the Purchase Order")
                     )
 
     @api.model
