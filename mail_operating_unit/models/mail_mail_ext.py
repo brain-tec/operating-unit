@@ -18,14 +18,13 @@ class MailMailExt(models.Model):
 
         for mail in mails:
             operating_unit = False
-            record = False
             if mail.mail_message_id.model and mail.mail_message_id.res_id:
                 model = mail.mail_message_id.model
                 res_id = mail.mail_message_id.res_id
                 record = self.env[model].browse(res_id)
-            if getattr(record, 'operating_unit_id', False):
-                operating_unit = record.operating_unit_id
-            elif self.env.context.get('uid', False):
+                if getattr(record, 'operating_unit_id', False):
+                    operating_unit = record.operating_unit_id
+            if not operating_unit and self.env.context.get('uid', False):
                 user = self.env['res.users'].browse(self.env.context.get('uid'))
                 operating_unit = user.operating_unit_for_mails_id
 
