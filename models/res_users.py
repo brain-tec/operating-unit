@@ -20,5 +20,6 @@ class ResUsers(models.Model):
     @api.onchange('operating_unit_ids')
     def _on_change_operating_unit_ids(self):
         if (self.operating_unit_for_mails_id and
-                self.operating_unit_for_mails_id.id not in self.operating_unit_ids.ids):
+                self.operating_unit_for_mails_id.id
+                not in self.operating_unit_ids.ids):
             self.operating_unit_for_mails_id = False
