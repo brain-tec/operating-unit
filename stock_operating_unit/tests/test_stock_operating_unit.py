@@ -84,9 +84,9 @@ class TestStockOperatingUnit(common.TestStockCommon):
         })
         self.MoveObj.sudo(user_id).create({
             'name': 'a move',
-            'product_id': self.productA.id,
+            'product_id': self.product1.id,
             'product_uom_qty': 3.0,
-            'product_uom': self.productA.uom_id.id,
+            'product_uom': self.product1.uom_id.id,
             'picking_id': picking.id,
             'location_id': src_loc_id,
             'location_dest_id': dest_loc_id,
