@@ -60,23 +60,6 @@ class TestPurchaseOperatingUnit(OperatingUnitsTransactionCase):
         self.purchase1.sudo(self.user1_id).button_confirm()
         self._create_invoice(self.purchase1, self.partner1, self.account)
 
-    def _create_user(self, login, groups, company, operating_units):
-        """ Create a user."""
-        group_ids = [group.id for group in groups]
-        user =\
-            self.ResUsers.with_context({'no_reset_password': True}).\
-            create({
-                'name': 'Chicago Purchase User',
-                'login': login,
-                'password': 'demo',
-                'email': 'chicago@yourcompany.com',
-                'company_id': company.id,
-                'company_ids': [(4, company.id)],
-                'operating_unit_ids': [(4, ou.id) for ou in operating_units],
-                'groups_id': [(6, 0, group_ids)]
-            })
-        return user.id
-
     def _create_purchase(self, user_id, line_products):
         """ Create a purchase order.
         ``line_products`` is a list of tuple [(product, qty)]
