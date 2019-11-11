@@ -4,10 +4,11 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 import time
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
-from odoo.tests import common
+from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import \
+    OperatingUnitsTransactionCase
 
 
-class TestPurchaseOperatingUnit(common.TransactionCase):
+class TestPurchaseOperatingUnit(OperatingUnitsTransactionCase):
 
     def setUp(self):
         super(TestPurchaseOperatingUnit, self).setUp()
@@ -25,6 +26,7 @@ class TestPurchaseOperatingUnit(common.TransactionCase):
         self.ou1 = self.env.ref('operating_unit.main_operating_unit')
         # B2B Operating Unit
         self.b2b = self.env.ref('operating_unit.b2b_operating_unit')
+        self.b2b.company_id = self.company2
         # Partner
         self.partner1 = self.env.ref('base.res_partner_1')
         # Products
@@ -32,18 +34,25 @@ class TestPurchaseOperatingUnit(common.TransactionCase):
         self.product2 = self.env.ref('product.product_product_9')
         self.product3 = self.env.ref('product.product_product_11')
         # Account
-        self.account = self.env.ref('l10n_generic_coa.conf_a_pay')
+        # self.account = self.env.ref('l10n_generic_coa.conf_a_pay')
+        self.account = self.env['account.account'].create({
+            'name': 'test_purchase_operating_unit',
+            'code': 'TPOUA',
+            'user_type_id': self.env.ref(
+                'account.data_account_type_fixed_assets').id,
+        })
+
         # Create users
         self.user1_id = self._create_user('user_1',
                                           [self.group_purchase_user,
                                            self.group_stock_user],
                                           self.company1,
-                                          [self.ou1])
+                                          self.ou1)
         self.user2_id = self._create_user('user_2',
                                           [self.group_purchase_user,
                                            self.group_stock_user],
                                           self.company2,
-                                          [self.b2b])
+                                          self.b2b)
         self.purchase1 = self._create_purchase(
             self.user1_id, [(self.product1, 1000),
                             (self.product2, 500),
