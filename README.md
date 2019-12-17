@@ -5,20 +5,11 @@
 
 # BT Customizations
 Open OCA PRs merged
-- (https://github.com/OCA/operating-unit/pull/184) hr_expense_operating_unit
-- (https://github.com/OCA/operating-unit/pull/175) purchase_request_operating_unit
 - (https://github.com/OCA/operating-unit/pull/174) sale_stock_operating_unit
-- (https://github.com/OCA/operating-unit/pull/173) stock_account_operating_unit
-- (https://github.com/OCA/operating-unit/pull/156) mrp_operating_unit
-- (https://github.com/OCA/operating-unit/pull/152) purchase_operating_unit
-- (https://github.com/OCA/operating-unit/pull/151) sale_operating_unit
-- (https://github.com/OCA/operating-unit/pull/150) stock_operating_unit
-- (https://github.com/OCA/operating-unit/pull/160) crm_operating_unit
-- (https://github.com/OCA/operating-unit/pull/149) account_operating_unit
 
 New BT Modules
 - (https://github.com/OCA/operating-unit/pull/188) product_operating_unit
-- (https://github.com/OCA/operating-unit/pull/199) mail_operating_unit
+- (https://github.com/OCA/operating-unit/pull/203) mail_operating_unit
 - () stock_landed_cost_operating_unit
 - () partner_operating_unit
 
