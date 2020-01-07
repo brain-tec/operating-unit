@@ -12,13 +12,16 @@ class TestPurchaseOperatingUnit(common.TransactionCase):
     def setUp(self):
         super(TestPurchaseOperatingUnit, self).setUp()
         self.ResUsers = self.env["res.users"]
+        self.StockPicking = self.env["stock.picking"]
         self.PurchaseOrder = self.env["purchase.order"]
         self.AccountInvoice = self.env["account.move"]
         self.AccountAccount = self.env["account.account"]
         # company
-        self.company = self.env.ref("base.main_company")
+        self.company1 = self.env.ref("base.main_company")
+        self.company2 = self.env.ref("stock.res_company_1")
         # groups
         self.group_purchase_user = self.env.ref("purchase.group_purchase_user")
+        self.group_stock_user = self.env.ref("stock.group_stock_user")
         # Main Operating Unit
         self.ou1 = self.env.ref("operating_unit.main_operating_unit")
         # B2B Operating Unit
@@ -37,14 +40,14 @@ class TestPurchaseOperatingUnit(common.TransactionCase):
         # Create users
         self.user1_id = self._create_user(
             "user_1",
-            [self.group_purchase_user],
-            self.company,
+            [self.group_purchase_user, self.group_stock_user],
+            self.company1,
             [self.ou1],
         )
         self.user2_id = self._create_user(
             "user_2",
-            [self.group_purchase_user],
-            self.company,
+            [self.group_purchase_user, self.group_stock_user],
+            self.company2,
             [self.b2b],
         )
         self.purchase1 = self._create_purchase(
@@ -92,7 +95,7 @@ class TestPurchaseOperatingUnit(common.TransactionCase):
                 "requesting_operating_unit_id": self.ou1.id,
                 "partner_id": self.partner1.id,
                 "order_line": lines,
-                "company_id": self.company.id,
+                "company_id": self.company1.id,
             }
         )
         return purchase
@@ -102,6 +105,7 @@ class TestPurchaseOperatingUnit(common.TransactionCase):
         invoice_vals = {
             "purchase_id": purchase.id,
             "partner_id": partner.id,
+            "account_id": account.id,
             "move_type": "in_invoice",
         }
         purchase_context = {

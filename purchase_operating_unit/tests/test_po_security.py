@@ -16,10 +16,17 @@ class TestPoSecurity(test_po_ou.TestPurchaseOperatingUnit):
             .ids
         )
         self.assertEqual(po_ids, [])
+        # User 2 cannot list the picking that was created from PO 1
+        picking_ids = (
+            self.StockPicking.with_user(self.user2_id)
+            .search([("id", "in", self.purchase1.picking_ids.ids)])
+            .ids
+        )
+        self.assertEqual(picking_ids, [])
         # User 2 cannot list the invoice that was created from PO 1
         invoice_ids = (
             self.AccountInvoice.with_user(self.user2_id)
-            .search([("id", "=", self.invoice.id)])
+            .search([("purchase_id", "=", self.purchase1.id)])
             .ids
         )
         self.assertEqual(invoice_ids, [])
@@ -31,10 +38,17 @@ class TestPoSecurity(test_po_ou.TestPurchaseOperatingUnit):
             .ids
         )
         self.assertNotEqual(po_ids, [])
+        # User 1 can list the picking that was created from PO 1
+        picking_ids = (
+            self.StockPicking.sudo(self.user1_id)
+            .search([("id", "in", self.purchase1.picking_ids.ids)])
+            .ids
+        )
+        self.assertNotEqual(picking_ids, [])
         # User 1 can list the invoice that was created from PO 2
         invoice_ids = (
             self.AccountInvoice.with_user(self.user1_id)
-            .search([("id", "=", self.invoice.id)])
+            .search([("purchase_id", "=", self.purchase1.id)])
             .ids
         )
         self.assertNotEqual(invoice_ids, [])

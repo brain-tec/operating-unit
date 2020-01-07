@@ -20,6 +20,9 @@ class PurchaseOrder(models.Model):
                 ("warehouse_id.operating_unit_id", "=", operating_unit.id),
             ]
         )
+        types = type_obj.search([('code', '=', 'incoming'),
+                                 ('warehouse_id.operating_unit_id', '=',
+                                  operating_unit.id)])
         if types:
             res = types[:1].id
         return res
@@ -49,12 +52,16 @@ class PurchaseOrder(models.Model):
     )
 
     picking_type_id = fields.Many2one(
+        comodel_name="stock.picking.type",
+        string="Deliver To",
+        help="This will determine picking type of incoming shipment",
+        required=True,
         states={
             "confirmed": [("readonly", True)],
             "approved": [("readonly", True)],
             "done": [("readonly", True)],
         },
-        default=_default_picking_type,
+        default=lambda self: self._default_picking_type(),
     )
 
     @api.constrains("operating_unit_id", "picking_type_id")
