@@ -105,7 +105,6 @@ class TestPurchaseOperatingUnit(common.TransactionCase):
         invoice_vals = {
             "purchase_id": purchase.id,
             "partner_id": partner.id,
-            "account_id": account.id,
             "move_type": "in_invoice",
         }
         purchase_context = {

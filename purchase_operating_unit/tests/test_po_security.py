@@ -40,7 +40,7 @@ class TestPoSecurity(test_po_ou.TestPurchaseOperatingUnit):
         self.assertNotEqual(po_ids, [])
         # User 1 can list the picking that was created from PO 1
         picking_ids = (
-            self.StockPicking.sudo(self.user1_id)
+            self.StockPicking.with_user(self.user1_id)
             .search([("id", "in", self.purchase1.picking_ids.ids)])
             .ids
         )
