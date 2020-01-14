@@ -14,7 +14,8 @@ class SaleOrder(models.Model):
         team = self.env['crm.team']._get_default_team_id()
         if team.operating_unit_id:
             return team.operating_unit_id
-        return self.env.user.default_operating_unit_id
+        else:
+            return self.env.user.operating_unit_default_id
 
     operating_unit_id = fields.Many2one(
         comodel_name='operating.unit',
@@ -61,6 +62,13 @@ class SaleOrder(models.Model):
         self.ensure_one()
         invoice_vals = super(SaleOrder, self)._prepare_invoice()
         invoice_vals['operating_unit_id'] = self.operating_unit_id.id
+
+        new_invoice = self.env['account.invoice'].new({
+            'operating_unit_id': invoice_vals['operating_unit_id'],
+            'journal_id': invoice_vals['journal_id']})
+        new_invoice._onchange_operating_unit()
+        invoice_vals['journal_id'] = new_invoice.journal_id.id
+
         return invoice_vals
 
 

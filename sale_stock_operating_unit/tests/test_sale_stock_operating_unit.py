@@ -3,10 +3,11 @@
 # Copyright 2015-19 Serpent Consulting Services Pvt. Ltd. - Sudhir Arya
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
-from odoo.tests import common
+from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import \
+    OperatingUnitsTransactionCase
 
 
-class TestSaleStockOperatingUnit(common.TransactionCase):
+class TestSaleStockOperatingUnit(OperatingUnitsTransactionCase):
 
     def setUp(self):
         super(TestSaleStockOperatingUnit, self).setUp()

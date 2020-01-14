@@ -1,11 +1,13 @@
 # Copyright 2019 Eficent Business and IT Consulting Services S.L.
 # Copyright 2019 Serpent Consulting Services Pvt. Ltd.
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
-from odoo.tests import common
+
+from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import \
+    OperatingUnitsTransactionCase
 from odoo.exceptions import ValidationError
 
 
-class TestMrpOperatingUnit(common.TransactionCase):
+class TestMrpOperatingUnit(OperatingUnitsTransactionCase):
 
     def setUp(self):
         super(TestMrpOperatingUnit, self).setUp()
