@@ -65,6 +65,21 @@ class TestSaleStockOperatingUnit(OperatingUnitsTransactionCase):
                                              self.product1, self.pricelist,
                                              self.sale_team_b2c, self.b2c_wh)
 
+    def _create_user(self, login, groups, company, operating_units):
+        """Create a user."""
+        group_ids = [group.id for group in groups]
+        user = self.res_users_model.create({
+            'name': 'Test Sales User',
+            'login': login,
+            'password': 'demo',
+            'email': 'example@yourcompany.com',
+            'company_id': company.id,
+            'company_ids': [(4, company.id)],
+            'operating_unit_ids': [(4, ou.id) for ou in operating_units],
+            'groups_id': [(6, 0, group_ids)]
+        })
+        return user
+
     def _create_sale_team(self, uid, operating_unit):
         """Create a sale team."""
         team = self.sale_team_model.sudo(uid).with_context(
