@@ -50,7 +50,6 @@ class StockMove(models.Model):
             return rslt
         return res
 
-
     @api.model
     def _prepare_account_move_line(self, qty, cost, credit_account_id,
                                    debit_account_id):

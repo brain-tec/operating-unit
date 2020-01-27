@@ -6,8 +6,10 @@
 
 from odoo.tests import common
 from odoo.tools import SUPERUSER_ID
+from odoo.tests import tagged
 
 
+@tagged('post_install', '-at_install')
 class TestPurchaseRequestToRfq(common.TransactionCase):
 
     def setUp(self):

@@ -5,8 +5,10 @@
 from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import \
     OperatingUnitsTransactionCase
 from odoo.exceptions import ValidationError
+from odoo.tests import tagged
 
 
+@tagged('post_install', '-at_install')
 class TestHrExpenseOperatingUnit(OperatingUnitsTransactionCase):
 
     def setUp(self):
