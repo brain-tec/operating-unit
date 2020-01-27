@@ -3,8 +3,10 @@
 
 from odoo.exceptions import AccessError
 from .OperatingUnitsTransactionCase import OperatingUnitsTransactionCase
+from odoo.tests import tagged
 
 
+@tagged('post_install', '-at_install')
 class TestOperatingUnit(OperatingUnitsTransactionCase):
 
     def setUp(self):
