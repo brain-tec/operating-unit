@@ -5,8 +5,10 @@
 from odoo.exceptions import ValidationError
 from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import \
     OperatingUnitsTransactionCase
+from odoo.tests import tagged
 
 
+@tagged('post_install', '-at_install')
 class TestProductOperatingUnit(OperatingUnitsTransactionCase):
     def setUp(self):
         super(TestProductOperatingUnit, self).setUp()
