@@ -7,8 +7,10 @@
 from odoo.addons.hr_contract_operating_unit.tests.\
     test_hr_contract_operating_unit import TestHrContractOperatingUnit
 from odoo.exceptions import ValidationError
+from odoo.tests import tagged
 
 
+@tagged('post_install', '-at_install')
 class TestPayrollAccountOperatingUnit(TestHrContractOperatingUnit):
 
     def setUp(self):

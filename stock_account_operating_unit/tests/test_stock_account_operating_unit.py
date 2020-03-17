@@ -2,10 +2,15 @@
 # - Jordi Ballester Alomar
 # © 2019 Serpent Consulting Services Pvt. Ltd. - Sudhir Arya
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
-from odoo.addons.stock.tests.common import TestStockCommon
+from odoo.addons.stock.tests import common
+from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import \
+    OperatingUnitsTransactionCase
+from odoo.tests import tagged
 
 
-class TestStockAccountOperatingUnit(TestStockCommon):
+@tagged('post_install', '-at_install')
+class TestStockAccountOperatingUnit(common.TestStockCommon,
+                                    OperatingUnitsTransactionCase):
 
     def setUp(self):
         super(TestStockAccountOperatingUnit, self).setUp()
@@ -54,33 +59,45 @@ class TestStockAccountOperatingUnit(TestStockCommon):
         name = 'Goods Received Not Invoiced'
         code = 'grni'
         acc_type = self.env.ref('account.data_account_type_equity')
-        self.account_grni = self._create_account(
-            acc_type, name, code, self.company)
+        self.account_grni = self._create_account(acc_type, name, code,
+                                                 self.company)
         # Create account for Cost of Goods Sold
         name = 'Cost of Goods Sold'
         code = 'cogs'
         acc_type = self.env.ref('account.data_account_type_expenses')
-        self.account_cogs_id = self._create_account(
-            acc_type, name, code, self.company)
+        self.account_cogs_id = self._create_account(acc_type, name, code,
+                                                    self.company)
         # Create account for Inventory
         name = 'Inventory'
         code = 'inventory'
         acc_type = self.env.ref('account.data_account_type_fixed_assets')
-        self.account_inventory = self._create_account(
-            acc_type, name, code, self.company)
+        self.account_inventory = self._create_account(acc_type, name, code,
+                                                      self.company)
         # Create account for Inter-OU Clearing
         name = 'Inter-OU Clearing'
         code = 'inter_ou'
         acc_type = self.env.ref('account.data_account_type_equity')
-        self.account_inter_ou_clearing = self._create_account(
-            acc_type, name, code, self.company)
+        self.account_inter_ou_clearing = self._create_account(acc_type,
+                                                              name, code,
+                                                              self.company)
         # Update company data
         self.company.write({
             'inter_ou_clearing_account_id': self.account_inter_ou_clearing.id,
             'ou_is_self_balanced': True})
 
         # Create Product
-        self.product = self._create_product()
+        self.product = self.env.ref('product.product_product_7')
+        self.product.categ_id.write({
+            'property_valuation': 'real_time',
+            'property_stock_valuation_account_id': self.account_inventory.id,
+            'property_stock_account_input_categ_id': self.account_grni.id,
+            'property_stock_account_output_categ_id': self.account_cogs_id,
+        })
+        self.product.write({
+            'list_price': 1.0,
+            'standard_price': 1.0
+        })
+
         # Create incoming stock picking type
         self.incoming_id = self.env.ref('stock.warehouse0').in_type_id
         # Create incoming and internal stock picking types
@@ -90,27 +107,12 @@ class TestStockAccountOperatingUnit(TestStockCommon):
         self.b2c_type_in_id = b2c_wh.in_type_id
         self.b2c_type_int_id = b2c_wh.int_type_id
 
-    def _create_user(self, login, groups, company, operating_units):
-        """Create a user."""
-        group_ids = [group.id for group in groups]
-        user = self.res_users_model.create({
-            'name': 'Test Stock Account User',
-            'login': login,
-            'password': 'demo',
-            'email': 'example@yourcompany.com',
-            'company_id': company.id,
-            'company_ids': [(4, company.id)],
-            'operating_unit_ids': [(4, ou.id) for ou in operating_units],
-            'groups_id': [(6, 0, group_ids)]
-        })
-        return user
-
     def _create_account(self, acc_type, name, code, company):
         """Create an account."""
         account = self.account_model.create({
             'name': name,
             'code': code,
-            'user_type_id': acc_type.id,
+            'user_type_id': acc_type.ids and acc_type.ids[0],
             'company_id': company.id
         })
         return account
@@ -133,16 +135,16 @@ class TestStockAccountOperatingUnit(TestStockCommon):
         })
         return product
 
-    def _create_picking(self, user, ou_id, picking_type,
+    def _create_picking(self, user_id, ou_id, picking_type,
                         src_loc_id, dest_loc_id):
         """Create a Picking."""
-        picking = self.picking_model.sudo(user.id).create({
+        picking = self.picking_model.sudo(user_id).create({
             'picking_type_id': picking_type.id,
             'location_id': src_loc_id.id,
             'location_dest_id': dest_loc_id.id,
             'operating_unit_id': ou_id.id,
         })
-        self.move_model.sudo(user.id).create({
+        self.move_model.sudo(user_id).create({
             'name': 'a move',
             'product_id': self.product.id,
             'product_uom_qty': 1.0,
@@ -153,7 +155,7 @@ class TestStockAccountOperatingUnit(TestStockCommon):
         })
         return picking
 
-    def _confirm_receive(self, user_id, picking):
+    def _confirm_receive(self, user_id, picking, picking_type=None):
         """
         Checks the stock availability, validates and process the stock picking.
         """
@@ -190,10 +192,11 @@ class TestStockAccountOperatingUnit(TestStockCommon):
         """
         Call read_group method and return the balance of particular account.
         """
-        aml_rec = self.aml_model.read_group(
-            domain, ['debit', 'credit', 'account_id'], ['account_id'])
+        aml_rec = self.aml_model.read_group(domain,
+                                            ['debit', 'credit', 'account_id'],
+                                            ['account_id'])
         if aml_rec:
-            return aml_rec[0].get('debit', 0.0) - aml_rec[0].get('credit', 0.0)
+            return aml_rec[0].get('debit', 0) - aml_rec[0].get('credit', 0)
         else:
             return 0.0
 
@@ -288,7 +291,9 @@ class TestStockAccountOperatingUnit(TestStockCommon):
                                  self.stock_location_stock,
                                  self.location_b2c_id)
         # Receive it
-        self._confirm_receive(self.user1.id, self.picking)
+        picking_type = 'internal'
+        self._confirm_receive(self.user1.id, self.picking,
+                              picking_type=picking_type)
         # GL account ‘Inventory’ has balance 2 irrespective of the OU
         expected_balance = 2.0
         self._check_account_balance(self.account_inventory.id,

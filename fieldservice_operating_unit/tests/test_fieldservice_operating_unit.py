@@ -4,8 +4,10 @@
 from odoo.tests import common
 from datetime import timedelta
 from odoo import fields
+from odoo.tests import tagged
 
 
+@tagged('post_install', '-at_install')
 class TestFSMOrder(common.TransactionCase):
 
     def setUp(self):
