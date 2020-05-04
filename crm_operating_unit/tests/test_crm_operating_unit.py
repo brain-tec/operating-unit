@@ -2,10 +2,14 @@
 # Jordi Ballester Alomar
 # © 2015-17 Serpent Consulting Services Pvt. Ltd. - Sudhir Arya
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
-from odoo.tests import common
+
+from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import \
+    OperatingUnitsTransactionCase
+from odoo.tests import tagged
 
 
-class TestCrmOperatingUnit(common.TransactionCase):
+@tagged('post_install', '-at_install')
+class TestCrmOperatingUnit(OperatingUnitsTransactionCase):
 
     def setUp(self):
         super(TestCrmOperatingUnit, self).setUp()

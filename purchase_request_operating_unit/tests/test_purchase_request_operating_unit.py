@@ -5,8 +5,10 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from odoo.tests import common
+from odoo.tests import tagged
 
 
+@tagged('post_install', '-at_install')
 class TestPurchaseRequestOperatingUnit(common.TransactionCase):
 
     def setUp(self):

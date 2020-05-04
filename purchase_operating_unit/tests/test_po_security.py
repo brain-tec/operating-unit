@@ -3,8 +3,10 @@
 # © 2015-17 Serpent Consulting Services Pvt. Ltd. - Sudhir Arya
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 from . import test_purchase_operating_unit as test_po_ou  # noqa
+from odoo.tests import tagged
 
 
+@tagged('post_install', '-at_install')
 class TestPoSecurity(test_po_ou.TestPurchaseOperatingUnit):
 
     def test_po_ou_security(self):
