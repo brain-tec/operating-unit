@@ -14,6 +14,7 @@
     "category": "Product",
     "depends": [
         "product",
+        "stock",
         "operating_unit"
     ],
     "license": "LGPL-3",
