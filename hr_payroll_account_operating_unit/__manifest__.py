@@ -16,6 +16,7 @@
     "depends": [
         "hr_payroll_account",
         "hr_contract_operating_unit",
+        "account",
         "account_operating_unit",
     ],
     'installable': True,

@@ -13,7 +13,7 @@ class ResUsers(models.Model):
     def create(self, vals):
         res = super().create(vals)
         res.partner_id.operating_unit_ids = \
-            [(4, res.default_operating_unit_id.id)]
+            [(4, res.operating_unit_default_id.id)]
         return res
 
     @api.multi
