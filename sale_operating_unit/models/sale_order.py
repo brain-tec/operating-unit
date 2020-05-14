@@ -40,15 +40,23 @@ class SaleOrder(models.Model):
     @api.constrains('team_id', 'operating_unit_id')
     def _check_team_operating_unit(self):
         for rec in self:
-            if rec.team_id and rec.team_id.operating_unit_id != rec.operating_unit_id:
-                team_operating_unit_name = \
-                    rec.team_id.operating_unit_id.name if rec.team_id.operating_unit_id else False
-                so_operating_unit_name = \
-                    rec.operating_unit_id.name if rec.operating_unit_id else False
-                raise ValidationError(_('Configuration error. The Operating '
-                                        'Unit of the sales team {0} must match '
-                                        'with that of the quote/sales order {1}.'.format(team_operating_unit_name,
-                                                                                         so_operating_unit_name)))
+            if (rec.team_id and
+                    rec.team_id.operating_unit_id != rec.operating_unit_id):
+                if rec.team_id.operating_unit_id:
+                    team_operating_unit_name = \
+                        rec.team_id.operating_unit_id.name
+                else:
+                    team_operating_unit_name = False
+                if rec.operating_unit_id:
+                    so_operating_unit_name = rec.operating_unit_id.name
+                else:
+                    so_operating_unit_name = False
+                raise ValidationError(
+                    _('Configuration error. The Operating Unit {0} of the '
+                      'sales team {1} must match with that of the quote/sales'
+                      ' order {2}.'.format(team_operating_unit_name,
+                                           rec.team_id.name,
+                                           so_operating_unit_name)))
 
     @api.multi
     @api.constrains('operating_unit_id', 'company_id')
