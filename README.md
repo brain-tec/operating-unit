@@ -3,6 +3,10 @@
 [![Coverage Status](https://coveralls.io/repos/OCA/operating-unit/badge.svg?branch=13.0&service=github)](https://coveralls.io/github/OCA/operating-unit?branch=13.0)
 [![Code Climate](https://codeclimate.com/github/OCA/operating-unit/badges/gpa.svg)](https://codeclimate.com/github/OCA/operating-unit)
 
+# BT Customizations
+Open OCA PRs merged
+- (https://github.com/OCA/operating-unit/pull/297) product_operating_unit
+
 # Operating Units
 
 An Operating Unit (OU) is an organizational entity part of a company,
