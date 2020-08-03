@@ -3,8 +3,10 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from odoo.addons.account.tests.account_test_classes import AccountingTestCase
+from odoo.tests import tagged
 
 
+@tagged('post_install', '-at_install')
 class TestAccountOperatingUnit(AccountingTestCase):
 
     def setUp(self):
