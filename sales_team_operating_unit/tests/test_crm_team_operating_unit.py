@@ -5,8 +5,13 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 from odoo.tests import common
 
+from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import \
+    OperatingUnitsTransactionCase
+from odoo.tests import tagged
 
-class TestSaleTeamOperatingUnit(common.TransactionCase):
+
+@tagged('post_install', '-at_install')
+class TestSaleTeamOperatingUnit(OperatingUnitsTransactionCase):
 
     def setUp(self):
         super(TestSaleTeamOperatingUnit, self).setUp()
@@ -67,7 +72,7 @@ class TestSaleTeamOperatingUnit(common.TransactionCase):
             'company_id': company.id,
             'company_ids': [(4, company.id)],
             'partner_id': partner.id,
-            'default_operating_unit_id': operating_units[0].id,
+            'operating_unit_default_id': operating_units[0].id,
             'operating_unit_ids': [(4, ou.id) for ou in operating_units],
             'groups_id': [(6, 0, group_ids)]
         })
