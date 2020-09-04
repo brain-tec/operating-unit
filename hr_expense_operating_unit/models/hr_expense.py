@@ -63,17 +63,15 @@ class HrExpenseExpense(models.Model):
                     "no Operating Unit"
                 )
             )
-        if res.get("context"):
-            res.get("context").update(
-                {"default_operating_unit_id": self[0].operating_unit_id.id}
-            )
+        sheet = self.env['hr.expense.sheet'].browse(res.get('res_id'))
+        sheet.write({'operating_unit_id': self[0].operating_unit_id.id})
         return res
 
     def _get_account_move_line_values(self):
         res = super(HrExpenseExpense, self)._get_account_move_line_values()
         for expense in self:
-            res[expense.id][0].update({"operating_unit_id": self.operating_unit_id.id})
-            res[expense.id][1].update({"operating_unit_id": self.operating_unit_id.id})
+            res[expense.id][0].update({"operating_unit_id": expense.operating_unit_id.id})
+            res[expense.id][1].update({"operating_unit_id": expense.operating_unit_id.id})
         return res
 
 
