@@ -51,7 +51,27 @@ class TestSaleOperatingUnit(OperatingUnitsTransactionCase):
         # We don't want to crash with the tests that check the
         # operating units on the warehouses/pickings/etc, so we make sure
         # we are not going to make a picking: we use for that a service.
-        self.product1.write({'type': 'service'})
+        # Because of the write() in stock/models/product.py, we set its
+        # qty_available to zero.
+        for location in self.env['stock.quant'].search([
+            ('product_id', '=', self.product1.id),
+            ('location_id.usage', 'in', ('internal', 'transit')),
+        ]).mapped('location_id'):
+            inventory = self.env['stock.inventory'].create({
+                'name': 'Sets available quantity for {} in {} to zero.'.format(
+                    self.product1.name, location.name),
+                'filter': 'product',
+                'product_id': self.product1.id,
+                'line_ids': [(0, 0, {
+                    'product_id': self.product1.id,
+                    'product_qty': 0,
+                    'location_id': location.id
+                })]
+            })
+            inventory.action_validate()
+        self.product1.write({
+            'type': 'service',
+        })
         # Create user1
         self.user1 = self._create_user('user_1', [self.grp_sale_user,
                                                   self.grp_acc_user],
