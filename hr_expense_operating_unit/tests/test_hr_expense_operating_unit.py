@@ -2,11 +2,14 @@
 # Copyright 2016-19 Serpent Consulting Services Pvt. Ltd.
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
+from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import \
+    OperatingUnitsTransactionCase
 from odoo.exceptions import ValidationError
-from odoo.tests import common
+from odoo.tests import tagged
 
 
-class TestHrExpenseOperatingUnit(common.TransactionCase):
+@tagged('post_install', '-at_install')
+class TestHrExpenseOperatingUnit(OperatingUnitsTransactionCase):
     def setUp(self):
         super(TestHrExpenseOperatingUnit, self).setUp()
         self.res_users_model = self.env["res.users"]
@@ -31,16 +34,12 @@ class TestHrExpenseOperatingUnit(common.TransactionCase):
         self.b2c = self.env.ref("operating_unit.b2c_operating_unit")
 
         self.user1 = self._create_user(
-            "Test HR User 1",
-            "user_1",
             "demo1",
             [self.grp_hr_user, self.grp_accou_mng, self.grp_account_invoice],
             self.company,
             [self.ou1, self.b2c],
         )
         self.user2 = self._create_user(
-            "Test HR User 2",
-            "user_2",
             "demo2",
             [self.grp_hr_user, self.grp_accou_mng, self.grp_account_invoice],
             self.company,
@@ -52,25 +51,6 @@ class TestHrExpenseOperatingUnit(common.TransactionCase):
         self.hr_expense1 = self._create_hr_expense(self.ou1, self.emp)
 
         self.hr_expense2 = self._create_hr_expense(self.b2c, self.emp)
-
-    def _create_user(
-        self, name, login, pwd, groups, company, operating_units, context=None
-    ):
-        """Creates a user."""
-        group_ids = [group.id for group in groups]
-        user = self.res_users_model.create(
-            {
-                "name": name,
-                "login": login,
-                "password": pwd,
-                "email": "example@yourcompany.com",
-                "company_id": company.id,
-                "company_ids": [(4, company.id)],
-                "operating_unit_ids": [(4, ou.id) for ou in operating_units],
-                "groups_id": [(6, 0, group_ids)],
-            }
-        )
-        return user
 
     def _create_hr_employee(self):
         """Creates an Employee."""
