@@ -51,8 +51,8 @@ class HrExpenseExpense(models.Model):
                     )
                 )
 
-    def action_submit_expenses(self):
-        res = super(HrExpenseExpense, self).action_submit_expenses()
+    def _create_sheet_from_expenses(self):
+        sheet = super()._create_sheet_from_expenses()
         if len(self.mapped("operating_unit_id")) != 1 or any(
             not expense.operating_unit_id for expense in self
         ):
@@ -63,9 +63,8 @@ class HrExpenseExpense(models.Model):
                     "no Operating Unit"
                 )
             )
-        sheet = self.env['hr.expense.sheet'].browse(res.get('res_id'))
-        sheet.write({'operating_unit_id': self[0].operating_unit_id.id})
-        return res
+        sheet.write({"operating_unit_id": self.mapped("operating_unit_id").id})
+        return sheet
 
     def _get_account_move_line_values(self):
         res = super(HrExpenseExpense, self)._get_account_move_line_values()
