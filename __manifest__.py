@@ -5,7 +5,7 @@
 {
     "name": "Operating Unit in Products",
     "summary": "Adds the concept of operating unit (OU) in products",
-    "version": "12.0.1.0.3",
+    "version": "13.0.1.0.0",
     "author": "brain-tec AG, "
               "Open Source Integrators, "
               "Serpent Consulting Services Pvt. Ltd.,"
@@ -13,7 +13,6 @@
     "website": "https://github.com/OCA/operating-unit",
     "category": "Product",
     "depends": [
-        "product",
         "stock",
         "operating_unit"
     ],

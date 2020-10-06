@@ -24,7 +24,6 @@ class ProductTemplate(models.Model):
         string='Operating Units',
         default=_default_operating_unit_ids)
 
-    @api.multi
     @api.constrains('operating_unit_ids', 'categ_id')
     def _check_operating_unit(self):
         for record in self:
@@ -35,7 +34,6 @@ class ProductTemplate(models.Model):
                     "The operating units of the product must include the "
                     "ones from the category."))
 
-    @api.multi
     @api.onchange('categ_id')
     def onchange_operating_unit_ids(self):
         for record in self:

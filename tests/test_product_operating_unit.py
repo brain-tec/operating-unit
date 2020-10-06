@@ -54,7 +54,7 @@ class TestProductOperatingUnit(OperatingUnitsTransactionCase):
         # User 1 is only assigned to Operating Unit 1, and can see all
         # products having Operating Unit 1.
         product_ids = \
-            self.ProductTemplate.sudo(self.user1_id).search(
+            self.ProductTemplate.with_user(self.user1_id).search(
                 [('operating_unit_ids', 'in', self.ou1.id),
                  ('id', 'in', self.testing_products_ids)]).ids
         self.assertEqual(set(product_ids), {self.product1.id,
@@ -63,7 +63,7 @@ class TestProductOperatingUnit(OperatingUnitsTransactionCase):
         # User 2 is only assigned to Operating Unit 2, so cannot see products
         # having Operating Unit 1, expect those also having Operating Unit b2b
         product_ids = \
-            self.ProductTemplate.sudo(self.user2_id).search(
+            self.ProductTemplate.with_user(self.user2_id).search(
                 [('operating_unit_ids', 'in', self.ou1.id),
                  ('id', 'in', self.testing_products_ids)]).ids
         self.assertEqual(product_ids, [self.product3.id])
@@ -71,7 +71,7 @@ class TestProductOperatingUnit(OperatingUnitsTransactionCase):
         # User 2 is only assigned to Operating Unit 2, and can see all
         # products having Operating Unit b2b.
         product_ids = \
-            self.ProductTemplate.sudo(self.user2_id).search(
+            self.ProductTemplate.with_user(self.user2_id).search(
                 [('operating_unit_ids', 'in', self.b2b.id),
                  ('id', 'in', self.testing_products_ids)]).ids
         self.assertEqual(set(product_ids),
@@ -80,7 +80,7 @@ class TestProductOperatingUnit(OperatingUnitsTransactionCase):
         # User 1 is only assigned to Operating Unit 1, so cannot see products
         # having Operating Unit b2b, expect those also having Operating Unit 1
         product_ids = \
-            self.ProductTemplate.sudo(self.user1_id).search(
+            self.ProductTemplate.with_user(self.user1_id).search(
                 [('operating_unit_ids', 'in', self.b2b.id),
                  ('id', 'in', self.testing_products_ids)]).ids
         self.assertEqual(product_ids, [self.product3.id])
