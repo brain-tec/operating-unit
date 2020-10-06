@@ -84,7 +84,7 @@ class TestSaleStockOperatingUnit(OperatingUnitsTransactionCase):
 
     def _create_sale_team(self, uid, operating_unit):
         """Create a sale team."""
-        team = self.sale_team_model.sudo(uid).with_context(
+        team = self.sale_team_model.with_user(uid).with_context(
             mail_create_nosubscribe=True).create({
                 'name': operating_unit.name,
                 'operating_unit_id': operating_unit.id
@@ -93,7 +93,7 @@ class TestSaleStockOperatingUnit(OperatingUnitsTransactionCase):
 
     def _create_sale_order(self, uid, customer, product, pricelist, team, wh):
         """Create a sale order."""
-        sale = self.sale_model.sudo(uid).create({
+        sale = self.sale_model.with_user(uid).create({
             'partner_id': customer.id,
             'partner_invoice_id': customer.id,
             'partner_shipping_id': customer.id,
@@ -102,7 +102,7 @@ class TestSaleStockOperatingUnit(OperatingUnitsTransactionCase):
             'operating_unit_id': team.operating_unit_id.id,
             'warehouse_id': wh.id
         })
-        self.sale_line_model.sudo(uid).create({
+        self.sale_line_model.with_user(uid).create({
             'order_id': sale.id,
             'product_id': product.id,
             'name': 'Sale Order Line'
