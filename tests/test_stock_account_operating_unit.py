@@ -14,16 +14,10 @@ class TestStockAccountOperatingUnit(common.TestStockCommon,
 
     def setUp(self):
         super(TestStockAccountOperatingUnit, self).setUp()
-        self.res_groups = self.env['res.groups']
-        self.res_users_model = self.env['res.users']
         self.aml_model = self.env['account.move.line']
         self.account_model = self.env['account.account']
         self.product_model = self.env['product.product']
         self.product_cteg_model = self.env['product.category']
-        self.inv_line_model = self.env['account.invoice.line']
-        self.acc_type_model = self.env['account.account.type']
-        self.operating_unit_model = self.env['operating.unit']
-        self.company_model = self.env['res.company']
         self.move_model = self.env['stock.move']
         self.picking_model = self.env['stock.picking']
 
@@ -34,12 +28,8 @@ class TestStockAccountOperatingUnit(common.TestStockCommon,
         self.grp_stock_user = self.env.ref('stock.group_stock_user')
         # Main Operating Unit
         self.ou1 = self.env.ref('operating_unit.main_operating_unit')
-        # B2B Operating Unit
-        self.b2b = self.env.ref('operating_unit.b2b_operating_unit')
         # B2C Operating Unit
         self.b2c = self.env.ref('operating_unit.b2c_operating_unit')
-        # Partner
-        self.partner1 = self.env.ref('base.res_partner_1')
         self.stock_location_stock = self.env.ref('stock.stock_location_stock')
         self.supplier_location = self.env.ref('stock.stock_location_suppliers')
 
@@ -87,6 +77,7 @@ class TestStockAccountOperatingUnit(common.TestStockCommon,
 
         # Create Product
         self.product = self.env.ref('product.product_product_7')
+        self.product.categ_id.property_stock_journal.write({'operating_unit_id': self.ou1.id})
         self.product.categ_id.write({
             'property_valuation': 'real_time',
             'property_stock_valuation_account_id': self.account_inventory.id,
@@ -139,13 +130,13 @@ class TestStockAccountOperatingUnit(common.TestStockCommon,
     def _create_picking(self, user_id, ou_id, picking_type,
                         src_loc_id, dest_loc_id):
         """Create a Picking."""
-        picking = self.picking_model.sudo(user_id).create({
+        picking = self.picking_model.with_user(user_id).create({
             'picking_type_id': picking_type.id,
             'location_id': src_loc_id.id,
             'location_dest_id': dest_loc_id.id,
             'operating_unit_id': ou_id.id,
         })
-        self.move_model.sudo(user_id).create({
+        self.move_model.with_user(user_id).create({
             'name': 'a move',
             'product_id': self.product.id,
             'product_uom_qty': 1.0,
@@ -162,7 +153,7 @@ class TestStockAccountOperatingUnit(common.TestStockCommon,
         """
         picking.action_confirm()
         picking.action_assign()
-        res = picking.sudo(user_id).button_validate()
+        res = picking.with_user(user_id).button_validate()
         validate_id = res['res_id']
         validate = self.env['stock.immediate.transfer'].browse(validate_id)
         validate.process()
@@ -249,6 +240,8 @@ class TestStockAccountOperatingUnit(common.TestStockCommon,
                                  self.b2c_type_in_id,
                                  self.supplier_location,
                                  self.location_b2c_id)
+        # As sharing same journal so updating operating unit
+        self.product.categ_id.property_stock_journal.write({'operating_unit_id': self.b2c.id})
 
         # Receive it
         self._confirm_receive(self.user2.id, self.picking)
