@@ -98,9 +98,8 @@ class StockLandedCost(models.Model):
                     product = line.move_id.product_id
                     if product.cost_method == 'average' and not float_is_zero(product.quantity_svl,
                                                                               precision_rounding=product.uom_id.rounding):
-                        product.with_context(
-                            force_company=self.company_id.id).sudo().standard_price += cost_to_add / \
-                                                                                       product.quantity_svl
+                        product.with_context(force_company=self.company_id.id).sudo().\
+                            standard_price += cost_to_add / product.quantity_svl
                     # `remaining_qty` is negative if the move is out and delivered proudcts that were not
                     # in stock.
                     qty_out = 0
@@ -115,8 +114,8 @@ class StockLandedCost(models.Model):
                 cost.write({'state': 'done', 'account_move_id': move.id})
                 move.post()
 
-                if cost.vendor_bill_id and cost.vendor_bill_id.state == 'posted' and \
-                        cost.company_id.anglo_saxon_accounting:
+                if (cost.vendor_bill_id and cost.vendor_bill_id.state == 'posted' and
+                        cost.company_id.anglo_saxon_accounting):
                     all_amls = cost.vendor_bill_id.line_ids | cost.account_move_id.line_ids
                     for product in cost.cost_lines.product_id:
                         accounts = product.product_tmpl_id.get_product_accounts()
