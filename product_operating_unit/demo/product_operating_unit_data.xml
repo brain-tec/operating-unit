@@ -1,0 +1,7 @@
+<odoo noupdate="1">
+    <record id="main_product_operating_unit" model="operating.unit">
+        <field name="name">Main Product Operating Unit</field>
+        <field name="code">OUMP</field>
+        <field name="partner_id" ref="base.main_partner"/>
+    </record>
+</odoo>
