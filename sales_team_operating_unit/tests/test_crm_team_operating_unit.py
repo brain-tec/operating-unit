@@ -2,10 +2,14 @@
 # Copyright 2017-TODAY Serpent Consulting Services Pvt. Ltd.
 #   (<http://www.serpentcs.com>)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
-from odoo.tests import common
+
+from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import \
+    OperatingUnitsTransactionCase
+from odoo.tests import tagged
 
 
-class TestSaleTeamOperatingUnit(common.TransactionCase):
+@tagged('post_install', '-at_install')
+class TestSaleTeamOperatingUnit(OperatingUnitsTransactionCase):
     def setUp(self):
         super(TestSaleTeamOperatingUnit, self).setUp()
         self.res_users_model = self.env["res.users"].with_context(

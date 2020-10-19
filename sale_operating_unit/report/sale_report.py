@@ -9,8 +9,8 @@ class SaleReport(models.Model):
 
     operating_unit_id = fields.Many2one("operating.unit", "Operating Unit")
 
-    def _query(self, with_clause="", fields=False, groupby="", from_clause=""):  # noqa
-        if not fields:
+    def _query(self, with_clause="", fields=None, groupby="", from_clause=""):  # noqa
+        if fields is None:
             fields = {}
         fields["operating_unit_id"] = ", s.operating_unit_id as operating_unit_id"
         groupby += ", s.operating_unit_id"

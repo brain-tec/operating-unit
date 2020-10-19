@@ -2,10 +2,13 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html)
 
 from odoo.exceptions import AccessError
-from odoo.tests import common
+from .OperatingUnitsTransactionCase import OperatingUnitsTransactionCase
+from odoo.tests import tagged
 
 
-class TestOperatingUnit(common.TransactionCase):
+@tagged('post_install', '-at_install')
+class TestOperatingUnit(OperatingUnitsTransactionCase):
+
     def setUp(self):
         super(TestOperatingUnit, self).setUp()
         self.res_users_model = self.env["res.users"].with_context(
@@ -31,22 +34,6 @@ class TestOperatingUnit(common.TransactionCase):
         self.user2 = self._create_user(
             "user_2", self.grp_ou_multi, self.company, self.b2c
         )
-
-    def _create_user(self, login, group, company, operating_units, context=None):
-        """ Create a user. """
-        user = self.res_users_model.create(
-            {
-                "name": "Test User",
-                "login": login,
-                "password": "demo",
-                "email": "test@yourcompany.com",
-                "company_id": company.id,
-                "company_ids": [(4, company.id)],
-                "operating_unit_ids": [(4, ou.id) for ou in operating_units],
-                "sel_groups_13_14": group.id,
-            }
-        )
-        return user
 
     def _create_operating_unit(self, uid, name, code):
         """ Create Operating Unit"""
