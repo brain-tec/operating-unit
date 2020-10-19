@@ -1,4 +1,4 @@
-# © 2017-TODAY Eficent Business and IT Consulting Services S.L.
+# © 2017-TODAY ForgeFlow S.L.
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html)
 
 from odoo.exceptions import AccessError
@@ -57,7 +57,13 @@ class TestOperatingUnit(OperatingUnitsTransactionCase):
             .search([])
             .mapped("code")
         )
-        nou = self.env["operating.unit"].search([])
+        nou = self.env["operating.unit"].search(
+            [
+                "|",
+                ("company_id", "=", False),
+                ("company_id", "in", self.user1.company_ids.ids),
+            ]
+        )
         self.assertEqual(
             len(operating_unit_list_1),
             len(nou),
