@@ -5,7 +5,7 @@
 {
     "name": "Operating Unit in Products",
     "summary": "Adds the concept of operating unit (OU) in products",
-    "version": "12.0.1.0.1",
+    "version": "12.0.1.0.3",
     "author": "brain-tec AG, "
               "Open Source Integrators, "
               "Serpent Consulting Services Pvt. Ltd.,"
@@ -14,6 +14,7 @@
     "category": "Product",
     "depends": [
         "product",
+        "stock",
         "operating_unit"
     ],
     "license": "LGPL-3",
@@ -22,4 +23,8 @@
         "views/product_template_view.xml",
         "views/product_category_view.xml",
     ],
+    "demo": [
+        "demo/product_operating_unit_data.xml",
+    ],
+    "installable": True,
 }

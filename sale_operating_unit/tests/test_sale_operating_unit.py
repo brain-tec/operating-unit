@@ -2,10 +2,14 @@
 # Jordi Ballester Alomar
 # © 2019 Serpent Consulting Services Pvt. Ltd. - Sudhir Arya
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
-from odoo.tests import common
+
+from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import \
+    OperatingUnitsTransactionCase
+from odoo.tests import tagged
 
 
-class TestSaleOperatingUnit(common.TransactionCase):
+@tagged('post_install', '-at_install')
+class TestSaleOperatingUnit(OperatingUnitsTransactionCase):
 
     def setUp(self):
         super(TestSaleOperatingUnit, self).setUp()
@@ -44,6 +48,30 @@ class TestSaleOperatingUnit(common.TransactionCase):
         self.product1 = self.env.ref(
             'product.product_product_7')
         self.product1.write({'invoice_policy': 'order'})
+        # We don't want to crash with the tests that check the
+        # operating units on the warehouses/pickings/etc, so we make sure
+        # we are not going to make a picking: we use for that a service.
+        # Because of the write() in stock/models/product.py, we set its
+        # qty_available to zero.
+        for location in self.env['stock.quant'].search([
+            ('product_id', '=', self.product1.id),
+            ('location_id.usage', 'in', ('internal', 'transit')),
+        ]).mapped('location_id'):
+            inventory = self.env['stock.inventory'].create({
+                'name': 'Sets available quantity for {} in {} to zero.'.format(
+                    self.product1.name, location.name),
+                'filter': 'product',
+                'product_id': self.product1.id,
+                'line_ids': [(0, 0, {
+                    'product_id': self.product1.id,
+                    'product_qty': 0,
+                    'location_id': location.id
+                })]
+            })
+            inventory.action_validate()
+        self.product1.write({
+            'type': 'service',
+        })
         # Create user1
         self.user1 = self._create_user('user_1', [self.grp_sale_user,
                                                   self.grp_acc_user],
@@ -67,21 +95,6 @@ class TestSaleOperatingUnit(common.TransactionCase):
         self.sale2 = self._create_sale_order(self.user2.id, self.customer,
                                              self.product1, self.pricelist,
                                              self.sale_team_b2c)
-
-    def _create_user(self, login, groups, company, operating_units):
-        """Create a user."""
-        group_ids = [group.id for group in groups]
-        user = self.res_users_model.create({
-            'name': 'Test Sales User',
-            'login': login,
-            'password': 'demo',
-            'email': 'example@yourcompany.com',
-            'company_id': company.id,
-            'company_ids': [(4, company.id)],
-            'operating_unit_ids': [(4, ou.id) for ou in operating_units],
-            'groups_id': [(6, 0, group_ids)]
-        })
-        return user
 
     def _create_sale_team(self, uid, operating_unit):
         """Create a sale team."""

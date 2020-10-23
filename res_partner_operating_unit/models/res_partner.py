@@ -12,7 +12,7 @@ class ResPartner(models.Model):
         if not uid2:
             uid2 = self._uid
         user = self.env['res.users'].browse(uid2)
-        return user.default_operating_unit_id
+        return user.operating_unit_default_id
 
     @api.model
     def _default_operating_unit(self):
