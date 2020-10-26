@@ -1,0 +1,13 @@
+
+git_repositories:
+  - repository: git@github.com:brain-tec/odoo.git
+    branch: 13.0
+    commitortag: 491890fba57f303f0adc653507b853b8eec76076
+  - repository: git@github.com:brain-tec/enterprise.git
+    branch: 13.0
+    commitortag: 914fe434d9a4396cd556473359997af0a6d9523d
+  - repository: git@github.com:brain-tec/operating-unit.git
+    branch: 13.0
+    mainrepo: True
+
+postgres: 12.4
