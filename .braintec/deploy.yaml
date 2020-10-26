@@ -9,4 +9,83 @@ git_repositories:
     branch: 12.0.project_MI_465
     mainrepo: True
 
+  - repository: git@github.com:brain-tec/contract.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/field-service.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/mis-builder.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/purchase-workflow.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/bank-payment.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/queue.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/sale-reporting.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/account-invoicing.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/account-closing.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/sale-workflow.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/account-analytic.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/account-invoice-reporting.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/geospatial.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/hr.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/partner-contact.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/stock-logistics-warehouse.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/web.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/management-system.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/reporting-engine.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/product-attribute.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/server-tools.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/server-ux.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/stock-logistics-workflow.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/account-payment.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/currency.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/timesheet.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/knowledge.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/project.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/crm.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/community-data-files.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/storage.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/connector.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/pos.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/server-env.git
+    branch: 12.0
+
+    # In OCA it is named delivery-carrier.
+  - repository: git@github.com:brain-tec/carrier-delivery.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/account-financial-tools.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/brand.git
+    branch: 12.0
+  - repository: git@github.com:brain-tec/stock-logistics-barcode.git
+    branch: 12.0
+
 postgres: 10.0
