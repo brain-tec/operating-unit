@@ -37,11 +37,9 @@ class SaleOrder(models.Model):
     @api.constrains("team_id", "operating_unit_id")
     def _check_team_operating_unit(self):
         for rec in self:
-            if (rec.team_id and
-                    rec.team_id.operating_unit_id != rec.operating_unit_id):
+            if rec.team_id and rec.team_id.operating_unit_id != rec.operating_unit_id:
                 if rec.team_id.operating_unit_id:
-                    team_operating_unit_name = \
-                        rec.team_id.operating_unit_id.name
+                    team_operating_unit_name = rec.team_id.operating_unit_id.name
                 else:
                     team_operating_unit_name = False
                 if rec.operating_unit_id:
@@ -49,11 +47,16 @@ class SaleOrder(models.Model):
                 else:
                     so_operating_unit_name = False
                 raise ValidationError(
-                    _('Configuration error. The Operating Unit {0} of the '
-                      'sales team {1} must match with that of the quote/sales'
-                      ' order {2}.'.format(team_operating_unit_name,
-                                           rec.team_id.name,
-                                           so_operating_unit_name)))
+                    _(
+                        "Configuration error. The Operating Unit {} of the "
+                        "sales team {} must match with that of the quote/sales"
+                        " order {}.".format(
+                            team_operating_unit_name,
+                            rec.team_id.name,
+                            so_operating_unit_name,
+                        )
+                    )
+                )
 
     @api.constrains("operating_unit_id", "company_id")
     def _check_company_operating_unit(self):
@@ -76,9 +79,12 @@ class SaleOrder(models.Model):
         invoice_vals = super(SaleOrder, self)._prepare_invoice()
         invoice_vals["operating_unit_id"] = self.operating_unit_id.id
 
-        new_invoice = self.env["account.move"].new({
-            "operating_unit_id": invoice_vals["operating_unit_id"],
-            "journal_id": invoice_vals["journal_id"]})
+        new_invoice = self.env["account.move"].new(
+            {
+                "operating_unit_id": invoice_vals["operating_unit_id"],
+                "journal_id": invoice_vals["journal_id"],
+            }
+        )
         new_invoice._onchange_operating_unit()
         invoice_vals["journal_id"] = new_invoice.journal_id.id
 

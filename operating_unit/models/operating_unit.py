@@ -57,10 +57,10 @@ class OperatingUnit(models.Model):
 
     @api.model
     def create(self, values):
-        if 'user_ids' in values:
-            values['user_ids'].extend([(4, self.env.user.id)])
+        if "user_ids" in values:
+            values["user_ids"].extend([(4, self.env.user.id)])
         else:
-            values['user_ids'] = [(4, self.env.user.id)]
+            values["user_ids"] = [(4, self.env.user.id)]
         res = super(OperatingUnit, self).create(values)
         self.clear_caches()
         return res
