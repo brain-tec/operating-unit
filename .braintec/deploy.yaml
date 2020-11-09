@@ -1,4 +1,3 @@
-
 git_repositories:
   - repository: git@github.com:brain-tec/odoo.git
     branch: 13.0

@@ -2,13 +2,15 @@
 # Copyright 2016-19 Serpent Consulting Services Pvt. Ltd.
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
-from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import \
-    OperatingUnitsTransactionCase
 from odoo.exceptions import ValidationError
 from odoo.tests import tagged
 
+from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
+    OperatingUnitsTransactionCase,
+)
 
-@tagged('post_install', '-at_install')
+
+@tagged("post_install", "-at_install")
 class TestHrExpenseOperatingUnit(OperatingUnitsTransactionCase):
     def setUp(self):
         super(TestHrExpenseOperatingUnit, self).setUp()
