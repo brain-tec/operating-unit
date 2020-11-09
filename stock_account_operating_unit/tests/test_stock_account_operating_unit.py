@@ -85,7 +85,8 @@ class TestStockAccountOperatingUnit(
         self.product = self._create_product()
         # self.product = self.env.ref('product.product_product_7')
         # self.product.write({'operating_unit_ids': [(4, self.ou1.id)]})
-        # self.product.categ_id.property_stock_journal.write({'operating_unit_id': self.ou1.id})
+        # self.product.categ_id.property_stock_journal.write(
+        #    {'operating_unit_id': self.ou1.id})
         # self.product.categ_id.write({
         #     'property_valuation': 'real_time',
         #     'property_stock_valuation_account_id': self.account_inventory.id,
