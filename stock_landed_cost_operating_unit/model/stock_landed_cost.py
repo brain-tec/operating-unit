@@ -54,7 +54,8 @@ class StockLandedCost(models.Model):
             if not all(cost.picking_ids for cost in self):
                 raise UserError(
                     _(
-                        "Please define the transfers on which those additional costs should apply."
+                        "Please define the transfers on which those additional"
+                        " costs should apply."
                     )
                 )
             cost_without_adjusment_lines = self.filtered(
@@ -65,7 +66,8 @@ class StockLandedCost(models.Model):
             if not self._check_sum():
                 raise UserError(
                     _(
-                        "Cost and adjustments lines do not match. You should maybe recompute the landed costs."
+                        "Cost and adjustments lines do not match. You should"
+                        " maybe recompute the landed costs."
                     )
                 )
 
@@ -120,7 +122,8 @@ class StockLandedCost(models.Model):
                         product.with_context(
                             force_company=self.company_id.id
                         ).sudo().standard_price += (cost_to_add / product.quantity_svl)
-                    # `remaining_qty` is negative if the move is out and delivered proudcts that were not
+                    # `remaining_qty` is negative if the move is out and
+                    # delivered products that were not
                     # in stock.
                     qty_out = 0
                     if line.move_id._is_in():
@@ -159,7 +162,7 @@ class StockLandedCost(models.Model):
         if origin != button_validate:
             LandedCost._patch_method("button_validate", button_validate)
             _logger.info(
-                "LandedCost.button_validate method" " patched to add operating unit!"
+                "LandedCost.button_validate method" " patched to add " "operating unit!"
             )
 
         return res
