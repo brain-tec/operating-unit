@@ -1,5 +1,3 @@
-import logging
-
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools.float_utils import float_is_zero
