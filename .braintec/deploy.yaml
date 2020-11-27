@@ -1,8 +1,10 @@
 git_repositories:
   - repository: git@github.com:brain-tec/odoo.git
     branch: 12.0
+    commitortag: c623809abde3d12273362eb2675e80299225e1d5
   - repository: git@github.com:brain-tec/enterprise.git
     branch: 12.0
+    commitortag: b5b0e85492f24c6f9b851bc275528e880cf74ede
   - repository: git@github.com:brain-tec/operating-unit.git
     branch: 12.0.project_MI_465
     mainrepo: True
