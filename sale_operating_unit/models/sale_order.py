@@ -21,6 +21,7 @@ class SaleOrder(models.Model):
         string="Operating Unit",
         default=_default_operating_unit,
         readonly=True,
+        index=True,
         states={"draft": [("readonly", False)], "sent": [("readonly", False)]},
     )
 
