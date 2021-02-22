@@ -13,7 +13,8 @@ class StockMove(models.Model):
         Override to add Operating Units to Picking.
         """
         values = super(StockMove, self)._get_new_picking_values()
-
-        values.update({"operating_unit_id": self.sale_line_id.operating_unit_id.id})
+        # Adding operating_unit_id as for 2 steps deliveries/receipts,
+        # one of the pickings is not associated to the sale line
+        values.update({"operating_unit_id": self.sale_line_id.operating_unit_id.id or self.operating_unit_id.id})
 
         return values
