@@ -99,8 +99,12 @@ class AccountMove(models.Model):
     def _onchange_operating_unit(self):
         if self.operating_unit_id and (
             not self.journal_id
-            # Hack by mojo2: added parenthesis and the first condition within the OR clause
-            or (self.journal_id.operating_unit_id and self.journal_id.operating_unit_id != self.operating_unit_id)
+            # Hack by mojo2: added parenthesis and the first condition within
+            # the OR clause
+            or (
+                self.journal_id.operating_unit_id
+                and self.journal_id.operating_unit_id != self.operating_unit_id
+            )
         ):
             journal = self.env["account.journal"].search(
                 [("type", "=", self.journal_id.type)]
