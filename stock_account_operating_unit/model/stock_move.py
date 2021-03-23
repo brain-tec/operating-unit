@@ -56,8 +56,16 @@ class StockMove(models.Model):
         res = super(StockMove, self)._prepare_account_move_line(
             qty, cost, credit_account_id, debit_account_id)
         if res:
-            debit_line_vals = res[1][2]
-            credit_line_vals = res[0][2]
+            # As lines were created from a dictionary returned by
+            # _generate_valuation_lines_data,
+            # not necessarily have to come in that order, so we need to
+            # assure choosing the right line for each debit and credit
+            if res[1][2]['debit'] != 0.0:
+                debit_line_vals = res[1][2]
+                credit_line_vals = res[0][2]
+            else:
+                debit_line_vals = res[0][2]
+                credit_line_vals = res[1][2]
 
             if (
                 self.operating_unit_id and self.operating_unit_dest_id and
