@@ -48,3 +48,22 @@ class ResPartner(models.Model):
                   ('operating_unit_ids', 'in', ou_ids),
                   ('operating_unit_ids', '=', False)]
         return super().search_count(domain + args)
+
+    @api.model
+    def create(self, vals):
+        res = super().create(vals)
+        user = self.env['res.users'].search([('partner_id', '=', res.id)])
+        if user:
+            user._check_partner_operating_unit()
+        return res
+
+    @api.multi
+    def write(self, vals):
+        res = super().write(vals)
+        for partner in self:
+            if vals.get('operating_unit_ids'):
+                user = self.env['res.users'].search(
+                    [('partner_id', '=', partner.id)])
+                if user:
+                    user._check_partner_operating_unit()
+        return res
