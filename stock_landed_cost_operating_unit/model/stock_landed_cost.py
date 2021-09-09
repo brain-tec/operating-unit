@@ -98,23 +98,6 @@ class StockLandedCost(models.Model):
                         remaining_qty / line.move_id.product_qty
                     ) * line.additional_landed_cost
 
-                    new_landed_cost_value = line.move_id.landed_cost_value + \
-                                            line.additional_landed_cost
-                    ##########################################################
-                    # hack by mara1 - Adding operating unit
-                    line.move_id.write({
-                        'landed_cost_value': new_landed_cost_value,
-                        'value': (line.move_id.value +
-                                  line.additional_landed_cost),
-                        'remaining_value': (line.move_id.remaining_value +
-                                            cost_to_add),
-                        'price_unit': ((line.move_id.value +
-                                        line.additional_landed_cost) /
-                                       line.move_id.product_qty),
-                        'operating_unit_id': cost.operating_unit_id.id,
-                    })
-                    ###########################################################
-
                     if not cost.company_id.currency_id.is_zero(cost_to_add):
                         valuation_layer = self.env["stock.valuation.layer"].create(
                             {
