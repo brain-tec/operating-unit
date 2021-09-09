@@ -5,13 +5,12 @@ from odoo.exceptions import UserError
 class StockRule(models.Model):
     _inherit = 'stock.rule'
 
-    def _prepare_purchase_order(self, product_id, product_qty, product_uom,
-                                origin, values, partner):
+    def _prepare_purchase_order(self, company_id, origins, values):
         res = super(StockRule, self). _prepare_purchase_order(
-            product_id, product_qty, product_uom, origin, values, partner)
-        if origin and 'SO' in origin:
+            company_id, origins, values)
+        if origins and len(origins) == 1 and 'SO' in list(origins)[0]:
             operating_unit = self.env['sale.order'].search(
-                [('name', '=', origin)]).warehouse_id.operating_unit_id
+                [('name', '=', list(origins)[0])]).warehouse_id.operating_unit_id
 
             res.update({
                 'operating_unit_id': operating_unit.id,
