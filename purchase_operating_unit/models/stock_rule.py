@@ -6,11 +6,12 @@ class StockRule(models.Model):
     _inherit = "stock.rule"
 
     def _prepare_purchase_order(self, company_id, origins, values):
-        res = super()._prepare_purchase_order(company_id, origins, values)
-        if origins and "SO" in origins:
+        res = super(StockRule, self)._prepare_purchase_order(
+            company_id, origins, values)
+        if origins and len(origins) == 1 and 'SO' in list(origins)[0]:
             operating_unit = (
                 self.env["sale.order"]
-                .search([("name", "=", origins)])
+                .search([('name', '=', list(origins)[0])])
                 .warehouse_id.operating_unit_id
             )
 
