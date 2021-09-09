@@ -97,6 +97,7 @@ class StockLandedCost(models.Model):
                     cost_to_add = (
                         remaining_qty / line.move_id.product_qty
                     ) * line.additional_landed_cost
+
                     if not cost.company_id.currency_id.is_zero(cost_to_add):
                         valuation_layer = self.env["stock.valuation.layer"].create(
                             {

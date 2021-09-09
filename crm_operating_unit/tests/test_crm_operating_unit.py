@@ -1,10 +1,16 @@
 # © 2015-19 ForgeFlow S.L. - Jordi Ballester Alomar
 # © 2015-17 Serpent Consulting Services Pvt. Ltd. - Sudhir Arya
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
-from odoo.tests import common
+
+from odoo.tests import tagged
+
+from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
+    OperatingUnitsTransactionCase,
+)
 
 
-class TestCrmOperatingUnit(common.TransactionCase):
+@tagged("post_install", "-at_install")
+class TestCrmOperatingUnit(OperatingUnitsTransactionCase):
     def setUp(self):
         super(TestCrmOperatingUnit, self).setUp()
         self.res_users_model = self.env["res.users"]
@@ -34,23 +40,6 @@ class TestCrmOperatingUnit(common.TransactionCase):
         # Create CRM Leads
         self.lead1 = self._create_crm_lead(self.user1.id, self.team1)
         self.lead2 = self._create_crm_lead(self.user2.id, self.team2)
-
-    def _create_user(self, login, groups, company, operating_units):
-        """ Create a user. """
-        group_ids = [group.id for group in groups]
-        user = self.res_users_model.create(
-            {
-                "name": login,
-                "login": login,
-                "password": "demo",
-                "email": "test@yourcompany.com",
-                "company_id": company.id,
-                "company_ids": [(4, company.id)],
-                "operating_unit_ids": [(4, ou.id) for ou in operating_units],
-                "groups_id": [(6, 0, group_ids)],
-            }
-        )
-        return user
 
     def _create_crm_team(self, uid, operating_unit):
         """Create a sale order."""
