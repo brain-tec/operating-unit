@@ -5,8 +5,9 @@
 
 from odoo.tests import tagged
 
-from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import \
-    OperatingUnitsTransactionCase
+from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
+    OperatingUnitsTransactionCase,
+)
 
 
 @tagged("post_install", "-at_install")

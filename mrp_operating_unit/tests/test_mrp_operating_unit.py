@@ -1,15 +1,16 @@
 # Copyright 2019 ForgeFlow S.L.
 # Copyright 2019 Serpent Consulting Services Pvt. Ltd.
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
-from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import \
-    OperatingUnitsTransactionCase
 from odoo.exceptions import ValidationError
 from odoo.tests import tagged
 
+from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
+    OperatingUnitsTransactionCase,
+)
 
-@tagged('post_install', '-at_install')
+
+@tagged("post_install", "-at_install")
 class TestMrpOperatingUnit(OperatingUnitsTransactionCase):
-
     def setUp(self):
         super(TestMrpOperatingUnit, self).setUp()
         self.res_users_model = self.env["res.users"]
