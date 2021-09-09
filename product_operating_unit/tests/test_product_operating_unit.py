@@ -3,12 +3,14 @@
 # Copyright (C) 2019 Serpent Consulting Services
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 from odoo.exceptions import ValidationError
-from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import \
-    OperatingUnitsTransactionCase
 from odoo.tests import tagged
 
+from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
+    OperatingUnitsTransactionCase,
+)
 
-@tagged('post_install', '-at_install')
+
+@tagged("post_install", "-at_install")
 class TestProductOperatingUnit(OperatingUnitsTransactionCase):
     def setUp(self):
         super(TestProductOperatingUnit, self).setUp()
@@ -38,7 +40,10 @@ class TestProductOperatingUnit(OperatingUnitsTransactionCase):
         self.product2.categ_id.operating_unit_ids = [(6, 0, [self.b2b.id])]
         self.product3.categ_id.operating_unit_ids = [(6, 0, [self.ou1.id, self.b2b.id])]
         self.testing_products_ids = [
-            self.product1.id, self.product2.id, self.product3.id]
+            self.product1.id,
+            self.product2.id,
+            self.product3.id,
+        ]
 
     def test_po_ou_onchange(self):
         with self.assertRaises(ValidationError):
@@ -50,8 +55,10 @@ class TestProductOperatingUnit(OperatingUnitsTransactionCase):
 
         # User 1 is only assigned to Operating Unit 1, and can see all
         # products having Operating Unit 1.
-        ou_domain = [("operating_unit_ids", "in", self.ou1.id),
-                     ('id', 'in', self.testing_products_ids)]
+        ou_domain = [
+            ("operating_unit_ids", "in", self.ou1.id),
+            ("id", "in", self.testing_products_ids),
+        ]
         product_ids = (
             self.ProductTemplate.with_user(self.user1_id).search(ou_domain).ids
         )
@@ -72,8 +79,10 @@ class TestProductOperatingUnit(OperatingUnitsTransactionCase):
 
         # User 2 is only assigned to Operating Unit 2, and can see all
         # products having Operating Unit b2b.
-        b2b_domain = [("operating_unit_ids", "in", self.b2b.id),
-                     ('id', 'in', self.testing_products_ids)]
+        b2b_domain = [
+            ("operating_unit_ids", "in", self.b2b.id),
+            ("id", "in", self.testing_products_ids),
+        ]
         product_ids = (
             self.ProductTemplate.with_user(self.user2_id).search(b2b_domain).ids
         )
