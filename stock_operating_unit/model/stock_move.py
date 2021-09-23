@@ -18,6 +18,7 @@ class StockMove(models.Model):
     operating_unit_dest_id = fields.Many2one(
         "operating.unit",
         compute="_compute_operating_unit_dest_id",
+        store=True,
         string="Dest. Location Operating Unit",
     )
 
