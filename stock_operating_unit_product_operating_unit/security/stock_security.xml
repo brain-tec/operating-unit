@@ -14,7 +14,10 @@
         <field eval="1" name="perm_read" />
         <field eval="1" name="perm_create" />
     </record>
-    <record id="stock_operating_unit.ir_rule_stock_quant_allowed_operating_units" model="ir.rule">
+    <record
+        id="stock_operating_unit.ir_rule_stock_quant_allowed_operating_units"
+        model="ir.rule"
+    >
         <field name="domain_force">['|',
             ('location_id.operating_unit_id', '=', False),
             ('location_id.operating_unit_id', 'in', user.operating_unit_ids.ids),
