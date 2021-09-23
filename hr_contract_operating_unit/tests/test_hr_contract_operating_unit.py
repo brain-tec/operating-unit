@@ -71,7 +71,7 @@ class TestHrContractOperatingUnit(common.TransactionCase):
 
     def _create_hr_contract(self, uid, operating_unit):
         """Creates a contract for an employee."""
-        contract = self.hr_contract_model.sudo(uid).create(
+        contract = self.hr_contract_model.with_user(uid).create(
             {
                 "name": "Sample Contract",
                 "operating_unit_id": operating_unit.id,
@@ -85,7 +85,7 @@ class TestHrContractOperatingUnit(common.TransactionCase):
         """Test Hr Contract Operating Unit"""
         # User 2 is only assigned to Operating Unit B2C, and cannot
         # Access Hr Contract records of Main Operating Unit.
-        record = self.hr_contract_model.sudo(self.user2.id).search(
+        record = self.hr_contract_model.with_user(self.user2.id).search(
             [("id", "=", self.hr_contract1.id), ("operating_unit_id", "=", self.ou1.id)]
         )
         self.assertEqual(
