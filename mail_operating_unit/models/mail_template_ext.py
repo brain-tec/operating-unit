@@ -9,6 +9,6 @@ from odoo import fields, models
 
 
 class MailTemplateExt(models.Model):
-    _inherit = 'mail.template'
+    _inherit = "mail.template"
 
-    operating_unit_id = fields.Many2one('operating.unit', 'Operating Unit')
+    operating_unit_id = fields.Many2one("operating.unit", "Operating Unit")
