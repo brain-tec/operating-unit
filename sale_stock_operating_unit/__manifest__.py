@@ -5,11 +5,9 @@
 
 {
     "name": "Operating Unit in Sales Stock",
-    "summary": "An operating unit (OU) is an organizational entity part of a "
-    "company",
+    "summary": "An operating unit (OU) is an organizational entity part of a company",
     "version": "13.0.1.0.0",
-    "author": "Eficent, Serpent Consulting Services Pvt. Ltd., "
-    "Odoo Community Association (OCA)",
+    "author": "Eficent, Serpent Consulting Services Pvt. Ltd., brain-tec AG, Odoo Community Association (OCA)",
     "license": "LGPL-3",
     "website": "https://github.com/OCA/operating-unit",
     "category": "Sales Management",
