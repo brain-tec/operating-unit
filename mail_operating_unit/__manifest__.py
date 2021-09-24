@@ -9,8 +9,7 @@
     "name": "Mail Operating Unit",
     "summary": "Adds the concept of operating unit (OU) according mail",
     "version": "13.0.1.0.0",
-    "author": "brain-tec AG, "
-              "Odoo Community Association (OCA)",
+    "author": "brain-tec AG, " "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/operating-unit",
     "category": "Purchase Management",
     "depends": ["operating_unit", "mail"],

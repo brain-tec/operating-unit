@@ -3,12 +3,11 @@
 
 {
     "name": "Stock and Product with Operating Units (Bridge)",
-    "summary": "Adds rules for lot and quant to deal with the concept of operating unit (OU) "
-               "in stock management and product",
+    "summary": "Adds rules for lot and quant to deal with the concept of "
+    "operating unit (OU) in stock management and product",
     "version": "13.0.1.0.0",
     "category": "Generic Modules/Sales & Purchases",
-    "author": "brain-tec AG, "
-    "Odoo Community Association (OCA)",
+    "author": "brain-tec AG, " "Odoo Community Association (OCA)",
     "license": "LGPL-3",
     "website": "https://github.com/OCA/operating-unit",
     "depends": ["stock_operating_unit", "product_operating_unit"],

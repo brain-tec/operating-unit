@@ -4,7 +4,6 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 import time
 
-from odoo.tests import tagged
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
@@ -12,7 +11,6 @@ from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
 )
 
 
-@tagged("post_install", "-at_install")
 class TestPurchaseOperatingUnit(OperatingUnitsTransactionCase):
     def setUp(self):
         super(TestPurchaseOperatingUnit, self).setUp()
