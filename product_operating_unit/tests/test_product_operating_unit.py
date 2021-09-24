@@ -3,14 +3,12 @@
 # Copyright (C) 2019 Serpent Consulting Services
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 from odoo.exceptions import ValidationError
-from odoo.tests import tagged
 
 from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
     OperatingUnitsTransactionCase,
 )
 
 
-@tagged("post_install", "-at_install")
 class TestProductOperatingUnit(OperatingUnitsTransactionCase):
     def setUp(self):
         super(TestProductOperatingUnit, self).setUp()
