@@ -2,7 +2,6 @@
 # - Jordi Ballester Alomar
 # © 2019 Serpent Consulting Services Pvt. Ltd. - Sudhir Arya
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
-from odoo.tests import tagged
 
 from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
     OperatingUnitsTransactionCase,
@@ -10,7 +9,6 @@ from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
 from odoo.addons.stock.tests import common
 
 
-@tagged("post_install", "-at_install")
 class TestStockAccountOperatingUnit(
     common.TestStockCommon, OperatingUnitsTransactionCase
 ):
@@ -82,21 +80,16 @@ class TestStockAccountOperatingUnit(
         )
 
         # Create Product
-        self.product = self._create_product()
-        # self.product = self.env.ref('product.product_product_7')
-        # self.product.write({'operating_unit_ids': [(4, self.ou1.id)]})
-        # self.product.categ_id.property_stock_journal.write(
-        #    {'operating_unit_id': self.ou1.id})
-        # self.product.categ_id.write({
-        #     'property_valuation': 'real_time',
-        #     'property_stock_valuation_account_id': self.account_inventory.id,
-        #     'property_stock_account_input_categ_id': self.account_grni.id,
-        #     'property_stock_account_output_categ_id': self.account_cogs_id,
-        # })
-        # self.product.write({
-        #     'list_price': 1.0,
-        #     'standard_price': 1.0
-        # })
+        self.product = self.env.ref("product.product_product_7")
+        self.product.categ_id.write(
+            {
+                "property_valuation": "real_time",
+                "property_stock_valuation_account_id": self.account_inventory.id,
+                "property_stock_account_input_categ_id": self.account_grni.id,
+                "property_stock_account_output_categ_id": self.account_cogs_id,
+            }
+        )
+        self.product.write({"list_price": 1.0, "standard_price": 1.0})
 
         # Create incoming stock picking type
         self.incoming_id = self.env.ref("stock.warehouse0").in_type_id

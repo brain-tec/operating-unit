@@ -4,11 +4,14 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 import time
 
-from odoo.tests import common
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
+from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
+    OperatingUnitsTransactionCase,
+)
 
-class TestPurchaseOperatingUnit(common.TransactionCase):
+
+class TestPurchaseOperatingUnit(OperatingUnitsTransactionCase):
     def setUp(self):
         super(TestPurchaseOperatingUnit, self).setUp()
         self.ResUsers = self.env["res.users"]
@@ -26,6 +29,7 @@ class TestPurchaseOperatingUnit(common.TransactionCase):
         self.ou1 = self.env.ref("operating_unit.main_operating_unit")
         # B2B Operating Unit
         self.b2b = self.env.ref("operating_unit.b2b_operating_unit")
+        self.b2b.company_id = self.company2
         # Partner
         self.partner1 = self.env.ref("base.res_partner_1")
         # Products
@@ -56,23 +60,6 @@ class TestPurchaseOperatingUnit(common.TransactionCase):
         )
         self.purchase1.with_user(self.user1_id).button_confirm()
         self.invoice = self._create_invoice(self.purchase1, self.partner1, self.account)
-
-    def _create_user(self, login, groups, company, operating_units):
-        """ Create a user."""
-        group_ids = [group.id for group in groups]
-        user = self.ResUsers.with_context({"no_reset_password": True}).create(
-            {
-                "name": "Chicago Purchase User",
-                "login": login,
-                "password": "demo",
-                "email": "chicago@yourcompany.com",
-                "company_id": company.id,
-                "company_ids": [(4, company.id)],
-                "operating_unit_ids": [(4, ou.id) for ou in operating_units],
-                "groups_id": [(6, 0, group_ids)],
-            }
-        )
-        return user.id
 
     def _create_purchase(self, user_id, line_products):
         """ Create a purchase order.
