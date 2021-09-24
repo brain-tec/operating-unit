@@ -2,7 +2,6 @@
 # - Jordi Ballester Alomar
 # © 2019 Serpent Consulting Services Pvt. Ltd. - Sudhir Arya
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
-from odoo.tests import tagged
 
 from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
     OperatingUnitsTransactionCase,
@@ -10,7 +9,6 @@ from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
 from odoo.addons.stock.tests import common
 
 
-@tagged("post_install", "-at_install")
 class TestStockAccountOperatingUnit(
     common.TestStockCommon, OperatingUnitsTransactionCase
 ):

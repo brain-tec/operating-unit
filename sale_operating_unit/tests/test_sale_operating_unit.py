@@ -3,14 +3,11 @@
 # © 2019 Serpent Consulting Services Pvt. Ltd. - Sudhir Arya
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo.tests import tagged
-
 from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
     OperatingUnitsTransactionCase,
 )
 
 
-@tagged("post_install", "-at_install")
 class TestSaleOperatingUnit(OperatingUnitsTransactionCase):
     def setUp(self):
         super(TestSaleOperatingUnit, self).setUp()
