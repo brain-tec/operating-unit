@@ -1,13 +1,11 @@
-# © 2019 ForgeFlow S.L.
-# © 2019 Serpent Consulting Services Pvt. Ltd.
 # © 2020 brain-tec group
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 
-class StockMove(models.Model):
-    _inherit = "stock.move"
+class StockMoveLine(models.Model):
+    _inherit = "stock.move.line"
 
     operating_unit_id = fields.Many2one(
         "operating.unit",
@@ -26,29 +24,29 @@ class StockMove(models.Model):
     @api.depends(
         "location_id",
         "location_id.operating_unit_id",
-        "picking_type_id",
-        "picking_type_id.warehouse_id",
-        "picking_type_id.warehouse_id.operating_unit_id",
+        "picking_id.picking_type_id",
+        "picking_id.picking_type_id.warehouse_id",
+        "picking_id.picking_type_id.warehouse_id.operating_unit_id",
     )
     def _compute_operating_unit_id(self):
         for rec in self:
             rec.operating_unit_id = (rec.location_id.operating_unit_id or
-                                     rec.picking_type_id.warehouse_id.operating_unit_id)
+                                     rec.picking_id.picking_type_id.warehouse_id.operating_unit_id)
 
     @api.depends(
         "location_id",
         "location_id.operating_unit_id",
-        "picking_type_id",
-        "picking_type_id.warehouse_id",
-        "picking_type_id.warehouse_id.operating_unit_id",
+        "picking_id.picking_type_id",
+        "picking_id.picking_type_id.warehouse_id",
+        "picking_id.picking_type_id.warehouse_id.operating_unit_id",
     )
     def _compute_operating_unit_dest_id(self):
         for rec in self:
             rec.operating_unit_dest_id = (rec.location_dest_id.operating_unit_id or
-                                          rec.picking_type_id.warehouse_id.operating_unit_id)
+                                          rec.picking_id.picking_type_id.warehouse_id.operating_unit_id)
 
     @api.constrains("picking_id", "location_id", "location_dest_id")
-    def _check_stock_move_operating_unit(self):
+    def _check_operating_units(self):
         for rec in self:
             ou_pick = rec.picking_id.operating_unit_id or False
             ou_src = rec.operating_unit_id or False
@@ -56,7 +54,7 @@ class StockMove(models.Model):
             if ou_src and ou_pick and (ou_src != ou_pick) and (ou_dest != ou_pick):
                 raise UserError(
                     _(
-                        "Configuration error. The Stock Moves must "
+                        "Configuration error. The Product Moves must "
                         "be related to locations (source and destination) "
                         "that belong to the requesting Operating Unit."
                     )
