@@ -8,5 +8,12 @@ git_repositories:
   - repository: git@github.com:brain-tec/operating-unit.git
     branch: 13.0
     mainrepo: True
-
+  - repository: git@github.com:brain-tec/account-financial-tools.git
+    branch: 13.0
+  - repository: git@github.com:brain-tec/mis-builder.git
+    branch: 13.0
+  - repository: git@github.com:brain-tec/reporting-engine.git
+    branch: 13.0
+  - repository: git@github.com:brain-tec/server-ux.git
+    branch: 13.0
 postgres: 12.4
