@@ -32,8 +32,10 @@ class StockMove(models.Model):
     )
     def _compute_operating_unit_id(self):
         for rec in self:
-            rec.operating_unit_id = (rec.location_id.operating_unit_id or
-                                     rec.picking_type_id.warehouse_id.operating_unit_id)
+            rec.operating_unit_id = (
+                rec.location_id.operating_unit_id
+                or rec.picking_type_id.warehouse_id.operating_unit_id
+            )
 
     @api.depends(
         "location_id",
@@ -44,8 +46,10 @@ class StockMove(models.Model):
     )
     def _compute_operating_unit_dest_id(self):
         for rec in self:
-            rec.operating_unit_dest_id = (rec.location_dest_id.operating_unit_id or
-                                          rec.picking_type_id.warehouse_id.operating_unit_id)
+            rec.operating_unit_dest_id = (
+                rec.location_dest_id.operating_unit_id
+                or rec.picking_type_id.warehouse_id.operating_unit_id
+            )
 
     @api.constrains("picking_id", "location_id", "location_dest_id")
     def _check_stock_move_operating_unit(self):
