@@ -75,7 +75,7 @@ class TestStockAccountOperatingUnit(
         )
         # Update company data
         cls.company.write(
-            {"inter_ou_clearing_account_id": cls.account_inter_ou_clearing.id,}
+            {"inter_ou_clearing_account_id": cls.account_inter_ou_clearing.id}
         )
 
         # Create Product
