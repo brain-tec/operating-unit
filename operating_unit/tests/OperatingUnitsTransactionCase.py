@@ -4,9 +4,10 @@
 from odoo.tests import common
 
 
-class OperatingUnitsTransactionCase(common.TransactionCase):
-    def setUp(self):
-        super(OperatingUnitsTransactionCase, self).setUp()
+class OperatingUnitsTransactionCase(common.SavepointCase):
+    @classmethod
+    def setUpClass(cls):
+        super(OperatingUnitsTransactionCase, cls).setUpClass()
 
     def _create_user(self, login, groups, company, operating_units):
         group_ids = [group.id for group in groups]
