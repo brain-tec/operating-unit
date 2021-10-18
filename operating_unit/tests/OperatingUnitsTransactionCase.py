@@ -9,11 +9,12 @@ class OperatingUnitsTransactionCase(common.SavepointCase):
     def setUpClass(cls):
         super(OperatingUnitsTransactionCase, cls).setUpClass()
 
-    def _create_user(self, login, groups, company, operating_units):
+    @classmethod
+    def _create_user(cls, login, groups, company, operating_units):
         group_ids = [group.id for group in groups]
         default_ou_id = False if not operating_units else operating_units[0].id
         user = (
-            self.env["res.users"]
+            cls.env["res.users"]
             .with_context({"no_reset_password": True})
             .create(
                 {
