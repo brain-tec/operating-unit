@@ -3,106 +3,106 @@
 # © 2019 Serpent Consulting Services Pvt. Ltd. - Sudhir Arya
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
+from odoo.tests import tagged
+
 from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
     OperatingUnitsTransactionCase,
 )
 from odoo.addons.stock.tests import common
 
 
+@tagged("post_install", "-at_install")
 class TestStockAccountOperatingUnit(
     common.TestStockCommon, OperatingUnitsTransactionCase
 ):
-    def setUp(self):
-        super(TestStockAccountOperatingUnit, self).setUp()
-        self.aml_model = self.env["account.move.line"]
-        self.account_model = self.env["account.account"]
-        self.product_model = self.env["product.product"]
-        self.product_cteg_model = self.env["product.category"]
-        self.move_model = self.env["stock.move"]
-        self.picking_model = self.env["stock.picking"]
+    @classmethod
+    def setUpClass(cls):
+        super(TestStockAccountOperatingUnit, cls).setUpClass()
+        cls.aml_model = cls.env["account.move.line"]
+        cls.account_model = cls.env["account.account"]
+        cls.product_model = cls.env["product.product"]
+        cls.product_cteg_model = cls.env["product.category"]
+        cls.move_model = cls.env["stock.move"]
+        cls.picking_model = cls.env["stock.picking"]
 
         # Company
-        self.company = self.env.ref("base.main_company")
-        self.group_stock_manager = self.env.ref("stock.group_stock_manager")
-        self.grp_acc_user = self.env.ref("account.group_account_invoice")
-        self.grp_stock_user = self.env.ref("stock.group_stock_user")
+        cls.company = cls.env.ref("base.main_company")
+        cls.group_stock_manager = cls.env.ref("stock.group_stock_manager")
+        cls.grp_acc_user = cls.env.ref("account.group_account_invoice")
+        cls.grp_stock_user = cls.env.ref("stock.group_stock_user")
         # Main Operating Unit
-        self.ou1 = self.env.ref("operating_unit.main_operating_unit")
+        cls.ou1 = cls.env.ref("operating_unit.main_operating_unit")
         # B2C Operating Unit
-        self.b2c = self.env.ref("operating_unit.b2c_operating_unit")
-        self.stock_location_stock = self.env.ref("stock.stock_location_stock")
-        self.supplier_location = self.env.ref("stock.stock_location_suppliers")
+        cls.b2c = cls.env.ref("operating_unit.b2c_operating_unit")
+        cls.stock_location_stock = cls.env.ref("stock.stock_location_stock")
+        cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
 
         # Create user1
-        self.user1 = self._create_user(
+        cls.user1 = cls._create_user(
             "stock_account_user_1",
-            [self.grp_stock_user, self.grp_acc_user, self.group_stock_manager],
-            self.company,
-            [self.ou1, self.b2c],
+            [cls.grp_stock_user, cls.grp_acc_user, cls.group_stock_manager],
+            cls.company,
+            [cls.ou1, cls.b2c],
         )
         # Create user2
-        self.user2 = self._create_user(
+        cls.user2 = cls._create_user(
             "stock_account_user_2",
-            [self.grp_stock_user, self.grp_acc_user, self.group_stock_manager],
-            self.company,
-            [self.b2c],
+            [cls.grp_stock_user, cls.grp_acc_user, cls.group_stock_manager],
+            cls.company,
+            [cls.b2c],
         )
         # Create account for Goods Received Not Invoiced
         name = "Goods Received Not Invoiced"
         code = "grni"
-        acc_type = self.env.ref("account.data_account_type_equity")
-        self.account_grni = self._create_account(acc_type, name, code, self.company)
+        acc_type = cls.env.ref("account.data_account_type_equity")
+        cls.account_grni = cls._create_account(acc_type, name, code, cls.company)
         # Create account for Cost of Goods Sold
         name = "Cost of Goods Sold"
         code = "cogs"
-        acc_type = self.env.ref("account.data_account_type_expenses")
-        self.account_cogs_id = self._create_account(acc_type, name, code, self.company)
+        acc_type = cls.env.ref("account.data_account_type_expenses")
+        cls.account_cogs_id = cls._create_account(acc_type, name, code, cls.company)
         # Create account for Inventory
         name = "Inventory"
         code = "inventory"
-        acc_type = self.env.ref("account.data_account_type_fixed_assets")
-        self.account_inventory = self._create_account(
-            acc_type, name, code, self.company
-        )
+        acc_type = cls.env.ref("account.data_account_type_fixed_assets")
+        cls.account_inventory = cls._create_account(acc_type, name, code, cls.company)
         # Create account for Inter-OU Clearing
         name = "Inter-OU Clearing"
         code = "inter_ou"
-        acc_type = self.env.ref("account.data_account_type_equity")
-        self.account_inter_ou_clearing = self._create_account(
-            acc_type, name, code, self.company
+        acc_type = cls.env.ref("account.data_account_type_equity")
+        cls.account_inter_ou_clearing = cls._create_account(
+            acc_type, name, code, cls.company
         )
         # Update company data
-        self.company.write(
-            {
-                "inter_ou_clearing_account_id": self.account_inter_ou_clearing.id,
-                "ou_is_self_balanced": True,
-            }
+        cls.company.write(
+            {"inter_ou_clearing_account_id": cls.account_inter_ou_clearing.id,}
         )
 
         # Create Product
-        self.product = self.env.ref("product.product_product_7")
-        self.product.categ_id.write(
+        cls.product = cls.env.ref("product.product_product_7")
+        cls.product.categ_id.write(
             {
                 "property_valuation": "real_time",
-                "property_stock_valuation_account_id": self.account_inventory.id,
-                "property_stock_account_input_categ_id": self.account_grni.id,
-                "property_stock_account_output_categ_id": self.account_cogs_id,
+                "property_stock_valuation_account_id": cls.account_inventory.id,
+                "property_stock_account_input_categ_id": cls.account_grni.id,
+                "property_stock_account_output_categ_id": cls.account_cogs_id,
             }
         )
-        self.product.write({"list_price": 1.0, "standard_price": 1.0})
+        cls.product.write({"list_price": 1.0, "standard_price": 1.0})
 
         # Create incoming stock picking type
-        self.incoming_id = self.env.ref("stock.warehouse0").in_type_id
+        cls.incoming_id = cls.env.ref("stock.warehouse0").in_type_id
         # Create incoming and internal stock picking types
-        b2c_wh = self.env.ref("stock_operating_unit.stock_warehouse_b2c")
-        b2c_wh.lot_stock_id.write({"operating_unit_id": self.b2c.id})
-        self.location_b2c_id = b2c_wh.lot_stock_id
-        self.b2c_type_in_id = b2c_wh.in_type_id
-        self.b2c_type_int_id = b2c_wh.int_type_id
+        b2c_wh = cls.env.ref("stock_operating_unit.stock_warehouse_b2c")
+        b2c_wh.lot_stock_id.write({"operating_unit_id": cls.b2c.id})
+        cls.location_b2c_id = b2c_wh.lot_stock_id
+        cls.b2c_type_in_id = b2c_wh.in_type_id
+        cls.b2c_type_int_id = b2c_wh.int_type_id
 
-    def _create_account(self, acc_type, name, code, company):
+    @classmethod
+    def _create_account(cls, acc_type, name, code, company):
         """Create an account."""
-        account = self.account_model.create(
+        account = cls.account_model.create(
             {
                 "name": name,
                 "code": code,
