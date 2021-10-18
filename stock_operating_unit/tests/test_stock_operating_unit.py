@@ -6,8 +6,10 @@ from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
     OperatingUnitsTransactionCase,
 )
 from odoo.addons.stock.tests import common
+from odoo.tests import tagged
 
 
+@tagged('post_install', '-at_install')
 class TestStockOperatingUnit(common.TestStockCommon, OperatingUnitsTransactionCase):
     def setUp(self):
         super(TestStockOperatingUnit, self).setUp()
