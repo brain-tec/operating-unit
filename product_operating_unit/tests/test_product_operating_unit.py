@@ -48,9 +48,7 @@ class TestProductOperatingUnit(OperatingUnitsTransactionCase):
 
         # User 1 is only assigned to Operating Unit 1, and can see all
         # products having Operating Unit 1.
-        ou_domain = [
-            ("operating_unit_ids", "in", self.ou1.id)
-        ]
+        ou_domain = [("operating_unit_ids", "in", self.ou1.id)]
         product_ids = (
             self.ProductTemplate.with_user(self.user1_id).search(ou_domain).ids
         )
@@ -71,9 +69,7 @@ class TestProductOperatingUnit(OperatingUnitsTransactionCase):
 
         # User 2 is only assigned to Operating Unit 2, and can see all
         # products having Operating Unit b2b.
-        b2b_domain = [
-            ("operating_unit_ids", "in", self.b2b.id)
-        ]
+        b2b_domain = [("operating_unit_ids", "in", self.b2b.id)]
         product_ids = (
             self.ProductTemplate.with_user(self.user2_id).search(b2b_domain).ids
         )
