@@ -28,8 +28,10 @@ class SaleOrder(models.Model):
     def onchange_team_id(self):
         super(SaleOrder, self).onchange_team_id()
         if (
-            self.team_id and self.team_id.operating_unit_id
-            and self.team_id.operating_unit_id.id != self.warehouse_id.operating_unit_id.id
+            self.team_id
+            and self.team_id.operating_unit_id
+            and self.team_id.operating_unit_id.id
+            != self.warehouse_id.operating_unit_id.id
         ):
             warehouses = self.env["stock.warehouse"].search(
                 [("operating_unit_id", "=", self.team_id.operating_unit_id.id)], limit=1
@@ -39,7 +41,10 @@ class SaleOrder(models.Model):
 
     @api.onchange("operating_unit_id")
     def onchange_operating_unit_id(self):
-        if self.operating_unit_id and self.operating_unit_id.id != self.warehouse_id.operating_unit_id.id:
+        if (
+            self.operating_unit_id
+            and self.operating_unit_id.id != self.warehouse_id.operating_unit_id.id
+        ):
             warehouses = self.env["stock.warehouse"].search(
                 [("operating_unit_id", "=", self.operating_unit_id.id)], limit=1
             )
@@ -50,7 +55,10 @@ class SaleOrder(models.Model):
     def onchange_warehouse_id(self):
         if self.warehouse_id:
             self.operating_unit_id = self.warehouse_id.operating_unit_id
-            if self.team_id and self.team_id.operating_unit_id != self.operating_unit_id:
+            if (
+                self.team_id
+                and self.team_id.operating_unit_id != self.operating_unit_id
+            ):
                 self.team_id = False
 
     @api.constrains("operating_unit_id", "warehouse_id")
