@@ -111,3 +111,13 @@ class HrExpenseSheet(models.Model):
                 the Expense and in the Operating Unit must be the same"""
                     )
                 )
+
+    @api.model
+    def create(self, vals):
+        lines = vals.get("expense_line_ids", False)
+        if lines and lines[0][0] == 6:
+            hr_expenses = self.env["hr.expense"].browse(lines[0][2])
+            operating_unit = hr_expenses.mapped("operating_unit_id")
+            if len(operating_unit) == 1:
+                vals["operating_unit_id"] = operating_unit.id
+        return super(HrExpenseSheet, self).create(vals)

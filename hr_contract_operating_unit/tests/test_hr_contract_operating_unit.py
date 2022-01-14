@@ -4,10 +4,12 @@
 #   (<http://www.serpentcs.com>)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
-from odoo.tests import common
+from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
+    OperatingUnitsTransactionCase,
+)
 
 
-class TestHrContractOperatingUnit(common.TransactionCase):
+class TestHrContractOperatingUnit(OperatingUnitsTransactionCase):
     def setUp(self):
         super(TestHrContractOperatingUnit, self).setUp()
 
@@ -47,23 +49,6 @@ class TestHrContractOperatingUnit(common.TransactionCase):
         self.hr_contract1 = self._create_hr_contract(self.user1, self.ou1)
         self.hr_contract2 = self._create_hr_contract(self.user2, self.b2c)
 
-    def _create_user(self, login, groups, company, operating_units, context=None):
-        """Creates a user."""
-        group_ids = [group.id for group in groups]
-        user = self.res_users_model.create(
-            {
-                "name": "Test HR Contract User",
-                "login": login,
-                "password": "demo",
-                "email": "example@yourcompany.com",
-                "company_id": company.id,
-                "company_ids": [(4, company.id)],
-                "operating_unit_ids": [(4, ou.id) for ou in operating_units],
-                "groups_id": [(6, 0, group_ids)],
-            }
-        )
-        return user
-
     def _create_hr_employee(self):
         """Creates an employee."""
         emp = self.hr_employee_model.create({"name": "Test Employee"})
@@ -71,7 +56,7 @@ class TestHrContractOperatingUnit(common.TransactionCase):
 
     def _create_hr_contract(self, uid, operating_unit):
         """Creates a contract for an employee."""
-        contract = self.hr_contract_model.sudo(uid).create(
+        contract = self.hr_contract_model.with_user(uid).create(
             {
                 "name": "Sample Contract",
                 "operating_unit_id": operating_unit.id,
@@ -85,7 +70,7 @@ class TestHrContractOperatingUnit(common.TransactionCase):
         """Test Hr Contract Operating Unit"""
         # User 2 is only assigned to Operating Unit B2C, and cannot
         # Access Hr Contract records of Main Operating Unit.
-        record = self.hr_contract_model.sudo(self.user2.id).search(
+        record = self.hr_contract_model.with_user(self.user2.id).search(
             [("id", "=", self.hr_contract1.id), ("operating_unit_id", "=", self.ou1.id)]
         )
         self.assertEqual(
