@@ -113,7 +113,7 @@ class StockMove(models.Model):
         a transit location or is outside of the company or the source or
         destination locations belong to different operating units.
         """
-        res = super(StockMove, self)._action_done(cancel_backorder=cancel_backorder)
+        res = super(StockMove, self)._action_done(cancel_backorder)
         for move in self:
 
             if move.product_id.valuation == "real_time":
