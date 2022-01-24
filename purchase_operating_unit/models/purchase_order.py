@@ -95,9 +95,11 @@ class PurchaseOrder(models.Model):
 
     @api.onchange('picking_type_id')
     def _onchange_picking_type_id(self):
-        super()._onchange_picking_type_id()
-        self.operating_unit_id = self.picking_type_id.warehouse_id.operating_unit_id
-        self.requesting_operating_unit_id = self.picking_type_id.warehouse_id.operating_unit_id
+        res = super()._onchange_picking_type_id()
+        if self.picking_type_id:
+            if self.picking_type_id.warehouse_id.operating_unit_id.id != self.operating_unit_id.id:
+                self.operating_unit_id = self.picking_type_id.warehouse_id.operating_unit_id
+        return res
 
     @api.onchange("operating_unit_id")
     def _onchange_operating_unit_id(self):
