@@ -20,9 +20,6 @@ class PurchaseOrder(models.Model):
                 ("warehouse_id.operating_unit_id", "=", operating_unit.id),
             ]
         )
-        types = type_obj.search([('code', '=', 'incoming'),
-                                 ('warehouse_id.operating_unit_id', '=',
-                                  operating_unit.id)])
         if types:
             res = types[:1].id
         return res
@@ -96,33 +93,55 @@ class PurchaseOrder(models.Model):
                     )
                 )
 
-    @api.onchange('picking_type_id')
+    @api.onchange("picking_type_id")
     def _onchange_picking_type_id(self):
-        super()._onchange_picking_type_id()
-        self.operating_unit_id = self.picking_type_id.warehouse_id.operating_unit_id
-        self.requesting_operating_unit_id = self.picking_type_id.warehouse_id.operating_unit_id
+        res = super()._onchange_picking_type_id()
+        if self.picking_type_id:
+            if (
+                self.picking_type_id.warehouse_id.operating_unit_id.id
+                != self.operating_unit_id.id
+            ):
+                self.operating_unit_id = (
+                    self.picking_type_id.warehouse_id.operating_unit_id
+                )
+        return res
 
     @api.onchange("operating_unit_id")
     def _onchange_operating_unit_id(self):
         type_obj = self.env["stock.picking.type"]
         if self.operating_unit_id:
-            if ((self.picking_type_id and
-                self.picking_type_id.code != "incoming" or
-                self.picking_type_id.warehouse_id.operating_unit_id.id
-                != self.operating_unit_id.id) or
-                not self.picking_type_id):
+            if (
+                self.picking_type_id
+                and self.picking_type_id.code != "incoming"
+                or self.picking_type_id.warehouse_id.operating_unit_id.id
+                != self.operating_unit_id.id
+            ) or not self.picking_type_id:
 
                 types = type_obj.search(
-                    [("code", "=", "incoming"),
-                     ("warehouse_id.operating_unit_id", "=",
-                      self.operating_unit_id.id)])
+                    [
+                        ("code", "=", "incoming"),
+                        (
+                            "warehouse_id.operating_unit_id",
+                            "=",
+                            self.operating_unit_id.id,
+                        ),
+                    ]
+                )
                 if types:
                     self.picking_type_id = types[:1]
                 else:
                     raise UserError(
-                        _("No Warehouse found with the Operating Unit "
-                          "indicated in the Purchase Order")
+                        _(
+                            "No Warehouse found with the Operating Unit "
+                            "indicated in the Purchase Order"
+                        )
                     )
+
+    @api.model
+    def _prepare_picking(self):
+        picking_vals = super(PurchaseOrder, self)._prepare_picking()
+        picking_vals["operating_unit_id"] = self.operating_unit_id.id
+        return picking_vals
 
     def _prepare_invoice(self):
         invoice_vals = super()._prepare_invoice()
