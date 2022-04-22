@@ -1,8 +1,9 @@
 
-[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/operating-unit&target_branch=14.0)
-[![Build Status](https://travis-ci.com/OCA/operating-unit.svg?branch=14.0)](https://travis-ci.com/OCA/operating-unit)
-[![codecov](https://codecov.io/gh/OCA/operating-unit/branch/14.0/graph/badge.svg)](https://codecov.io/gh/OCA/operating-unit)
-[![Translation Status](https://translation.odoo-community.org/widgets/operating-unit-14-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/operating-unit-14-0/?utm_source=widget)
+<!-- /!\ Non OCA Context : Set here the badge of your runbot / runboat instance. -->
+[![Pre-commit Status](https://github.com/https://github.com/OCA/operating-unit/operating-unit/actions/workflows/pre-commit.yml/badge.svg?branch=14.0)](https://github.com/https://github.com/OCA/operating-unit/operating-unit/actions/workflows/pre-commit.yml?query=branch%3A14.0)
+[![Build Status](https://github.com/https://github.com/OCA/operating-unit/operating-unit/actions/workflows/test.yml/badge.svg?branch=14.0)](https://github.com/https://github.com/OCA/operating-unit/operating-unit/actions/workflows/test.yml?query=branch%3A14.0)
+[![codecov](https://codecov.io/gh/https://github.com/OCA/operating-unit/operating-unit/branch/14.0/graph/badge.svg)](https://codecov.io/gh/https://github.com/OCA/operating-unit/operating-unit)
+<!-- /!\ Non OCA Context : Set here the badge of your translation instance. -->
 
 <!-- /!\ do not modify above this line -->
 
@@ -23,7 +24,7 @@ addon | version | maintainers | summary
 [account_asset_operating_unit](account_asset_operating_unit/) | 14.0.1.0.1 | [![ps-tubtim](https://github.com/ps-tubtim.png?size=30px)](https://github.com/ps-tubtim) | This module adds operating unit information to assets.
 [account_asset_operating_unit_access_all](account_asset_operating_unit_access_all/) | 14.0.1.0.0 | [![ps-tubtim](https://github.com/ps-tubtim.png?size=30px)](https://github.com/ps-tubtim) | Access all OUs' Assets
 [account_financial_report_operating_unit](account_financial_report_operating_unit/) | 14.0.1.0.0 |  | Introduces Operating Unit (OU) in financial reports
-[account_operating_unit](account_operating_unit/) | 14.0.1.0.0 |  | Introduces Operating Unit (OU) in invoices and Accounting Entries with clearing account
+[account_operating_unit](account_operating_unit/) | 14.0.1.0.1 |  | Introduces Operating Unit (OU) in invoices and Accounting Entries with clearing account
 [agreement_operating_unit](agreement_operating_unit/) | 14.0.1.0.0 | [![max3903](https://github.com/max3903.png?size=30px)](https://github.com/max3903) | This module adds operating unit information to agreements and service profiles.
 [analytic_operating_unit](analytic_operating_unit/) | 14.0.1.0.0 |  | Analytic Operating Unit
 [analytic_operating_unit_access_all](analytic_operating_unit_access_all/) | 14.0.1.0.0 | [![kittiu](https://github.com/kittiu.png?size=30px)](https://github.com/kittiu) | Access all OUs' Analytics
@@ -61,6 +62,4 @@ policy. Consult each module's `__manifest__.py` file, which contains a `license`
 that explains its license.
 
 ----
-OCA, or the [Odoo Community Association](http://odoo-community.org/), is a nonprofit
-organization whose mission is to support the collaborative development of Odoo features
-and promote its widespread use.
+<!-- /!\ Non OCA Context : Set here the full description of your organization. -->
