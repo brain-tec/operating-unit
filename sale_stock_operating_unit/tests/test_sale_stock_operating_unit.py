@@ -92,6 +92,7 @@ class TestSaleStockOperatingUnit(common.TestStockCommon):
             }
         )
         return user
+
     def _create_sale_team(self, uid, operating_unit):
         """Create a sale team."""
         team = (
