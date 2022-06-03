@@ -3,12 +3,10 @@
 # Copyright 2015-19 Serpent Consulting Services Pvt. Ltd. - Sudhir Arya
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
-from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
-    OperatingUnitsTransactionCase,
-)
+from odoo.addons.stock.tests import common
 
 
-class TestSaleStockOperatingUnit(OperatingUnitsTransactionCase):
+class TestSaleStockOperatingUnit(common.TestStockCommon):
     def setUp(self):
         super(TestSaleStockOperatingUnit, self).setUp()
         self.res_groups = self.env["res.groups"]
@@ -78,6 +76,22 @@ class TestSaleStockOperatingUnit(OperatingUnitsTransactionCase):
             self.b2c_wh,
         )
 
+    def _create_user(self, login, groups, company, operating_units):
+        """Create a user."""
+        group_ids = [group.id for group in groups]
+        user = self.res_users_model.with_context(**{"no_reset_password": True}).create(
+            {
+                "name": "Sale Stock User",
+                "login": login,
+                "password": "demo",
+                "email": "chicago@yourcompany.com",
+                "company_id": company.id,
+                "company_ids": [(4, company.id)],
+                "operating_unit_ids": [(4, ou.id) for ou in operating_units],
+                "groups_id": [(6, 0, group_ids)],
+            }
+        )
+        return user
     def _create_sale_team(self, uid, operating_unit):
         """Create a sale team."""
         team = (
