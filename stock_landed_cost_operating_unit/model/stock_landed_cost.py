@@ -37,7 +37,7 @@ class StockLandedCost(models.Model):
             item.show_operating_unit = len(self.env.user.operating_unit_ids) > 1
 
     def _register_hook(self):
-        """ MonkeyPatch method only when module is installed on the DB.
+        """MonkeyPatch method only when module is installed on the DB.
         The patched method is a copy of standard name_get adding name2.
         The original function pointer to name_get is stored in 'origin'
         attribute.
