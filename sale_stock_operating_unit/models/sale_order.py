@@ -26,7 +26,7 @@ class SaleOrder(models.Model):
 
     @api.onchange("team_id")
     def onchange_team_id(self):
-        super(SaleOrder, self).onchange_team_id()
+        res = super(SaleOrder, self).onchange_team_id()
         if (
             self.team_id
             and self.team_id.operating_unit_id
@@ -38,6 +38,8 @@ class SaleOrder(models.Model):
             )
             if warehouses:
                 self.warehouse_id = warehouses[0]
+
+        return res
 
     @api.onchange("operating_unit_id")
     def onchange_operating_unit_id(self):
