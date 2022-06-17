@@ -177,8 +177,8 @@ class TestStockAccountOperatingUnit(TestStockCommon):
         picking.action_assign()
         res = picking.with_user(user_id).button_validate()
         wiz = Form(
-            self.env[res['res_model']].with_context(res['context']),
-            view=self.env.ref('stock.view_immediate_transfer')
+            self.env[res["res_model"]].with_context(**res["context"]),
+            view=self.env.ref("stock.view_immediate_transfer"),
         ).save()
         wiz.process()
 
