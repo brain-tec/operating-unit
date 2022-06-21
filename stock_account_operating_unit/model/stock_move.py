@@ -2,7 +2,7 @@
 # - Jordi Ballester Alomar
 # © 2019 Serpent Consulting Services Pvt. Ltd. - Sudhir Arya
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
-from odoo import _, exceptions, models
+from odoo import _, api, exceptions, models
 
 
 class StockMove(models.Model):
@@ -71,6 +71,40 @@ class StockMove(models.Model):
             return rslt
         return res
 
+    @api.model
+    def _prepare_account_move_line(
+        self, qty, cost, credit_account_id, debit_account_id, description
+    ):
+        res = super(StockMove, self)._prepare_account_move_line(
+            qty, cost, credit_account_id, debit_account_id, description
+        )
+        if res:
+            debit_line_vals = res[1][2]
+            credit_line_vals = res[0][2]
+
+            if (
+                self.operating_unit_id
+                and self.operating_unit_dest_id
+                and self.operating_unit_id != self.operating_unit_dest_id
+                and debit_line_vals["account_id"] != credit_line_vals["account_id"]
+            ):
+                raise exceptions.UserError(
+                    _(
+                        "You cannot create stock moves involving separate source"
+                        " and destination accounts related to different "
+                        "operating units."
+                    )
+                )
+
+            debit_line_vals["operating_unit_id"] = (
+                self.operating_unit_dest_id.id or self.operating_unit_id.id
+            )
+            credit_line_vals["operating_unit_id"] = (
+                self.operating_unit_id.id or self.operating_unit_dest_id.id
+            )
+            return [(0, 0, debit_line_vals), (0, 0, credit_line_vals)]
+        return res
+
     def _action_done(self, cancel_backorder=False):
         """
         Generate accounting moves if the product being moved is subject
@@ -88,6 +122,8 @@ class StockMove(models.Model):
                 if (
                     move.location_id.company_id
                     and move.location_id.company_id == move.location_dest_id.company_id
+                    and move.operating_unit_id
+                    and move.operating_unit_dest_id
                     and move.operating_unit_id != move.operating_unit_dest_id
                 ):
                     (
@@ -102,7 +138,7 @@ class StockMove(models.Model):
                         move.product_id.standard_price,
                         acc_valuation,
                         acc_valuation,
-                        _("%s - OU Move") % move.product_id.display_name,
+                        move.name,
                     )
                     am = (
                         self.env["account.move"]

@@ -118,7 +118,7 @@ class TestStockAccountOperatingUnit(TestStockCommon):
             {
                 "name": name,
                 "code": code,
-                "user_type_id": acc_type.id,
+                "user_type_id": acc_type.ids and acc_type.ids[0],
                 "company_id": company.id,
             }
         )
@@ -282,6 +282,10 @@ class TestStockAccountOperatingUnit(TestStockCommon):
             self.b2c_type_in_id,
             self.supplier_location,
             self.location_b2c_id,
+        )
+        # As sharing same journal so updating operating unit
+        self.product.categ_id.property_stock_journal.write(
+            {"operating_unit_id": self.b2c.id}
         )
 
         # Receive it
