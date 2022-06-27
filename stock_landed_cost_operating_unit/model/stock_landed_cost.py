@@ -3,8 +3,10 @@ from odoo.exceptions import UserError
 from odoo.tools.float_utils import float_is_zero
 
 from odoo.addons.stock_landed_costs.models.stock_landed_cost import (
-    LandedCost as LandedCost,
+    StockLandedCost as LandedCost,
 )
+
+import logging
 
 _logger = logging.getLogger(__name__)
 

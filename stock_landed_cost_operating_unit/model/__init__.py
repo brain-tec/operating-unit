@@ -1,7 +1,7 @@
 from . import stock_landed_cost
 
 from odoo.addons.stock_landed_costs.models.stock_landed_cost import (
-    LandedCost as LandedCost,
+    StockLandedCost as LandedCost,
 )
 
 
