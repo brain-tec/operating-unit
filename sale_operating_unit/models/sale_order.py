@@ -51,11 +51,11 @@ class SaleOrder(models.Model):
                     _(
                         "Configuration error. The Operating Unit {} of the "
                         "sales team {} must match with that of the quote/sales"
-                        " order {}.".format(
-                            team_operating_unit_name,
-                            rec.team_id.name,
-                            so_operating_unit_name,
-                        )
+                        " order {}."
+                    ).format(
+                        team_operating_unit_name,
+                        rec.team_id.name,
+                        so_operating_unit_name,
                     )
                 )
 

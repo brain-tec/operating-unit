@@ -1,3 +1,5 @@
+import logging
+
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools.float_utils import float_is_zero
@@ -5,8 +7,6 @@ from odoo.tools.float_utils import float_is_zero
 from odoo.addons.stock_landed_costs.models.stock_landed_cost import (
     StockLandedCost as LandedCost,
 )
-
-import logging
 
 _logger = logging.getLogger(__name__)
 
@@ -37,7 +37,7 @@ class StockLandedCost(models.Model):
             item.show_operating_unit = len(self.env.user.operating_unit_ids) > 1
 
     def _register_hook(self):
-        """ MonkeyPatch method only when module is installed on the DB.
+        """MonkeyPatch method only when module is installed on the DB.
         The patched method is a copy of standard name_get adding name2.
         The original function pointer to name_get is stored in 'origin'
         attribute.

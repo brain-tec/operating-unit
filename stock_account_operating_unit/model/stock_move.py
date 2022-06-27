@@ -2,7 +2,7 @@
 # - Jordi Ballester Alomar
 # © 2019 Serpent Consulting Services Pvt. Ltd. - Sudhir Arya
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
-from odoo import _, exceptions, models
+from odoo import _, api, exceptions, models
 
 
 class StockMove(models.Model):
