@@ -73,8 +73,8 @@ class MrpProduction(models.Model):
             self.picking_type_id = picking_type_id
 
     @api.onchange("picking_type_id")
-    def onchange_picking_type(self):
-        res = super(MrpProduction, self).onchange_picking_type()
+    def _onchange_picking_type(self):
+        res = super(MrpProduction, self)._onchange_picking_type()
 
         picking_type_operating_unit = (
             self.picking_type_id.warehouse_id.operating_unit_id
