@@ -26,8 +26,6 @@ class StockMove(models.Model):
     @api.depends(
         "location_id",
         "location_id.operating_unit_id",
-        "picking_type_id",
-        "picking_type_id.warehouse_id",
         "picking_type_id.warehouse_id.operating_unit_id",
     )
     def _compute_operating_unit_id(self):
@@ -39,10 +37,8 @@ class StockMove(models.Model):
             )
 
     @api.depends(
-        "location_id",
-        "location_id.operating_unit_id",
-        "picking_type_id",
-        "picking_type_id.warehouse_id",
+        "location_dest_id",
+        "location_dest_id.operating_unit_id",
         "picking_type_id.warehouse_id.operating_unit_id",
     )
     def _compute_operating_unit_dest_id(self):
