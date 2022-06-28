@@ -24,8 +24,6 @@ class StockMoveLine(models.Model):
     @api.depends(
         "location_id",
         "location_id.operating_unit_id",
-        "picking_id.picking_type_id",
-        "picking_id.picking_type_id.warehouse_id",
         "picking_id.picking_type_id.warehouse_id.operating_unit_id",
     )
     def _compute_operating_unit_id(self):
@@ -36,10 +34,8 @@ class StockMoveLine(models.Model):
             )
 
     @api.depends(
-        "location_id",
-        "location_id.operating_unit_id",
-        "picking_id.picking_type_id",
-        "picking_id.picking_type_id.warehouse_id",
+        "location_dest_id",
+        "location_dest_id.operating_unit_id",
         "picking_id.picking_type_id.warehouse_id.operating_unit_id",
     )
     def _compute_operating_unit_dest_id(self):
@@ -52,9 +48,9 @@ class StockMoveLine(models.Model):
     @api.constrains("picking_id", "location_id", "location_dest_id")
     def _check_operating_units(self):
         for rec in self:
-            ou_pick = rec.picking_id.operating_unit_id or False
-            ou_src = rec.operating_unit_id or False
-            ou_dest = rec.operating_unit_dest_id or False
+            ou_pick = rec.picking_id.operating_unit_id
+            ou_src = rec.operating_unit_id
+            ou_dest = rec.operating_unit_dest_id
             if ou_src and ou_pick and (ou_src != ou_pick) and (ou_dest != ou_pick):
                 raise UserError(
                     _(

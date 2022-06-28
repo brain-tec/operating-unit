@@ -10,9 +10,9 @@ Operating Unit in CRM
 .. |badge1| image:: https://img.shields.io/badge/licence-LGPL--3-blue.png
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
-.. |badge2| image:: https://img.shields.io/badge/github-minditp-lightgray.png?logo=github
-    :target: https://github.com/brain-tec/minditp/tree/15.0.project_MI_465.t130202/crm_operating_unit
-    :alt: brain-tec/minditp
+.. |badge2| image:: https://img.shields.io/badge/github-operating--unit-lightgray.png?logo=github
+    :target: https://github.com/brain-tec/operating-unit/tree/15.0.project_MI_465/crm_operating_unit
+    :alt: brain-tec/operating-unit
 
 |badge1| |badge2| 
 
@@ -32,10 +32,10 @@ This module introduces the following features:
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/brain-tec/minditp/issues>`_.
+Bugs are tracked on `GitHub Issues <https://github.com/brain-tec/operating-unit/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/brain-tec/minditp/issues/new?body=module:%20crm_operating_unit%0Aversion:%2015.0.project_MI_465.t130202%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/brain-tec/operating-unit/issues/new?body=module:%20crm_operating_unit%0Aversion:%2015.0.project_MI_465%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -74,6 +74,6 @@ in Switzerland, Germany, Austria and Spain.
 
 Their goal is the commitment to a more efficient daily business routine in SMEs.
 
-This module is part of the `brain-tec/minditp <https://github.com/brain-tec/minditp/tree/15.0.project_MI_465.t130202/crm_operating_unit>`_ project on GitHub.
+This module is part of the `brain-tec/operating-unit <https://github.com/brain-tec/operating-unit/tree/15.0.project_MI_465/crm_operating_unit>`_ project on GitHub.
 
 You are welcome to contribute.
