@@ -26,7 +26,7 @@ class TestPoSecurity(test_po_ou.TestPurchaseOperatingUnit):
         # User 2 cannot list the invoice that was created from PO 1
         invoice_ids = (
             self.AccountInvoice.with_user(self.user2_id)
-            .search([("purchase_id", "=", self.purchase1.id)])
+            .search([("id", "=", self.invoice.id)])
             .ids
         )
         self.assertEqual(invoice_ids, [])
@@ -48,7 +48,7 @@ class TestPoSecurity(test_po_ou.TestPurchaseOperatingUnit):
         # User 1 can list the invoice that was created from PO 2
         invoice_ids = (
             self.AccountInvoice.with_user(self.user1_id)
-            .search([("purchase_id", "=", self.purchase1.id)])
+            .search([("id", "=", self.invoice.id)])
             .ids
         )
         self.assertNotEqual(invoice_ids, [])
