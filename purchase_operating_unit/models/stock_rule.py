@@ -6,7 +6,7 @@ class StockRule(models.Model):
     _inherit = "stock.rule"
 
     def _prepare_purchase_order(self, company_id, origins, values):
-        res = super()._prepare_purchase_order(self, company_id, origins, values)
+        res = super()._prepare_purchase_order(company_id, origins, values)
         if origins and "SO" in origins:
             operating_unit = (
                 self.env["sale.order"]
