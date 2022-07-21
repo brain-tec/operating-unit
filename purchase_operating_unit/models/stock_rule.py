@@ -6,50 +6,46 @@ class StockRule(models.Model):
     _inherit = "stock.rule"
 
     def _prepare_purchase_order(self, company_id, origins, values):
-        res = super(StockRule, self)._prepare_purchase_order(
-            company_id, origins, values)
-        if origins and len(origins) == 1 and 'SO' in list(origins)[0]:
-            operating_unit = (
-                self.env["sale.order"]
-                .search([('name', '=', list(origins)[0])])
-                .warehouse_id.operating_unit_id
-            )
+        res = super(StockRule, self)._prepare_purchase_order(company_id, origins, values)
 
-            res.update(
-                {
-                    "operating_unit_id": operating_unit.id,
-                    "requesting_operating_unit_id": operating_unit.id,
-                }
-            )
+        if "group_id" in res:
+            so = self.env["procurement.group"].browse(res["group_id"]).sale_id
 
-            if hasattr(operating_unit, "purchase_note"):
-                res.update({"purchase_note": operating_unit.purchase_note})
+            if so:
+                # We don't rely on the SO having the "operating_unit_id" field; instead, we rely on the warehouse
+                # having such a field (this is because of the manifest dependencies)
+                so_operating_unit = so.warehouse_id.operating_unit_id
+                so_operating_unit_id = so_operating_unit.id
 
-            if "picking_type_id" in res:
-                type_obj = self.env["stock.picking.type"]
-                picking_type = type_obj.browse(res["picking_type_id"])
-                if (
-                    picking_type.code != "incoming"
-                    or picking_type.warehouse_id.operating_unit_id.id
-                    != operating_unit.id
-                ):
+                res.update(
+                    {
+                        "operating_unit_id": so_operating_unit_id,
+                        "requesting_operating_unit_id": so_operating_unit_id,
+                    }
+                )
 
-                    # Code copied from _onchange_operating_unit_id in
-                    # purchase_order.py
-                    types = type_obj.search(
-                        [
+                if hasattr(so_operating_unit, "purchase_note"):
+                    res.update({"purchase_note": so_operating_unit.purchase_note})
+
+                if "picking_type_id" in res:
+                    picking_type_obj = self.env["stock.picking.type"]
+                    picking_type = picking_type_obj.browse(res["picking_type_id"])
+
+                    if (
+                        picking_type.code != "incoming"
+                        or picking_type.warehouse_id.operating_unit_id.id != so_operating_unit_id
+                    ):
+                        in_picking_types = picking_type_obj.search([
                             ("code", "=", "incoming"),
-                            ("warehouse_id.operating_unit_id", "=", operating_unit.id),
-                        ]
-                    )
-                    if types:
-                        res.update({"picking_type_id": types[:1].id})
-                    else:
-                        raise UserError(
-                            _(
-                                "No Warehouse found with the Operating Unit "
-                                "indicated in the Purchase Order"
+                            ("warehouse_id.operating_unit_id", "=", so_operating_unit_id),
+                        ])
+
+                        if in_picking_types:
+                            res.update({"picking_type_id": in_picking_types[0].id})
+                        else:
+                            raise UserError(
+                                _('No Operation Type of type "Receipt" found for the "%s" Operating Unit') %
+                                so_operating_unit.display_name
                             )
-                        )
 
         return res
