@@ -4,10 +4,11 @@
 from datetime import datetime
 
 from odoo.exceptions import ValidationError
-from odoo.tests import common
+from odoo.tests import common, tagged
 from odoo.tests.common import Form
 
 
+@tagged("post_install")
 class TestMrpOperatingUnit(common.TransactionCase):
     def setUp(self):
         super(TestMrpOperatingUnit, self).setUp()

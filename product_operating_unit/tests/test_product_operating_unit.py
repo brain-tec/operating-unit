@@ -3,9 +3,10 @@
 # Copyright (C) 2019 Serpent Consulting Services
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 from odoo.exceptions import ValidationError
-from odoo.tests import common
+from odoo.tests import common, tagged
 
 
+@tagged("post_install")
 class TestProductOperatingUnit(common.TransactionCase):
     def setUp(self):
         super().setUp()
