@@ -2,10 +2,11 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html)
 
 from odoo.exceptions import AccessError
-from odoo.tests import common
+
+from .OperatingUnitsTransactionCase import OperatingUnitsTransactionCase
 
 
-class TestOperatingUnit(common.TransactionCase):
+class TestOperatingUnit(OperatingUnitsTransactionCase):
     def setUp(self):
         super(TestOperatingUnit, self).setUp()
         self.res_users_model = self.env["res.users"].with_context(

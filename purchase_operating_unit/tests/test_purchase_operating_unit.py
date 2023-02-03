@@ -4,11 +4,14 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 import time
 
-from odoo.tests import common
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
+from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
+    OperatingUnitsTransactionCase,
+)
 
-class TestPurchaseOperatingUnit(common.TransactionCase):
+
+class TestPurchaseOperatingUnit(OperatingUnitsTransactionCase):
     def setUp(self):
         super(TestPurchaseOperatingUnit, self).setUp()
         self.ResUsers = self.env["res.users"]
