@@ -42,12 +42,11 @@ class TestSaleOperatingUnit(OperatingUnitsTransactionCase):
         # Partner
         self.partner1 = self.env.ref("base.res_partner_1")
         # Products
-        self.product1 = self.env.ref("product.product_product_7")
+        self.product1 = self.env.ref("product.expense_product")
         self.product1.write({"invoice_policy": "order"})
         # We don't want to crash with the tests that check the
         # operating units on the warehouses/pickings/etc, so we make sure
         # we are not going to make a picking: we use for that a service.
-        self.product1.write({"type": "service"})
         # Create user1
         self.user1 = self._create_user(
             "user_1",
