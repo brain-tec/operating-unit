@@ -51,11 +51,11 @@ class ResUsers(models.Model):
     def _onchange_operating_unit_ids(self):
         for record in self:
             if (
-                record.default_operating_unit_id
-                and record.default_operating_unit_id
+                record.operating_unit_default_id
+                and record.operating_unit_default_id
                 not in record.operating_unit_ids._origin
             ):
-                record.default_operating_unit_id = False
+                record.operating_unit_default_id = False
 
     @api.depends("groups_id", "assigned_operating_unit_ids")
     def _compute_operating_unit_ids(self):
@@ -85,8 +85,8 @@ class ResUsers(models.Model):
         ):
             default_user = self.env.ref("base.default_user")
             vals[
-                "default_operating_unit_id"
-            ] = default_user.default_operating_unit_id.id
+                "operating_unit_default_id"
+            ] = default_user.operating_unit_default_id.id
             vals["operating_unit_ids"] = [(6, 0, default_user.operating_unit_ids.ids)]
         return vals
 
