@@ -46,22 +46,41 @@ class MrpProduction(models.Model):
     @api.onchange("operating_unit_id")
     def _onchange_operating_unit_id(self):
         """Change locations according to the warehouse of the operating unit"""
-        if self.operating_unit_id:
-            # Take first warehouse with the current operating unit
-            wh = self.env["stock.warehouse"].search(
-                [("operating_unit_id", "=", self.operating_unit_id.id)], limit=1
-            )
-            picking_type_id = (
-                self.env["stock.picking.type"].search(
-                    [
-                        ("code", "=", "mrp_operation"),
-                        ("company_id", "=", self.company_id.id),
-                        ("warehouse_id", "=", wh.id),
-                    ],
-                    limit=1,
-                )
-                if wh
-                else False
-            )
-            if picking_type_id:
-                self.picking_type_id = picking_type_id
+        if (
+            not self.operating_unit_id
+            or not self.picking_type_id.warehouse_id.operating_unit_id
+            or self.picking_type_id.warehouse_id.operating_unit_id.id
+            == self.operating_unit_id.id
+        ):
+            return
+
+        # Take first warehouse with the current operating unit
+        wh = self.env["stock.warehouse"].search(
+            [("operating_unit_id", "=", self.operating_unit_id.id)], limit=1
+        )
+        if not wh:
+            return
+
+        picking_type_id = self.env["stock.picking.type"].search(
+            [
+                ("code", "=", "mrp_operation"),
+                ("company_id", "=", self.company_id.id),
+                ("warehouse_id", "=", wh.id),
+            ],
+            limit=1,
+        )
+        if picking_type_id:
+            self.picking_type_id = picking_type_id
+
+    @api.onchange("picking_type_id")
+    def _onchange_picking_type(self):
+        res = super(MrpProduction, self)._onchange_picking_type()
+
+        picking_type_operating_unit = (
+            self.picking_type_id.warehouse_id.operating_unit_id
+        )
+
+        if picking_type_operating_unit.id != self.operating_unit_id.id:
+            self.operating_unit_id = picking_type_operating_unit
+
+        return res
