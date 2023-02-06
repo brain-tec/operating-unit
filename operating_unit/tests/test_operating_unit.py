@@ -2,11 +2,12 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html)
 
 from odoo.exceptions import AccessError
-from odoo.tests import common
 from odoo.tests.common import Form
 
+from .OperatingUnitsTransactionCase import OperatingUnitsTransactionCase
 
-class TestOperatingUnit(common.TransactionCase):
+
+class TestOperatingUnit(OperatingUnitsTransactionCase):
     def setUp(self):
         super(TestOperatingUnit, self).setUp()
         self.res_users_model = self.env["res.users"].with_context(
@@ -44,7 +45,7 @@ class TestOperatingUnit(common.TransactionCase):
                 "company_id": company.id,
                 "company_ids": [(4, company.id)],
                 "operating_unit_ids": [(4, ou.id) for ou in operating_units],
-                "default_operating_unit_id": False,
+                "operating_unit_default_id": False,
                 "sel_groups_13_14": group.id,
             }
         )
@@ -119,7 +120,7 @@ class TestOperatingUnit(common.TransactionCase):
         user = user_form.save()
         default_user = self.env.ref("base.default_user")
         self.assertEqual(
-            user.default_operating_unit_id, default_user.default_operating_unit_id
+            user.operating_unit_default_id, default_user.operating_unit_default_id
         )
         nou = self.env["operating.unit"].search(
             [
@@ -131,7 +132,7 @@ class TestOperatingUnit(common.TransactionCase):
         )
         partner = self.env["res.partner"].search([], limit=1)
         with Form(self.env["res.users"], view="base.view_users_form") as user_form:
-            user_form.default_operating_unit_id = nou[0]
+            user_form.operating_unit_default_id = nou[0]
             with user_form.operating_unit_ids.new() as line:
                 line.partner_id = partner
                 line.name = "Test Unit"

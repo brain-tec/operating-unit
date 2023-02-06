@@ -4,11 +4,14 @@
 from datetime import datetime
 
 from odoo.exceptions import ValidationError
-from odoo.tests import common
 from odoo.tests.common import Form
 
+from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
+    OperatingUnitsTransactionCase,
+)
 
-class TestMrpOperatingUnit(common.TransactionCase):
+
+class TestMrpOperatingUnit(OperatingUnitsTransactionCase):
     def setUp(self):
         super(TestMrpOperatingUnit, self).setUp()
         self.res_users_model = self.env["res.users"]

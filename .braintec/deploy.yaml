@@ -1,0 +1,17 @@
+git_repositories:
+  - repository: git@github.com:brain-tec/odoo.git
+    branch: 15.0
+  - repository: git@github.com:brain-tec/enterprise.git
+    branch: 15.0
+  - repository: git@github.com:brain-tec/operating-unit.git
+    branch: 15.0.project_MI_465
+    mainrepo: True
+  - repository: git@github.com:brain-tec/account-financial-tools.git
+    branch: 15.0
+  - repository: git@github.com:brain-tec/mis-builder.git
+    branch: 15.0
+  - repository: git@github.com:brain-tec/reporting-engine.git
+    branch: 15.0
+  - repository: git@github.com:brain-tec/server-ux.git
+    branch: 15.0
+postgres: 13.5

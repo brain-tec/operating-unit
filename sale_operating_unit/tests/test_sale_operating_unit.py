@@ -3,10 +3,12 @@
 # © 2019 Serpent Consulting Services Pvt. Ltd. - Sudhir Arya
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo.tests import common
+from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
+    OperatingUnitsTransactionCase,
+)
 
 
-class TestSaleOperatingUnit(common.TransactionCase):
+class TestSaleOperatingUnit(OperatingUnitsTransactionCase):
     def setUp(self):
         super(TestSaleOperatingUnit, self).setUp()
         self.res_groups = self.env["res.groups"]
@@ -40,12 +42,11 @@ class TestSaleOperatingUnit(common.TransactionCase):
         # Partner
         self.partner1 = self.env.ref("base.res_partner_1")
         # Products
-        self.product1 = self.env.ref("product.product_product_7")
+        self.product1 = self.env.ref("product.expense_product")
         self.product1.write({"invoice_policy": "order"})
         # We don't want to crash with the tests that check the
         # operating units on the warehouses/pickings/etc, so we make sure
         # we are not going to make a picking: we use for that a service.
-        self.product1.write({"type": "service"})
         # Create user1
         self.user1 = self._create_user(
             "user_1",
@@ -80,23 +81,6 @@ class TestSaleOperatingUnit(common.TransactionCase):
             self.pricelist,
             self.sale_team_b2c,
         )
-
-    def _create_user(self, login, groups, company, operating_units):
-        """Create a user."""
-        group_ids = [group.id for group in groups]
-        user = self.res_users_model.create(
-            {
-                "name": "Test Sales User",
-                "login": login,
-                "password": "demo",
-                "email": "example@yourcompany.com",
-                "company_id": company.id,
-                "company_ids": [(4, company.id)],
-                "operating_unit_ids": [(4, ou.id) for ou in operating_units],
-                "groups_id": [(6, 0, group_ids)],
-            }
-        )
-        return user
 
     def _create_sale_team(self, uid, operating_unit):
         """Create a sale team."""

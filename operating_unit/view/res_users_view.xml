@@ -14,7 +14,7 @@
                     />
 
                     <field
-                        name="default_operating_unit_id"
+                        name="operating_unit_default_id"
                         domain="[('id','in',operating_unit_ids)]"
                     />
                 </group>

@@ -3,10 +3,13 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from odoo.exceptions import ValidationError
-from odoo.tests import common
+
+from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
+    OperatingUnitsTransactionCase,
+)
 
 
-class TestHrExpenseOperatingUnit(common.TransactionCase):
+class TestHrExpenseOperatingUnit(OperatingUnitsTransactionCase):
     def setUp(self):
         super(TestHrExpenseOperatingUnit, self).setUp()
 

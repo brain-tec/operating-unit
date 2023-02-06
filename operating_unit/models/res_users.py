@@ -14,7 +14,7 @@ class ResUsers(models.Model):
         if not uid2:
             uid2 = self.env.user.id
         user = self.env["res.users"].browse(uid2)
-        return user.default_operating_unit_id
+        return user.operating_unit_default_id
 
     @api.model
     def _default_operating_unit(self):
@@ -40,8 +40,7 @@ class ResUsers(models.Model):
         string="Operating Units",
         default=lambda self: self._default_operating_units(),
     )
-
-    default_operating_unit_id = fields.Many2one(
+    operating_unit_default_id = fields.Many2one(
         comodel_name="operating.unit",
         string="Default Operating Unit",
         default=lambda self: self._default_operating_unit(),
@@ -52,11 +51,11 @@ class ResUsers(models.Model):
     def _onchange_operating_unit_ids(self):
         for record in self:
             if (
-                record.default_operating_unit_id
-                and record.default_operating_unit_id
+                record.operating_unit_default_id
+                and record.operating_unit_default_id
                 not in record.operating_unit_ids._origin
             ):
-                record.default_operating_unit_id = False
+                record.operating_unit_default_id = False
 
     @api.depends("groups_id", "assigned_operating_unit_ids")
     def _compute_operating_unit_ids(self):
@@ -86,8 +85,8 @@ class ResUsers(models.Model):
         ):
             default_user = self.env.ref("base.default_user")
             vals[
-                "default_operating_unit_id"
-            ] = default_user.default_operating_unit_id.id
+                "operating_unit_default_id"
+            ] = default_user.operating_unit_default_id.id
             vals["operating_unit_ids"] = [(6, 0, default_user.operating_unit_ids.ids)]
         return vals
 

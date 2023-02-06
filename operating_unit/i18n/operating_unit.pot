@@ -50,7 +50,7 @@ msgid "Created on"
 msgstr ""
 
 #. module: operating_unit
-#: model:ir.model.fields,field_description:operating_unit.field_res_users__default_operating_unit_id
+#: model:ir.model.fields,field_description:operating_unit.field_res_users__operating_unit_default_id
 msgid "Default Operating Unit"
 msgstr ""
 
