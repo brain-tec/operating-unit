@@ -15,7 +15,7 @@ class OperatingUnitsTransactionCase(common.TransactionCase):
         default_ou_id = False if not operating_units else operating_units[0].id
         user = (
             cls.env["res.users"]
-            .with_context({"no_reset_password": True})
+            .with_context(no_reset_password=True)
             .create(
                 {
                     "name": "Test User",
