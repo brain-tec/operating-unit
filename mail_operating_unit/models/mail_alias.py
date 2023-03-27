@@ -14,7 +14,7 @@ class MailAlias(models.Model):
 
     operating_unit_id = fields.Many2one("operating.unit", "Operating Unit")
 
-    @api.depends('alias_name', 'operating_unit_id', 'operating_unit_id.catchall_domain')
+    @api.depends("alias_name", "operating_unit_id", "operating_unit_id.catchall_domain")
     def _compute_alias_domain(self):
         super()._compute_alias_domain()
         for record in self:
