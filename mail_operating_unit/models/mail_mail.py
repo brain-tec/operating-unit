@@ -1,8 +1,9 @@
 ##############################################################################
+# Copyright (c) 2021 brain-tec AG (https://braintec.com)
+# All Rights Reserved
 #
-#    Copyright (c) 2021 brain-tec AG (http://www.braintec-group.com)
-#    License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
-#
+# Licensed under the LGPL-3.
+# See LICENSE file for full licensing details.
 ##############################################################################
 
 from email.utils import formataddr
@@ -10,12 +11,12 @@ from email.utils import formataddr
 from odoo import api, models
 
 
-class MailMailExt(models.Model):
+class MailMail(models.Model):
     _inherit = "mail.mail"
 
     @api.model_create_multi
     def create(self, vals_list):
-        mails = super(MailMailExt, self).create(vals_list)
+        mails = super().create(vals_list)
 
         for mail in mails:
             operating_unit = False

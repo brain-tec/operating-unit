@@ -1,8 +1,9 @@
 ##############################################################################
+# Copyright (c) 2021 brain-tec AG (https://braintec.com)
+# All Rights Reserved
 #
-#    Copyright (c) 2021 brain-tec AG (http://www.braintec-group.com)
-#    License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
-#
+# Licensed under the LGPL-3.
+# See LICENSE file for full licensing details.
 ##############################################################################
 
 from odoo import api, fields, models

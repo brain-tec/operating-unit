@@ -1,21 +1,22 @@
 ##############################################################################
+# Copyright (c) 2021 brain-tec AG (https://braintec.com)
+# All Rights Reserved
 #
-#    Copyright (c) 2021 brain-tec AG (http://www.braintec-group.com)
-#    License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
-#
+# Licensed under the LGPL-3.
+# See LICENSE file for full licensing details.
 ##############################################################################
 
 from odoo import api, fields, models
 
 
-class MailComposeMessageExt(models.TransientModel):
+class MailComposeMessage(models.TransientModel):
     _inherit = "mail.compose.message"
 
-    operating_unit_id = fields.Many2one("operating.unit", "Operating Unit")
+    operating_unit_id = fields.Many2one("operating.unit")
 
     @api.model
     def default_get(self, fields):
-        result = super(MailComposeMessageExt, self).default_get(fields)
+        result = super().default_get(fields)
         model = result.get("model", False)
         res_id = result.get("res_id", False)
         if model and res_id:

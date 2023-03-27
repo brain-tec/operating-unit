@@ -1,28 +1,30 @@
 ##############################################################################
+# Copyright (c) 2021 brain-tec AG (https://braintec.com)
+# All Rights Reserved
 #
-#    Copyright (c) 2021 brain-tec AG (http://www.braintec-group.com)
-#    License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
-#
+# Licensed under the LGPL-3.
+# See LICENSE file for full licensing details.
 ##############################################################################
 
 {
     "name": "Mail Operating Unit",
     "summary": "Adds the concept of operating unit (OU) according mail",
-    "version": "13.0.1.0.0",
+    "license": "LGPL-3",
+    "version": "15.0.1.0.0",
     "author": "brain-tec AG, " "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/operating-unit",
     "category": "Purchase Management",
     "depends": ["operating_unit", "mail"],
-    "license": "LGPL-3",
     "data": [
         "data/mail_data.xml",
         "security/mail_alias_security.xml",
         "security/mail_template_security.xml",
-        "views/operating_unit_views_ext.xml",
-        "views/mail_alias_views_ext.xml",
-        "views/mail_template_views_ext.xml",
+        "security/ir.model.access.csv",
+        "views/operating_unit_views.xml",
+        "views/mail_alias_views.xml",
+        "views/mail_template_views.xml",
         "views/res_users_view.xml",
-        "wizard/mail_compose_message_view_ext.xml",
+        "wizard/mail_compose_message_view.xml",
     ],
     "installable": True,
 }
