@@ -17,6 +17,5 @@ class MailAlias(models.Model):
     @api.depends("alias_name", "operating_unit_id", "operating_unit_id.catchall_domain")
     def _compute_alias_domain(self):
         super()._compute_alias_domain()
-        for record in self:
-            if record.operating_unit_id:
-                record.alias_domain = record.operating_unit_id.catchall_domain
+        for record in self.filtered(lambda r: r.operating_unit_id):
+            record.alias_domain = record.operating_unit_id.catchall_domain
