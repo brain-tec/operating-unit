@@ -15,9 +15,8 @@ from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
 
 class TestPurchaseOperatingUnit(OperatingUnitsTransactionCase):
     def setUp(self):
-        super(TestPurchaseOperatingUnit, self).setUp()
+        super().setUp()
         self.ResUsers = self.env["res.users"]
-        self.StockPicking = self.env["stock.picking"]
         self.PurchaseOrder = self.env["purchase.order"]
         self.AccountInvoice = self.env["account.move"]
         self.AccountAccount = self.env["account.account"]
