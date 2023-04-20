@@ -13,7 +13,11 @@
     "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/operating-unit",
     "category": "Purchase Management",
-    "depends": ["purchase", "account_operating_unit"],
+    "depends": [
+        "purchase_stock",
+        "account_operating_unit",
+        "stock_operating_unit",
+    ],
     "license": "LGPL-3",
     "data": [
         "security/purchase_security.xml",

@@ -8,9 +8,9 @@ def migrate(cr, installed_version):
     )
     cr.execute(
         """
-        UPDATE stock_quant
+        UPDATE stock_quant as sq
         SET operating_unit_id = sl.operating_unit_id
         FROM stock_location sl
-        WHERE sl.id=location_id AND sl.operating_unit_id IS NOT NULL;
+        WHERE sl.id=sq.location_id AND sl.operating_unit_id IS NOT NULL;
     """
     )

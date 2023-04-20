@@ -5,14 +5,19 @@
 import time
 
 from odoo.exceptions import ValidationError
-from odoo.tests import Form, common
+from odoo.tests import Form
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
+from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
+    OperatingUnitsTransactionCase,
+)
 
-class TestPurchaseOperatingUnit(common.TransactionCase):
+
+class TestPurchaseOperatingUnit(OperatingUnitsTransactionCase):
     def setUp(self):
-        super().setUp()
+        super(TestPurchaseOperatingUnit, self).setUp()
         self.ResUsers = self.env["res.users"]
+        self.StockPicking = self.env["stock.picking"]
         self.PurchaseOrder = self.env["purchase.order"]
         self.AccountInvoice = self.env["account.move"]
         self.AccountAccount = self.env["account.account"]

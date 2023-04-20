@@ -169,7 +169,7 @@ class TestStockAccountOperatingUnit(TestStockCommon):
         )
         return picking
 
-    def _confirm_receive(self, user_id, picking):
+    def _confirm_receive(self, user_id, picking, picking_type=None):
         """
         Checks the stock availability, validates and process the stock picking.
         """
@@ -283,6 +283,10 @@ class TestStockAccountOperatingUnit(TestStockCommon):
             self.supplier_location,
             self.location_b2c_id,
         )
+        # As sharing same journal so updating operating unit
+        self.product.categ_id.property_stock_journal.write(
+            {"operating_unit_id": self.b2c.id}
+        )
 
         # Receive it
         self._confirm_receive(self.user2.id, self.picking)
@@ -338,7 +342,8 @@ class TestStockAccountOperatingUnit(TestStockCommon):
             self.location_b2c_id,
         )
         # Receive it
-        self._confirm_receive(self.user1.id, self.picking)
+        picking_type = "internal"
+        self._confirm_receive(self.user1.id, self.picking, picking_type=picking_type)
         # GL account ‘Inventory’ has balance 2 irrespective of the OU
         expected_balance = 2.0
         self._check_account_balance(
