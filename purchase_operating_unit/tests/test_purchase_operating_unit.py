@@ -4,8 +4,8 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 import time
 
-# from odoo.exceptions import ValidationError
-# from odoo.tests import Form
+from odoo.exceptions import UserError
+from odoo.tests import Form
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 from odoo.addons.operating_unit.tests.OperatingUnitsTransactionCase import (
@@ -127,29 +127,32 @@ class TestPurchaseOperatingUnit(OperatingUnitsTransactionCase):
     # a new operating unit to the po, as we have a custom onchange for that field
     # that complains that there is no warehouse associated to that other op. unit
 
-    # def test_01_purchase_operating_unit(self):
-    #     self.purchase1.button_cancel()
-    #     self.purchase1.button_draft()
-    #     # Check change operating unit in purchase
-    #     # Changed to Exception, as otherwise assigning no company leads to a db
-    #     # exception due to required value in operating_unit/operating_unit.py
-    #     with self.assertRaises(ValidationError):
-    #         self.b2b.company_id = self.env.ref('stock.res_company_1')
-    #         with Form(self.purchase1) as po:
-    #             po.operating_unit_id = self.b2b
-    #     self.purchase1.with_user(self.user1_id).button_confirm()
-    #     # Create Vendor Bill
-    #     f = Form(self.env["account.move"].with_context(default_move_type="in_invoice"))
-    #     f.partner_id = self.purchase1.partner_id
-    #     f.purchase_id = self.purchase1
-    #     invoice = f.save()
-    #     self.assertEqual(invoice.operating_unit_id, self.purchase1.operating_unit_id)
-    #     self.assertEqual(
-    #         invoice.invoice_line_ids[0].operating_unit_id,
-    #         invoice.invoice_line_ids[0].purchase_line_id.operating_unit_id,
-    #     )
-    #     # Check change operating unit in invoice line != purchase line,
-    #     # it should error.
-    #     with self.assertRaises(ValidationError):
-    #         with Form(invoice.invoice_line_ids[0]) as line:
-    #             line.operating_unit_id = self.b2b
+    def test_01_purchase_operating_unit(self):
+        self.purchase1.button_cancel()
+        self.purchase1.button_draft()
+        # Check change operating unit in purchase
+        # Changed to switch to another company, otherwise it was raising a db error due
+        # to required value in operating_unit/operating_unit.py. Now as we have a
+        # customized onchange for operating_unit_id in
+        # purchase_operating_unit/purchase_order.py, it will lead to UserError
+        # as that operating unit that we are assigning has no warehouse
+        with self.assertRaises(UserError):
+            self.b2b.company_id = self.env.ref("stock.res_company_1")
+            with Form(self.purchase1) as po:
+                po.operating_unit_id = self.b2b
+        self.purchase1.with_user(self.user1_id).button_confirm()
+        # Create Vendor Bill
+        f = Form(self.env["account.move"].with_context(default_move_type="in_invoice"))
+        f.partner_id = self.purchase1.partner_id
+        f.purchase_id = self.purchase1
+        invoice = f.save()
+        self.assertEqual(invoice.operating_unit_id, self.purchase1.operating_unit_id)
+        self.assertEqual(
+            invoice.invoice_line_ids[0].operating_unit_id,
+            invoice.invoice_line_ids[0].purchase_line_id.operating_unit_id,
+        )
+        # Check change operating unit in invoice line != purchase line,
+        # it should error.
+        with self.assertRaises(UserError):
+            with Form(invoice.invoice_line_ids[0]) as line:
+                line.operating_unit_id = self.b2b
