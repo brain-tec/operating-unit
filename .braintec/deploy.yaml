@@ -14,4 +14,6 @@ git_repositories:
     branch: 15.0
   - repository: git@github.com:brain-tec/server-ux.git
     branch: 15.0
+  - repository: git@github.com:brain-tec/purchase-workflow.git
+    branch: 15.0
 postgres: 13.5

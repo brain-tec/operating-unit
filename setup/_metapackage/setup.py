@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-operating-unit Odoo addons",
     version=version,
     install_requires=[
+        'odoo-addon-account_asset_operating_unit>=15.0dev,<15.1dev',
         'odoo-addon-account_operating_unit>=15.0dev,<15.1dev',
         'odoo-addon-analytic_operating_unit>=15.0dev,<15.1dev',
         'odoo-addon-crm_operating_unit>=15.0dev,<15.1dev',
@@ -16,7 +17,11 @@ setuptools.setup(
         'odoo-addon-mrp_operating_unit>=15.0dev,<15.1dev',
         'odoo-addon-operating_unit>=15.0dev,<15.1dev',
         'odoo-addon-operating_unit_access_all>=15.0dev,<15.1dev',
+        'odoo-addon-purchase_operating_unit>=15.0dev,<15.1dev',
+        'odoo-addon-purchase_request_operating_unit>=15.0dev,<15.1dev',
+        'odoo-addon-purchase_stock_operating_unit>=15.0dev,<15.1dev',
         'odoo-addon-sales_team_operating_unit>=15.0dev,<15.1dev',
+        'odoo-addon-stock_account_operating_unit>=15.0dev,<15.1dev',
         'odoo-addon-stock_operating_unit>=15.0dev,<15.1dev',
     ],
     classifiers=[

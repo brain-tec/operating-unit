@@ -21,7 +21,8 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[account_operating_unit](account_operating_unit/) | 15.0.1.0.1 |  | Introduces Operating Unit (OU) in invoices and Accounting Entries with clearing account
+[account_asset_operating_unit](account_asset_operating_unit/) | 15.0.1.0.0 | [![ps-tubtim](https://github.com/ps-tubtim.png?size=30px)](https://github.com/ps-tubtim) | This module adds operating unit information to assets.
+[account_operating_unit](account_operating_unit/) | 15.0.1.1.0 |  | Introduces Operating Unit (OU) in invoices and Accounting Entries with clearing account
 [analytic_operating_unit](analytic_operating_unit/) | 15.0.1.0.1 |  | Analytic Operating Unit
 [crm_operating_unit](crm_operating_unit/) | 15.0.1.0.0 |  | Operating Unit in CRM
 [hr_contract_operating_unit](hr_contract_operating_unit/) | 15.0.1.0.1 |  | HR Contract Operating Unit
@@ -29,8 +30,12 @@ addon | version | maintainers | summary
 [mrp_operating_unit](mrp_operating_unit/) | 15.0.1.0.0 |  | Operating Unit in MRP
 [operating_unit](operating_unit/) | 15.0.1.0.6 |  | An operating unit (OU) is an organizational entity part of a company
 [operating_unit_access_all](operating_unit_access_all/) | 15.0.1.0.0 | [![kittiu](https://github.com/kittiu.png?size=30px)](https://github.com/kittiu) | Access all Operating Units
+[purchase_operating_unit](purchase_operating_unit/) | 15.0.1.0.0 |  | Adds the concecpt of operating unit (OU) in purchase order management
+[purchase_request_operating_unit](purchase_request_operating_unit/) | 15.0.1.0.0 |  | Operating Unit in Purchase Requests
+[purchase_stock_operating_unit](purchase_stock_operating_unit/) | 15.0.1.0.0 | [![Saran440](https://github.com/Saran440.png?size=30px)](https://github.com/Saran440) | Copies the operating unit of purchase picking to the stock picking
 [sales_team_operating_unit](sales_team_operating_unit/) | 15.0.1.0.0 |  | Sales Team Operating Unit
-[stock_operating_unit](stock_operating_unit/) | 15.0.1.0.0 |  | Adds the concept of operating unit (OU) in stock management
+[stock_account_operating_unit](stock_account_operating_unit/) | 15.0.1.0.0 |  | Create journal entries in moves between internal locations with different operating units.
+[stock_operating_unit](stock_operating_unit/) | 15.0.1.2.0 |  | Adds the concept of operating unit (OU) in stock management
 
 [//]: # (end addons)
 

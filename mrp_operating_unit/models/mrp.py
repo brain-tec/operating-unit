@@ -61,13 +61,17 @@ class MrpProduction(models.Model):
         if not wh:
             return
 
-        picking_type_id = self.env["stock.picking.type"].search(
-            [
-                ("code", "=", "mrp_operation"),
-                ("company_id", "=", self.company_id.id),
-                ("warehouse_id", "=", wh.id),
-            ],
-            limit=1,
+        picking_type_id = (
+            self.env["stock.picking.type"].search(
+                [
+                    ("code", "=", "mrp_operation"),
+                    ("company_id", "=", self.company_id.id),
+                    ("warehouse_id", "=", wh.id),
+                ],
+                limit=1,
+            )
+            if wh
+            else False
         )
         if picking_type_id:
             self.picking_type_id = picking_type_id

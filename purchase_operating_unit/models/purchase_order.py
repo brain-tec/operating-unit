@@ -95,6 +95,13 @@ class PurchaseOrder(models.Model):
 
     @api.onchange("picking_type_id")
     def _onchange_picking_type_id(self):
+        """This customized onchange has not been contributed to OCA as they have the
+        strategy of raising errors when the user doesn't change manually the fields
+        and thus they would be causing data inconsistencies (e.g. if they change
+        the picking_type_id we should change the operating_unit_id in some cases),
+        whilst we have onchanges to automatically change the other fields
+        not to end up with inconsistencies.
+        """
         res = super()._onchange_picking_type_id()
         if self.picking_type_id:
             if (
@@ -108,6 +115,13 @@ class PurchaseOrder(models.Model):
 
     @api.onchange("operating_unit_id")
     def _onchange_operating_unit_id(self):
+        """This customized onchange has not been contributed to OCA as they have the
+        strategy of raising errors when the user doesn't change manually the fields
+        and thus they would be causing data inconsistencies (e.g. if they change
+        the operating unit we should change the picking_type_id in some cases),
+        whilst we have onchanges to automatically change the other fields
+        not to end up with inconsistencies.
+        """
         type_obj = self.env["stock.picking.type"]
         if self.operating_unit_id:
             if (
