@@ -11,8 +11,9 @@ from . import test_account_operating_unit as test_ou
 
 @tagged("post_install", "-at_install")
 class TestCrossOuJournalEntry(test_ou.TestAccountOperatingUnit):
-    def setUp(self):
-        super().setUp()
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
 
     def _check_balance(self, account_id, acc_type="clearing"):
         # Check balance for all operating units
