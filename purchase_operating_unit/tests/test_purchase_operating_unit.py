@@ -10,50 +10,51 @@ from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 
 class TestPurchaseOperatingUnit(common.TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.ResUsers = self.env["res.users"]
-        self.PurchaseOrder = self.env["purchase.order"]
-        self.AccountInvoice = self.env["account.move"]
-        self.AccountAccount = self.env["account.account"]
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.ResUsers = cls.env["res.users"]
+        cls.PurchaseOrder = cls.env["purchase.order"]
+        cls.AccountInvoice = cls.env["account.move"]
+        cls.AccountAccount = cls.env["account.account"]
         # company
-        self.company = self.env.ref("base.main_company")
+        cls.company = cls.env.ref("base.main_company")
         # groups
-        self.group_purchase_user = self.env.ref("purchase.group_purchase_user")
+        cls.group_purchase_user = cls.env.ref("purchase.group_purchase_user")
         # Main Operating Unit
-        self.ou1 = self.env.ref("operating_unit.main_operating_unit")
+        cls.ou1 = cls.env.ref("operating_unit.main_operating_unit")
         # B2B Operating Unit
-        self.b2b = self.env.ref("operating_unit.b2b_operating_unit")
+        cls.b2b = cls.env.ref("operating_unit.b2b_operating_unit")
         # Partner
-        self.partner1 = self.env.ref("base.res_partner_1")
+        cls.partner1 = cls.env.ref("base.res_partner_1")
         # Products
-        self.product1 = self.env.ref("product.product_product_7")
-        self.product2 = self.env.ref("product.product_product_9")
-        self.product3 = self.env.ref("product.product_product_11")
+        cls.product1 = cls.env.ref("product.product_product_7")
+        cls.product2 = cls.env.ref("product.product_product_9")
+        cls.product3 = cls.env.ref("product.product_product_11")
         # Account
-        payable_acc_type = self.env.ref("account.data_account_type_payable").id
-        self.account = self.AccountAccount.search(
+        payable_acc_type = cls.env.ref("account.data_account_type_payable").id
+        cls.account = cls.AccountAccount.search(
             [("user_type_id", "=", payable_acc_type)], limit=1
         )
         # Create users
-        self.user1_id = self._create_user(
+        cls.user1_id = cls._create_user(
             "user_1",
-            [self.group_purchase_user],
-            self.company,
-            [self.ou1],
+            [cls.group_purchase_user],
+            cls.company,
+            [cls.ou1],
         )
-        self.user2_id = self._create_user(
+        cls.user2_id = cls._create_user(
             "user_2",
-            [self.group_purchase_user],
-            self.company,
-            [self.b2b],
+            [cls.group_purchase_user],
+            cls.company,
+            [cls.b2b],
         )
-        self.purchase1 = self._create_purchase(
-            self.user1_id,
-            [(self.product1, 1000), (self.product2, 500), (self.product3, 800)],
+        cls.purchase1 = cls._create_purchase(
+            cls.user1_id,
+            [(cls.product1, 1000), (cls.product2, 500), (cls.product3, 800)],
         )
-        self.purchase1.with_user(self.user1_id).button_confirm()
-        self.invoice = self._create_invoice(self.purchase1, self.partner1, self.account)
+        cls.purchase1.with_user(cls.user1_id).button_confirm()
+        cls.invoice = cls._create_invoice(cls.purchase1, cls.partner1, cls.account)
 
     def _create_user(self, login, groups, company, operating_units):
         """Create a user."""
