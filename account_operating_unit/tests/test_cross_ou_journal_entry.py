@@ -11,8 +11,9 @@ from . import test_account_operating_unit as test_ou
 
 @tagged("post_install", "-at_install")
 class TestCrossOuJournalEntry(test_ou.TestAccountOperatingUnit):
-    def setUp(self):
-        super().setUp()
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
 
     def _check_balance(self, account_id, acc_type="clearing"):
         # Check balance for all operating units
@@ -93,7 +94,11 @@ class TestCrossOuJournalEntry(test_ou.TestAccountOperatingUnit):
         move_vals.update(
             {"journal_id": journal_ids and journal_ids.id, "line_ids": lines}
         )
-        move = self.move_model.with_user(self.user_id.id).create(move_vals)
+        move = (
+            self.move_model.with_user(self.user_id.id)
+            .with_context(check_move_validity=False)
+            .create(move_vals)
+        )
         # Post journal entries
         move.action_post()
         # Check the balance of the account
