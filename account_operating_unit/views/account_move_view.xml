@@ -197,6 +197,7 @@ https://github.com/brain-tec/odoo/commit/97d1afb9ff0ca88dfb0b6a8ed152e39d3db7727
                     icon="terp-folder-orange"
                     domain="[]"
                     context="{'group_by':'operating_unit_id'}"
+                    groups="operating_unit.group_multi_operating_unit"
                 />
                     <!--            FIXME: commented as this no longer exists:
         groups="operating_unit.group_multi_operating_unit"-->
