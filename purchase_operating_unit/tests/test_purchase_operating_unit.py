@@ -21,7 +21,9 @@ class TestPurchaseOperatingUnit(common.TransactionCase):
         cls.company = cls.env.ref("base.main_company")
         # groups
         cls.group_purchase_user = cls.env.ref("purchase.group_purchase_user")
-        cls.group_operating_unit = cls.env.ref("operating_unit.group_multi_operating_unit")
+        cls.group_operating_unit = cls.env.ref(
+            "operating_unit.group_multi_operating_unit"
+        )
         # Main Operating Unit
         cls.ou1 = cls.env.ref("operating_unit.main_operating_unit")
         # B2B Operating Unit
@@ -55,7 +57,9 @@ class TestPurchaseOperatingUnit(common.TransactionCase):
             [(cls.product1, 1000), (cls.product2, 500), (cls.product3, 800)],
         )
         cls.purchase1.with_user(cls.user1_id).button_confirm()
-        cls.purchase1.order_line[0].qty_received = cls.purchase1.order_line[0].product_qty
+        cls.purchase1.order_line[0].qty_received = cls.purchase1.order_line[
+            0
+        ].product_qty
         cls.purchase1.with_user(cls.user1_id).action_create_invoice()
         # cls.invoice = cls._create_invoice(cls.purchase1, cls.partner1, cls.account)
         cls.invoice = cls.purchase1.invoice_ids[0]
@@ -145,10 +149,15 @@ class TestPurchaseOperatingUnit(common.TransactionCase):
         # f.purchase_id = self.purchase1
         # invoice = f.save()
 
-        self.assertEqual(self.purchase1.invoice_ids[0].operating_unit_id, self.purchase1.operating_unit_id)
+        self.assertEqual(
+            self.purchase1.invoice_ids[0].operating_unit_id,
+            self.purchase1.operating_unit_id
+        )
         self.assertEqual(
             self.purchase1.invoice_ids[0].invoice_line_ids[0].operating_unit_id,
-            self.purchase1.invoice_ids[0].invoice_line_ids[0].purchase_line_id.operating_unit_id,
+            self.purchase1.invoice_ids[0]
+            .invoice_line_ids[0]
+            .purchase_line_id.operating_unit_id,
         )
         # Check change operating unit in invoice line != purchase line,
         # it should error.
