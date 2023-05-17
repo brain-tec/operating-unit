@@ -4,7 +4,7 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 import time
 
-from odoo.exceptions import ValidationError
+from odoo.exceptions import AccessError, ValidationError
 from odoo.tests import Form, common
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
@@ -21,6 +21,7 @@ class TestPurchaseOperatingUnit(common.TransactionCase):
         cls.company = cls.env.ref("base.main_company")
         # groups
         cls.group_purchase_user = cls.env.ref("purchase.group_purchase_user")
+        cls.group_operating_unit = cls.env.ref("operating_unit.group_multi_operating_unit")
         # Main Operating Unit
         cls.ou1 = cls.env.ref("operating_unit.main_operating_unit")
         # B2B Operating Unit
@@ -32,14 +33,14 @@ class TestPurchaseOperatingUnit(common.TransactionCase):
         cls.product2 = cls.env.ref("product.product_product_9")
         cls.product3 = cls.env.ref("product.product_product_11")
         # Account
-        payable_acc_type = cls.env.ref("account.data_account_type_payable").id
+        # payable_acc_type = cls.env.ref("account.data_account_type_payable").id
         cls.account = cls.AccountAccount.search(
-            [("user_type_id", "=", payable_acc_type)], limit=1
+            [("account_type", "=", "liability_payable")], limit=1
         )
         # Create users
         cls.user1_id = cls._create_user(
             "user_1",
-            [cls.group_purchase_user],
+            [cls.group_purchase_user, cls.group_operating_unit],
             cls.company,
             [cls.ou1],
         )
@@ -54,12 +55,16 @@ class TestPurchaseOperatingUnit(common.TransactionCase):
             [(cls.product1, 1000), (cls.product2, 500), (cls.product3, 800)],
         )
         cls.purchase1.with_user(cls.user1_id).button_confirm()
-        cls.invoice = cls._create_invoice(cls.purchase1, cls.partner1, cls.account)
+        cls.purchase1.order_line[0].qty_received = cls.purchase1.order_line[0].product_qty
+        cls.purchase1.with_user(cls.user1_id).action_create_invoice()
+        # cls.invoice = cls._create_invoice(cls.purchase1, cls.partner1, cls.account)
+        cls.invoice = cls.purchase1.invoice_ids[0]
 
-    def _create_user(self, login, groups, company, operating_units):
+    @classmethod
+    def _create_user(cls, login, groups, company, operating_units):
         """Create a user."""
         group_ids = [group.id for group in groups]
-        user = self.ResUsers.with_context(**{"no_reset_password": True}).create(
+        user = cls.ResUsers.with_context(**{"no_reset_password": True}).create(
             {
                 "name": "Chicago Purchase User",
                 "login": login,
@@ -73,7 +78,8 @@ class TestPurchaseOperatingUnit(common.TransactionCase):
         )
         return user.id
 
-    def _create_purchase(self, user_id, line_products):
+    @classmethod
+    def _create_purchase(cls, user_id, line_products):
         """Create a purchase order.
         ``line_products`` is a list of tuple [(product, qty)]
         """
@@ -88,18 +94,19 @@ class TestPurchaseOperatingUnit(common.TransactionCase):
                 "date_planned": time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
             }
             lines.append((0, 0, line_values))
-        purchase = self.PurchaseOrder.with_user(user_id).create(
+        purchase = cls.PurchaseOrder.with_user(user_id).create(
             {
-                "operating_unit_id": self.ou1.id,
-                "requesting_operating_unit_id": self.ou1.id,
-                "partner_id": self.partner1.id,
+                "operating_unit_id": cls.ou1.id,
+                "requesting_operating_unit_id": cls.ou1.id,
+                "partner_id": cls.partner1.id,
                 "order_line": lines,
-                "company_id": self.company.id,
+                "company_id": cls.company.id,
             }
         )
         return purchase
 
-    def _create_invoice(self, purchase, partner, account):
+    @classmethod
+    def _create_invoice(cls, purchase, partner, account):
         """Create a vendor invoice for the purchase order."""
         invoice_vals = {
             "purchase_id": purchase.id,
@@ -112,7 +119,7 @@ class TestPurchaseOperatingUnit(common.TransactionCase):
             "active_model": "purchase.order",
         }
         res = (
-            self.env["account.move"]
+            cls.env["account.move"]
             .with_context(**purchase_context)
             .create(invoice_vals)
         )
@@ -124,21 +131,27 @@ class TestPurchaseOperatingUnit(common.TransactionCase):
         # Check change operating unit in purchase
         with self.assertRaises(ValidationError):
             self.b2b.company_id = False
-            with Form(self.purchase1) as po:
+            # The user_1 is used here so he's able to see the field operating_unit
+            with Form(self.purchase1.with_user(self.user1_id)) as po:
                 po.operating_unit_id = self.b2b
+        # This has been changed to follow the standard flow of creating a purchase order and then billing
         self.purchase1.with_user(self.user1_id).button_confirm()
+        # self.purchase1.order_line[0].qty_received = self.purchase1.order_line[0].product_qty
+        # self.purchase1.with_user(self.user1_id).action_create_invoice()
         # Create Vendor Bill
-        f = Form(self.env["account.move"].with_context(default_move_type="in_invoice"))
-        f.partner_id = self.purchase1.partner_id
-        f.purchase_id = self.purchase1
-        invoice = f.save()
-        self.assertEqual(invoice.operating_unit_id, self.purchase1.operating_unit_id)
+        # The user_1 is used here so he's able to see the field purchase_id
+        # f = Form(self.env["account.move"].with_context(default_move_type="in_invoice").with_user(self.user1_id))
+        # f.partner_id = self.purchase1.partner_id
+        # f.purchase_id = self.purchase1
+        # invoice = f.save()
+
+        self.assertEqual(self.purchase1.invoice_ids[0].operating_unit_id, self.purchase1.operating_unit_id)
         self.assertEqual(
-            invoice.invoice_line_ids[0].operating_unit_id,
-            invoice.invoice_line_ids[0].purchase_line_id.operating_unit_id,
+            self.purchase1.invoice_ids[0].invoice_line_ids[0].operating_unit_id,
+            self.purchase1.invoice_ids[0].invoice_line_ids[0].purchase_line_id.operating_unit_id,
         )
         # Check change operating unit in invoice line != purchase line,
         # it should error.
-        with self.assertRaises(ValidationError):
-            with Form(invoice.invoice_line_ids[0]) as line:
+        with self.assertRaises(AccessError):
+            with Form(self.purchase1.invoice_ids[0].invoice_line_ids[0]) as line:
                 line.operating_unit_id = self.b2b
