@@ -106,23 +106,24 @@ class TestCrossOuJournalEntry(test_ou.TestAccountOperatingUnit):
         clearing_account_id = self.company.inter_ou_clearing_account_id.id
         self._check_balance(clearing_account_id, acc_type="clearing")
         # Report journal
-        report_journal = (
-            self.env["report.account.report_journal"]
-            .sudo()
-            ._get_report_values(
-                docids=[journal_ids.id],
-                data={
-                    "form": {
-                        "journal_ids": journal_ids.ids,
-                        "company_id": journal_ids.company_id,
-                        "used_context": {
-                            "operating_unit_ids": journal_ids.operating_unit_id.id
-                        },
-                    }
-                },
-            )
-        )
-        self.assertTrue(report_journal)
+        # Commented as this report does not longer exist
+        # report_journal = (
+        #     self.env["report.account.report_journal"]
+        #     .sudo()
+        #     ._get_report_values(
+        #         docids=[journal_ids.id],
+        #         data={
+        #             "form": {
+        #                 "journal_ids": journal_ids.ids,
+        #                 "company_id": journal_ids.company_id,
+        #                 "used_context": {
+        #                     "operating_unit_ids": journal_ids.operating_unit_id.id
+        #                 },
+        #             }
+        #         },
+        #     )
+        # )
+        # self.assertTrue(report_journal)
 
     def test_journal_no_ou(self):
         """Test journal can not create if use self-balance but not ou in journal"""
@@ -130,5 +131,5 @@ class TestCrossOuJournalEntry(test_ou.TestAccountOperatingUnit):
             with Form(self.journal_model) as f:
                 f.type = "bank"
                 f.name = "Test new bank not ou"
-                f.code = "testcode"
+                f.code = "bankcode"
             f.save()
