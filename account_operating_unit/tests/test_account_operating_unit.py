@@ -173,6 +173,7 @@ class TestAccountOperatingUnit(AccountTestInvoicingCommon):
                 "account_id": self.env["account.account"]
                 .search([("account_type", "=", "expense")], limit=1)
                 .id,
+                'tax_ids': [],
             }
             lines.append((0, 0, line_values))
         inv_vals = {
