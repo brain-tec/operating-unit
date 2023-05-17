@@ -94,7 +94,11 @@ class TestCrossOuJournalEntry(test_ou.TestAccountOperatingUnit):
         move_vals.update(
             {"journal_id": journal_ids and journal_ids.id, "line_ids": lines}
         )
-        move = self.move_model.with_user(self.user_id.id).create(move_vals)
+        move = (
+            self.move_model.with_user(self.user_id.id)
+            .with_context(check_move_validity=False)
+            .create(move_vals)
+        )
         # Post journal entries
         move.action_post()
         # Check the balance of the account

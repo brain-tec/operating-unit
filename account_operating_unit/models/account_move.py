@@ -2,6 +2,8 @@
 # © 2019 Serpent Consulting Services Pvt. Ltd.
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
+from contextlib import contextmanager
+
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
@@ -190,10 +192,12 @@ class AccountMove(models.Model):
 
         return super()._post(soft)
 
-    def _check_balanced(self):
+    @contextmanager
+    def _check_balanced(self, container):
         if self.env.context.get("wip"):
-            return True
-        return super()._check_balanced()
+            yield
+        else:
+            yield super()._check_balanced(container)
 
     @api.constrains("line_ids")
     def _check_ou(self):
