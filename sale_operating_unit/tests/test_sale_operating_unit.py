@@ -129,6 +129,7 @@ class TestSaleOperatingUnit(common.TransactionCase):
     def _confirm_sale(cls, sale):
         sale.action_confirm()
         payment = cls.payment_model.create({"advance_payment_method": "delivered"})
+        payment.sale_order_ids = sale
         sale_context = {
             "active_id": sale.id,
             "active_ids": sale.ids,
