@@ -10,11 +10,11 @@ class SaleReport(models.Model):
 
     def _group_by_sale(self):
         res = super()._group_by_sale()
-        res += """, s.operating_unit_id"""
+        res += """,
+                    s.operating_unit_id"""
         return res
 
     def _select_additional_fields(self):
-
         res = super()._select_additional_fields()
-        res["operating_unit_id"] = ", s.operating_unit_id as operating_unit_id"
+        res["operating_unit_id"] = "s.operating_unit_id"
         return res
