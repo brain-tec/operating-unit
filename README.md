@@ -25,6 +25,7 @@ addon | version | maintainers | summary
 [account_financial_report_operating_unit](account_financial_report_operating_unit/) | 15.0.1.0.0 |  | Introduces Operating Unit (OU) in financial reports
 [account_operating_unit](account_operating_unit/) | 15.0.1.1.2 |  | Introduces Operating Unit (OU) in invoices and Accounting Entries with clearing account
 [analytic_operating_unit](analytic_operating_unit/) | 15.0.1.0.1 |  | Analytic Operating Unit
+[analytic_operating_unit_access_all](analytic_operating_unit_access_all/) | 15.0.1.0.0 | [![kittiu](https://github.com/kittiu.png?size=30px)](https://github.com/kittiu) | Access all OUs' Analytics
 [crm_operating_unit](crm_operating_unit/) | 15.0.1.0.0 |  | Operating Unit in CRM
 [hr_contract_operating_unit](hr_contract_operating_unit/) | 15.0.1.0.1 |  | HR Contract Operating Unit
 [hr_expense_operating_unit](hr_expense_operating_unit/) | 15.0.1.0.0 |  | HR Expense Operating Unit
@@ -37,6 +38,7 @@ addon | version | maintainers | summary
 [operating_unit_access_all](operating_unit_access_all/) | 15.0.1.0.0 | [![kittiu](https://github.com/kittiu.png?size=30px)](https://github.com/kittiu) | Access all Operating Units
 [purchase_operating_unit](purchase_operating_unit/) | 15.0.1.0.0 |  | Adds the concecpt of operating unit (OU) in purchase order management
 [purchase_request_operating_unit](purchase_request_operating_unit/) | 15.0.1.0.0 |  | Operating Unit in Purchase Requests
+[purchase_requisition_operating_unit](purchase_requisition_operating_unit/) | 15.0.1.0.0 |  | Operating Unit in Purchase Requisitions
 [purchase_stock_operating_unit](purchase_stock_operating_unit/) | 15.0.1.0.0 | [![Saran440](https://github.com/Saran440.png?size=30px)](https://github.com/Saran440) | Copies the operating unit of purchase picking to the stock picking
 [report_qweb_operating_unit](report_qweb_operating_unit/) | 15.0.1.0.0 |  | Qweb Report With Operating Unit
 [sale_operating_unit](sale_operating_unit/) | 15.0.1.0.0 |  | An operating unit (OU) is an organizational entity part of a company
