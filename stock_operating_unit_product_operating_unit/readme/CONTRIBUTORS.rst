@@ -1,1 +1,1 @@
-* Raúl Martín <raul.martin@bt-group.com>
+* Raúl Martín <raul.martin@braintec.com> (https://braintec.com)

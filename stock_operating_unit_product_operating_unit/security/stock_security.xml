@@ -1,5 +1,11 @@
-<!-- Copyright 2021 brain-tec AG
-     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (c) 2021 braintec AG (https://braintec.com)
+All Rights Reserved
+Licensed under the AGPL-3.0 (http://www.gnu.org/licenses/agpl.html)
+See LICENSE file for full licensing details.
+-->
+
 <odoo>
     <record id="ir_rule_stock_production_lot_allowed_operating_units" model="ir.rule">
         <field name="model_id" ref="stock.model_stock_production_lot" />
