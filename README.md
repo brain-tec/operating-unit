@@ -23,7 +23,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [account_asset_operating_unit](account_asset_operating_unit/) | 15.0.1.0.0 | [![ps-tubtim](https://github.com/ps-tubtim.png?size=30px)](https://github.com/ps-tubtim) | This module adds operating unit information to assets.
 [account_financial_report_operating_unit](account_financial_report_operating_unit/) | 15.0.1.0.0 |  | Introduces Operating Unit (OU) in financial reports
-[account_operating_unit](account_operating_unit/) | 15.0.1.2.0 |  | Introduces Operating Unit (OU) in invoices and Accounting Entries with clearing account
+[account_operating_unit](account_operating_unit/) | 15.0.1.2.1 |  | Introduces Operating Unit (OU) in invoices and Accounting Entries with clearing account
 [analytic_operating_unit](analytic_operating_unit/) | 15.0.1.0.1 |  | Analytic Operating Unit
 [analytic_operating_unit_access_all](analytic_operating_unit_access_all/) | 15.0.1.0.0 | [![kittiu](https://github.com/kittiu.png?size=30px)](https://github.com/kittiu) | Access all OUs' Analytics
 [crm_operating_unit](crm_operating_unit/) | 15.0.1.0.0 |  | Operating Unit in CRM
@@ -49,8 +49,8 @@ addon | version | maintainers | summary
 [sale_stock_operating_unit](sale_stock_operating_unit/) | 15.0.1.0.0 |  | An operating unit (OU) is an organizational entity part of a company
 [sales_team_operating_unit](sales_team_operating_unit/) | 15.0.1.0.0 |  | Sales Team Operating Unit
 [stock_account_operating_unit](stock_account_operating_unit/) | 15.0.1.0.0 |  | Create journal entries in moves between internal locations with different operating units.
-[stock_operating_unit](stock_operating_unit/) | 15.0.1.2.0 |  | Adds the concept of operating unit (OU) in stock management
-[stock_operating_unit_access_all](stock_operating_unit_access_all/) | 15.0.1.0.0 | [![kittiu](https://github.com/kittiu.png?size=30px)](https://github.com/kittiu) | Access all OUs' Stock
+[stock_operating_unit](stock_operating_unit/) | 15.0.1.3.0 |  | Adds the concept of operating unit (OU) in stock management
+[stock_operating_unit_access_all](stock_operating_unit_access_all/) | 15.0.1.1.0 | [![kittiu](https://github.com/kittiu.png?size=30px)](https://github.com/kittiu) | Access all OUs' Stock
 
 [//]: # (end addons)
 
