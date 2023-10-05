@@ -8,7 +8,7 @@ from odoo.tests import common
 class TestSaleTeamOperatingUnit(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(TestSaleTeamOperatingUnit, cls).setUpClass()
+        super().setUpClass()
         cls.res_users_model = cls.env["res.users"].with_context(
             tracking_disable=True, no_reset_password=True
         )
