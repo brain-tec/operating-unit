@@ -42,8 +42,8 @@ addon | version | maintainers | summary
 [mis_builder_budget_operating_unit](mis_builder_budget_operating_unit/) | 14.0.1.0.0 |  | MIS Builder Budget with Operating Unit
 [mis_builder_operating_unit](mis_builder_operating_unit/) | 14.0.1.0.0 |  | MIS Builder with Operating Unit
 [mis_builder_operating_unit_access_all](mis_builder_operating_unit_access_all/) | 14.0.1.0.0 | [![kittiu](https://github.com/kittiu.png?size=30px)](https://github.com/kittiu) | Access all OUs' MIS Builder
-[mrp_operating_unit](mrp_operating_unit/) | 14.0.1.0.0 |  | Operating Unit in MRP
-[operating_unit](operating_unit/) | 14.0.1.0.8 |  | An operating unit (OU) is an organizational entity part of a company
+[mrp_operating_unit](mrp_operating_unit/) | 14.0.1.1.0 |  | Operating Unit in MRP
+[operating_unit](operating_unit/) | 14.0.1.1.0 |  | An operating unit (OU) is an organizational entity part of a company
 [operating_unit_access_all](operating_unit_access_all/) | 14.0.1.0.0 | [![kittiu](https://github.com/kittiu.png?size=30px)](https://github.com/kittiu) | Access all Operating Units
 [pos_operating_unit](pos_operating_unit/) | 14.0.1.0.0 |  | POS Operating Unit Access
 [product_operating_unit](product_operating_unit/) | 14.0.1.0.1 |  | Adds the concept of operating unit (OU) in products
@@ -53,9 +53,9 @@ addon | version | maintainers | summary
 [purchase_request_operating_unit](purchase_request_operating_unit/) | 14.0.1.0.0 |  | Operating Unit in Purchase Requests
 [purchase_request_operating_unit_access_all](purchase_request_operating_unit_access_all/) | 14.0.1.0.0 | [![kittiu](https://github.com/kittiu.png?size=30px)](https://github.com/kittiu) | Access all OUs' Purchase Requests
 [purchase_request_to_requisition_operating_unit](purchase_request_to_requisition_operating_unit/) | 14.0.1.0.0 |  | Purchase Request to Call for Bids with Operating Units
-[purchase_requisition_operating_unit](purchase_requisition_operating_unit/) | 14.0.1.0.1 |  | Operating Unit in Purchase Requisitions
+[purchase_requisition_operating_unit](purchase_requisition_operating_unit/) | 14.0.1.1.0 |  | Operating Unit in Purchase Requisitions
 [purchase_requisition_operating_unit_access_all](purchase_requisition_operating_unit_access_all/) | 14.0.1.0.0 | [![kittiu](https://github.com/kittiu.png?size=30px)](https://github.com/kittiu) | Access all OUs' Purchase Agreement
-[report_qweb_operating_unit](report_qweb_operating_unit/) | 14.0.1.0.0 |  | Qweb Report With Operating Unit
+[report_qweb_operating_unit](report_qweb_operating_unit/) | 14.0.1.1.0 |  | Qweb Report With Operating Unit
 [sale_crm_operating_unit](sale_crm_operating_unit/) | 14.0.1.0.0 |  | Sale CRM Operating Unit
 [sale_operating_unit](sale_operating_unit/) | 14.0.1.1.0 |  | An operating unit (OU) is an organizational entity part of a company
 [sale_stock_operating_unit](sale_stock_operating_unit/) | 14.0.1.0.0 |  | An operating unit (OU) is an organizational entity part of a company
