@@ -1,4 +1,4 @@
-
+Check https://github.com/OCA/operating-unit/issues/509 to see the states of the PRs that make this branch to exist
 [![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/operating-unit&target_branch=16.0)
 [![Pre-commit Status](https://github.com/OCA/operating-unit/actions/workflows/pre-commit.yml/badge.svg?branch=16.0)](https://github.com/OCA/operating-unit/actions/workflows/pre-commit.yml?query=branch%3A16.0)
 [![Build Status](https://github.com/OCA/operating-unit/actions/workflows/test.yml/badge.svg?branch=16.0)](https://github.com/OCA/operating-unit/actions/workflows/test.yml?query=branch%3A16.0)
