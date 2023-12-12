@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+global_permissions_mail_compose_message,access_mail_compose_message,model_mail_compose_message,,1,1,1,0
