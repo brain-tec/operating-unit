@@ -80,7 +80,7 @@ class StockLandedCost(models.Model):
                     "date": cost.date,
                     "ref": cost.name,
                     "line_ids": [],
-                    "type": "entry",
+                    "move_type": "entry",
                     "operating_unit_id": cost.operating_unit_id.id,
                 }
                 ##########################################################
