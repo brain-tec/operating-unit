@@ -13,7 +13,7 @@ class ProductTemplate(models.Model):
     def _default_operating_unit_ids(self):
         if self.categ_id and self.categ_id.operating_unit_ids:
             return [(6, 0, self.categ_id.operating_unit_ids.ids)]
-        if self.env.user.default_operating_unit_id:
+        if self.env.user.operating_unit_default_id:
             return [
                 (
                     6,
