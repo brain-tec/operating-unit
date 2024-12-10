@@ -4,7 +4,7 @@
 
 {
     "name": "Operating Unit in MRP",
-    "version": "15.0.1.0.0",
+    "version": "18.0.1.0.0",
     "author": "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/operating-unit",
     "license": "LGPL-3",

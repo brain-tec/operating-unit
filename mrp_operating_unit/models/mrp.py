@@ -13,8 +13,7 @@ class MrpProduction(models.Model):
         "operating.unit",
         "Operating Unit",
         readonly=True,
-        states={"confirmed": [("readonly", False)], "draft": [("readonly", False)]},
-        default=lambda self: self.env["res.users"].operating_unit_default_get(
+        default=lambda self: self.env["res.users"]._get_default_operating_unit(
             self._uid
         ),
     )

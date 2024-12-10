@@ -31,6 +31,7 @@
                     domain="[('user_ids', 'in', uid)]"
                     groups="operating_unit.group_multi_operating_unit"
                     options="{'no_create': True}"
+                    readonly="state not in ['draft', 'confirmed']"
                 />
             </xpath>
         </field>

@@ -4,8 +4,7 @@
 from datetime import datetime
 
 from odoo.exceptions import ValidationError
-from odoo.tests import common
-from odoo.tests.common import Form
+from odoo.tests import Form, common
 
 
 class TestMrpOperatingUnit(common.TransactionCase):
@@ -18,34 +17,37 @@ class TestMrpOperatingUnit(common.TransactionCase):
 
         # Products
         self.product1 = self.env.ref("product.product_product_4c")
-        # Stock Location
-        self.stock_location = self.env.ref("stock.stock_location_shop0")
 
         # Main Operating Unit
         self.ou1 = self.env.ref("operating_unit.main_operating_unit")
         # B2B Operating Unit
         self.b2b = self.env.ref("operating_unit.b2b_operating_unit")
-        # Chicago Operating Unit
-        self.chicago = self.env.ref("stock_operating_unit.operating_unit_shop0")
+        # B2C Operating Unit
+        self.b2c = self.env.ref("operating_unit.b2c_operating_unit")
         # Groups
         self.grp_mrp_saleman = self.env.ref("sales_team.group_sale_salesman")
         self.grp_mrp_manager = self.env.ref("mrp.group_mrp_manager")
 
+        # Stock Location
+        self.b2c_wh = self.env.ref("stock_operating_unit.stock_warehouse_b2c")
+        self.b2c_location = self.b2c_wh.lot_stock_id
+        self.b2c_location.operating_unit_id = self.b2c.id
+
         # Users
         self.user1 = self._create_user(
-            "user_1", [self.grp_mrp_saleman], self.company, [self.ou1, self.chicago]
+            "user_1", [self.grp_mrp_saleman], self.company, [self.ou1, self.b2c]
         )
         self.user2 = self._create_user(
             "user_2",
             [self.grp_mrp_saleman, self.grp_mrp_manager],
             self.company,
-            [self.chicago],
+            [self.b2c],
         )
 
         # Manufacturing Orders
         self.mrp_record1 = self._create_mrp("Manufacturing Order 1", self.ou1)
         self.mrp_record2 = self._create_mrp(
-            "Manufacturing Order 2", self.chicago, self.stock_location
+            "Manufacturing Order 2", self.b2c, self.b2c_location
         )
 
     def _create_user(self, login, groups, company, operating_units, context=None):
@@ -94,7 +96,7 @@ class TestMrpOperatingUnit(common.TransactionCase):
 
     def test_check_location_operating_unit(self):
         with self.assertRaises(ValidationError):
-            self.mrp_record1.location_src_id = self.stock_location.id
+            self.mrp_record1.location_src_id = self.b2c_location.id
 
         with self.assertRaises(ValidationError):
             self.mrp_record2.operating_unit_id = False
@@ -127,11 +129,11 @@ class TestMrpOperatingUnit(common.TransactionCase):
             [
                 ("company_id", "=", self.mrp_record1.company_id.id),
                 ("code", "=", "mrp_operation"),
-                ("warehouse_id.operating_unit_id", "=", self.b2b.id),
+                ("warehouse_id.operating_unit_id", "=", self.b2c.id),
             ]
         )
         with Form(self.mrp_record1) as mrp_form:
-            mrp_form.operating_unit_id = self.b2b
+            mrp_form.operating_unit_id = self.b2c
             self.assertEqual(new_picking_type_id, mrp_form.picking_type_id)
 
     def test_mrp_ou(self):
@@ -145,7 +147,7 @@ class TestMrpOperatingUnit(common.TransactionCase):
         with self.assertRaises(ValidationError):
             self.mrp_record1.operating_unit_id = False
         with self.assertRaises(ValidationError):
-            self.mrp_record1.write({"operating_unit_id": self.chicago.id})
+            self.mrp_record1.write({"operating_unit_id": self.b2c.id})
 
     def test_prepare_mo_vals(self):
         self.assertIn(
@@ -154,7 +156,7 @@ class TestMrpOperatingUnit(common.TransactionCase):
                 self.env.ref("product.product_product_4"),
                 0,
                 self.env.ref("uom.product_uom_unit"),
-                self.env.ref("stock.stock_location_shop0"),
+                self.b2c_location,
                 "test",
                 False,
                 self.env.company,
