@@ -92,6 +92,13 @@ class TestStockAccountOperatingUnit(TestStockCommon):
         self.location_b2c_id = b2c_wh.lot_stock_id
         self.b2c_type_in_id = b2c_wh.in_type_id
         self.b2c_type_int_id = b2c_wh.int_type_id
+        self.quant_id = self.env["stock.quant"].create(
+            {
+                "product_id": self.product.product_variant_id.id,
+                "inventory_quantity": 10,
+                "location_id": self.location_b2c_id.id,
+            }
+        )
 
     def _create_user(self, login, groups, company, operating_units):
         """Create a user."""

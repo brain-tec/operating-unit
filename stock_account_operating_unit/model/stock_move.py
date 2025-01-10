@@ -124,3 +124,11 @@ class StockMove(models.Model):
                     )
                     am.action_post()
             return res
+
+    def _account_entry_move(self, qty, description, svl_id, cost):
+        res = super()._account_entry_move(qty, description, svl_id, cost)
+        operating_unit = self.operating_unit_dest_id or self.operating_unit_id
+        if operating_unit:
+            for val_dict in res:
+                val_dict["operating_unit_id"] = operating_unit.id
+        return res
