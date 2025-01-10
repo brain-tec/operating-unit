@@ -368,3 +368,15 @@ class TestStockAccountOperatingUnit(TestStockCommon):
             operating_unit=None,
             expected_balance=expected_balance,
         )
+        # Check if the OU is set in the resulting move
+        # The same operating unit must be set in the account.move
+        # related to this inventory adjustment.
+        self.quant_id.inventory_quantity = 5
+        self.quant_id.action_apply_inventory()
+        move = self.env["account.move"].search(
+            [("ref", "ilike", "% - test_product")],
+            limit=1,
+            order="create_date desc",
+        )
+        self.assertTrue(move.exists())
+        self.assertEqual(move.operating_unit_id, self.ou1)
