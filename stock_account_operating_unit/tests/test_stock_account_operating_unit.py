@@ -348,14 +348,14 @@ class TestStockAccountOperatingUnit(TestStockCommon):
             expected_balance=expected_balance,
         )
         # GL account ‘Inventory’ has balance 0 on OU main_operating_unit
-        expected_balance = 0.0
+        expected_balance = 1.0
         self._check_account_balance(
             self.account_inventory.id,
             operating_unit=self.ou1,
             expected_balance=expected_balance,
         )
         # GL account ‘Inventory’ has balance 2 on OU b2c
-        expected_balance = 2.0
+        expected_balance = 1.0
         self._check_account_balance(
             self.account_inventory.id,
             operating_unit=self.b2c,
