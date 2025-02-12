@@ -31,7 +31,7 @@ addon | version | maintainers | summary
 [crm_operating_unit](crm_operating_unit/) | 17.0.1.0.0 |  | Operating Unit in CRM
 [hr_operating_unit](hr_operating_unit/) | 17.0.1.0.0 |  | HR Operating Unit
 [mail_operating_unit](mail_operating_unit/) | 17.0.1.0.0 |  | Mail Operating Unit
-[operating_unit](operating_unit/) | 17.0.1.0.0 |  | An operating unit (OU) is an organizational entity part of a company
+[operating_unit](operating_unit/) | 17.0.1.1.0 |  | An operating unit (OU) is an organizational entity part of a company
 [operating_unit_access_all](operating_unit_access_all/) | 17.0.1.0.0 | [![kittiu](https://github.com/kittiu.png?size=30px)](https://github.com/kittiu) | Access all Operating Units
 [pos_operating_unit](pos_operating_unit/) | 17.0.1.0.0 |  | POS with Operating Units
 [product_operating_unit](product_operating_unit/) | 17.0.1.0.0 |  | Adds the concept of operating unit (OU) in products
