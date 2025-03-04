@@ -1,9 +1,10 @@
 [project]
 name = "odoo-addons-oca-operating-unit"
-version = "18.0.20250211.0"
+version = "18.0.20250303.0"
 dependencies = [
     "odoo-addon-operating_unit==18.0.*",
     "odoo-addon-stock_operating_unit==18.0.*",
+    "odoo-addon-stock_operating_unit_access_all==18.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
