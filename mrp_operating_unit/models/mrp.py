@@ -3,7 +3,6 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.tools.translate import _
 
 
 class MrpProduction(models.Model):
@@ -34,7 +33,7 @@ class MrpProduction(models.Model):
 
             if no_mo_ou or different_ou:
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "The Operating Unit of the Manufacturing Order must match "
                         "with that of the Raw Materials and Finished Product "
                         "Locations."
@@ -43,7 +42,7 @@ class MrpProduction(models.Model):
 
     @api.onchange("operating_unit_id")
     def _onchange_operating_unit_id(self):
-        """Change locations according to the warehouse of the operating unit"""
+        """Change locations according to the warehouse of the operating unit."""
         if self.operating_unit_id:
             # Take first warehouse with the current operating unit
             wh = self.env["stock.warehouse"].search(
