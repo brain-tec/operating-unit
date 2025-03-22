@@ -21,7 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[account_operating_unit](account_operating_unit/) | 16.0.1.1.1 |  | Introduces Operating Unit (OU) in invoices and Accounting Entries with clearing account
+[account_operating_unit](account_operating_unit/) | 16.0.1.1.2 |  | Introduces Operating Unit (OU) in invoices and Accounting Entries with clearing account
 [analytic_operating_unit](analytic_operating_unit/) | 16.0.1.0.0 |  | Analytic Operating Unit
 [contract_operating_unit](contract_operating_unit/) | 16.0.1.0.0 |  | Contract Operating Unit
 [hr_operating_unit](hr_operating_unit/) | 16.0.1.0.0 |  | HR Operating Unit
