@@ -21,7 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[account_check_deposit_operating_unit](account_check_deposit_operating_unit/) | 13.0.1.0.0 | [![newtratip](https://github.com/newtratip.png?size=30px)](https://github.com/newtratip) | Operating Unit in Check Deposit
+[account_check_deposit_operating_unit](account_check_deposit_operating_unit/) | 13.0.1.0.0 | <a href='https://github.com/newtratip'><img src='https://github.com/newtratip.png' width='32' height='32' style='border-radius:50%;' alt='newtratip'/></a> | Operating Unit in Check Deposit
 [account_operating_unit](account_operating_unit/) | 13.0.1.2.0 |  | Introduces Operating Unit (OU) in invoices and Accounting Entries with clearing account
 [analytic_operating_unit](analytic_operating_unit/) | 13.0.1.0.1 |  | Analytic Operating Unit
 [crm_operating_unit](crm_operating_unit/) | 13.0.1.0.0 |  | Operating Unit in CRM
