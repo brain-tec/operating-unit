@@ -1,4 +1,7 @@
 
+[![Support the OCA](https://odoo-community.org/readme-banner-image)](https://odoo-community.org/get-involved?utm_source=repo-readme)
+
+# operating-unit
 [![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/operating-unit&target_branch=16.0)
 [![Pre-commit Status](https://github.com/OCA/operating-unit/actions/workflows/pre-commit.yml/badge.svg?branch=16.0)](https://github.com/OCA/operating-unit/actions/workflows/pre-commit.yml?query=branch%3A16.0)
 [![Build Status](https://github.com/OCA/operating-unit/actions/workflows/test.yml/badge.svg?branch=16.0)](https://github.com/OCA/operating-unit/actions/workflows/test.yml?query=branch%3A16.0)
@@ -6,8 +9,6 @@
 [![Translation Status](https://translation.odoo-community.org/widgets/operating-unit-16-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/operating-unit-16-0/?utm_source=widget)
 
 <!-- /!\ do not modify above this line -->
-
-# operating-unit
 
 TODO: add repo description.
 
@@ -31,6 +32,7 @@ addon | version | maintainers | summary
 [project_operating_unit](project_operating_unit/) | 16.0.1.0.0 | <a href='https://github.com/max3903'><img src='https://github.com/max3903.png' width='32' height='32' style='border-radius:50%;' alt='max3903'/></a> | This module adds operating unit information to projects and tasks.
 [report_qweb_operating_unit](report_qweb_operating_unit/) | 16.0.1.0.0 |  | Qweb Report With Operating Unit
 [sale_operating_unit](sale_operating_unit/) | 16.0.1.0.0 |  | An operating unit (OU) is an organizational entity part of a company
+[sale_operating_unit_sequence](sale_operating_unit_sequence/) | 16.0.1.0.0 |  | Sale Order Sequence by Operating Unit
 [sale_stock_operating_unit](sale_stock_operating_unit/) | 16.0.1.0.1 |  | An operating unit (OU) is an organizational entity part of a company
 [sales_team_operating_unit](sales_team_operating_unit/) | 16.0.1.0.0 |  | Sales Team Operating Unit
 [stock_operating_unit](stock_operating_unit/) | 16.0.1.2.2 |  | Adds the concept of operating unit (OU) in stock management
