@@ -1,4 +1,7 @@
 
+[![Support the OCA](https://odoo-community.org/readme-banner-image)](https://odoo-community.org/get-involved?utm_source=repo-readme)
+
+# operating-unit
 [![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/operating-unit&target_branch=19.0)
 [![Pre-commit Status](https://github.com/OCA/operating-unit/actions/workflows/pre-commit.yml/badge.svg?branch=19.0)](https://github.com/OCA/operating-unit/actions/workflows/pre-commit.yml?query=branch%3A19.0)
 [![Build Status](https://github.com/OCA/operating-unit/actions/workflows/test.yml/badge.svg?branch=19.0)](https://github.com/OCA/operating-unit/actions/workflows/test.yml?query=branch%3A19.0)
@@ -6,8 +9,6 @@
 [![Translation Status](https://translation.odoo-community.org/widgets/operating-unit-19-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/operating-unit-19-0/?utm_source=widget)
 
 <!-- /!\ do not modify above this line -->
-
-# operating-unit
 
 operating-unit
 
@@ -21,14 +22,14 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[account_operating_unit](account_operating_unit/) | 19.0.1.0.3 |  | Introduces Operating Unit (OU) in invoices and Accounting Entries with clearing account
+[account_operating_unit](account_operating_unit/) | 19.0.1.0.4 |  | Introduces Operating Unit (OU) in invoices and Accounting Entries with clearing account
 [analytic_operating_unit](analytic_operating_unit/) | 19.0.1.0.0 |  | Analytic Operating Unit
 [crm_operating_unit](crm_operating_unit/) | 19.0.1.0.0 |  | Operating Unit in CRM
-[operating_unit](operating_unit/) | 19.0.1.0.1 |  | An operating unit (OU) is an organizational entity part of a company
+[operating_unit](operating_unit/) | 19.0.1.0.2 |  | An operating unit (OU) is an organizational entity part of a company
 [operating_unit_access_all](operating_unit_access_all/) | 19.0.1.0.0 | <a href='https://github.com/kittiu'><img src='https://github.com/kittiu.png' width='32' height='32' style='border-radius:50%;' alt='kittiu'/></a> | Access all Operating Units
 [product_operating_unit](product_operating_unit/) | 19.0.1.0.0 |  | Adds the concept of operating unit (OU) in products
 [res_partner_operating_unit](res_partner_operating_unit/) | 19.0.1.1.0 |  | Introduces Operating Unit fields in Partner
-[sale_operating_unit](sale_operating_unit/) | 19.0.1.0.0 |  | An operating unit (OU) is an organizational entity part of a company
+[sale_operating_unit](sale_operating_unit/) | 19.0.1.0.1 |  | An operating unit (OU) is an organizational entity part of a company
 [sales_team_operating_unit](sales_team_operating_unit/) | 19.0.1.0.0 |  | Sales Team Operating Unit
 
 [//]: # (end addons)
